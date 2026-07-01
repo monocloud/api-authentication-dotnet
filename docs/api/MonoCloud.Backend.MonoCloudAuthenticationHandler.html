@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class MonoCloudAuthenticationHandler </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class MonoCloudAuthenticationHandler ">
+      
+      <meta name="description" content="Handles authentication for MonoCloud by providing authentication logic specific to the MonoCloud platform.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/monocloud/backend-dotnet/new/feat/v0.1.0/apiSpec/new?filename=MonoCloud_Backend_MonoCloudAuthenticationHandler.md&amp;value=---%0Auid%3A%20MonoCloud.Backend.MonoCloudAuthenticationHandler%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="MonoCloud.Backend.MonoCloudAuthenticationHandler">
+
+
+
+  <h1 id="MonoCloud_Backend_MonoCloudAuthenticationHandler" data-uid="MonoCloud.Backend.MonoCloudAuthenticationHandler" class="text-break">
+Class MonoCloudAuthenticationHandler  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationHandler.cs/#L11"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="MonoCloud.html">MonoCloud</a>.<a class="xref" href="MonoCloud.Backend.html">Backend</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MonoCloud.Backend.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Handles authentication for MonoCloud by providing authentication logic specific to the MonoCloud platform.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class MonoCloudAuthenticationHandler : AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;, IAuthenticationHandler</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1">AuthenticationHandler</a>&lt;<a class="xref" href="MonoCloud.Backend.MonoCloudAuthenticationOptions.html">MonoCloudAuthenticationOptions</a>&gt;</div>
+      <div><span class="xref">MonoCloudAuthenticationHandler</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.iauthenticationhandler">IAuthenticationHandler</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.initializeasync">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.InitializeAsync(AuthenticationScheme, HttpContext)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.initializeeventsasync">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.InitializeEventsAsync()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.initializehandlerasync">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.InitializeHandlerAsync()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.buildredirecturi">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.BuildRedirectUri(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.resolvetarget">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.ResolveTarget(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.authenticateasync">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.AuthenticateAsync()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.handleauthenticateonceasync">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.HandleAuthenticateOnceAsync()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.handleauthenticateoncesafeasync">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.HandleAuthenticateOnceSafeAsync()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.handleforbiddenasync">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.HandleForbiddenAsync(AuthenticationProperties)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.handlechallengeasync">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.HandleChallengeAsync(AuthenticationProperties)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.challengeasync">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.ChallengeAsync(AuthenticationProperties)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.forbidasync">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.ForbidAsync(AuthenticationProperties)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.scheme">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.Scheme</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.options">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.Options</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.context">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.Context</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.request">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.Request</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.response">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.Response</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.originalpath">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.OriginalPath</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.originalpathbase">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.OriginalPathBase</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.logger">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.Logger</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.urlencoder">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.UrlEncoder</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.clock">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.Clock</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.optionsmonitor">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.OptionsMonitor</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.claimsissuer">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.ClaimsIssuer</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1.currenturi">AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;.CurrentUri</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="MonoCloud_Backend_MonoCloudAuthenticationHandler_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>This handler processes authentication tokens and performs token introspection to validate incoming requests.</p>
+</div>
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="MonoCloud_Backend_MonoCloudAuthenticationHandler__ctor_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationHandler.#ctor*"></a>
+
+  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationHandler__ctor_Microsoft_Extensions_Options_IOptionsMonitor_MonoCloud_Backend_MonoCloudAuthenticationOptions__System_Text_Encodings_Web_UrlEncoder_Microsoft_Extensions_Logging_ILoggerFactory_Microsoft_AspNetCore_Authentication_ISystemClock_MonoCloud_Backend_Shared_IMonoCloudClaimsCache_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{MonoCloud.Backend.MonoCloudAuthenticationOptions},System.Text.Encodings.Web.UrlEncoder,Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.AspNetCore.Authentication.ISystemClock,MonoCloud.Backend.Shared.IMonoCloudClaimsCache)">
+  MonoCloudAuthenticationHandler(IOptionsMonitor&lt;MonoCloudAuthenticationOptions&gt;, UrlEncoder, ILoggerFactory, ISystemClock, IMonoCloudClaimsCache?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationHandler.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="MonoCloud.Backend.MonoCloudAuthenticationHandler.html">MonoCloudAuthenticationHandler</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Obsolete(&quot;ISystemClock is obsolete, use TimeProvider on AuthenticationSchemeOptions instead.&quot;)]
+public MonoCloudAuthenticationHandler(IOptionsMonitor&lt;MonoCloudAuthenticationOptions&gt; options, UrlEncoder encoder, ILoggerFactory logger, ISystemClock clock, IMonoCloudClaimsCache? cache = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>options</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.options.ioptionsmonitor-1">IOptionsMonitor</a>&lt;<a class="xref" href="MonoCloud.Backend.MonoCloudAuthenticationOptions.html">MonoCloudAuthenticationOptions</a>&gt;</dt>
+    <dd></dd>
+    <dt><code>encoder</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.encodings.web.urlencoder">UrlEncoder</a></dt>
+    <dd></dd>
+    <dt><code>logger</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.iloggerfactory">ILoggerFactory</a></dt>
+    <dd></dd>
+    <dt><code>clock</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.isystemclock">ISystemClock</a></dt>
+    <dd></dd>
+    <dt><code>cache</code> <a class="xref" href="MonoCloud.Backend.Shared.IMonoCloudClaimsCache.html">IMonoCloudClaimsCache</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="MonoCloud_Backend_MonoCloudAuthenticationHandler_Events_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationHandler.Events*"></a>
+
+  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationHandler_Events" data-uid="MonoCloud.Backend.MonoCloudAuthenticationHandler.Events">
+  Events
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationHandler.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p><a class="xref" href="MonoCloud.Backend.MonoCloudAuthenticationEvents.html">MonoCloudAuthenticationEvents</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected MonoCloudAuthenticationEvents Events { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MonoCloud.Backend.MonoCloudAuthenticationEvents.html">MonoCloudAuthenticationEvents</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="MonoCloud_Backend_MonoCloudAuthenticationHandler_CreateEventsAsync_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationHandler.CreateEventsAsync*"></a>
+
+  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationHandler_CreateEventsAsync" data-uid="MonoCloud.Backend.MonoCloudAuthenticationHandler.CreateEventsAsync">
+  CreateEventsAsync()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationHandler.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a new instance of the events instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override Task&lt;object&gt; CreateEventsAsync()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;</dt>
+    <dd><p>A new instance of the events instance.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MonoCloud_Backend_MonoCloudAuthenticationHandler_HandleAuthenticateAsync_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationHandler.HandleAuthenticateAsync*"></a>
+
+  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationHandler_HandleAuthenticateAsync" data-uid="MonoCloud.Backend.MonoCloudAuthenticationHandler.HandleAuthenticateAsync">
+  HandleAuthenticateAsync()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationHandler.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Allows derived types to handle authentication.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override Task&lt;AuthenticateResult&gt; HandleAuthenticateAsync()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticateresult">AuthenticateResult</a>&gt;</dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticateresult">AuthenticateResult</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,369 @@
+{
+  "source_base_path": "/Users/sathyajith/Workspace/backend-dotnet/docs-gen",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.MonoCloudAuthenticationDefaults.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.MonoCloudAuthenticationDefaults.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.MonoCloudAuthenticationDefaults",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.MonoCloudAuthenticationDefaults.yml\" sourcestartlinenumber=\"1\">Default values used by the SDK</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.MonoCloudAuthenticationEvents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.MonoCloudAuthenticationEvents.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.MonoCloudAuthenticationEvents",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.MonoCloudAuthenticationEvents.yml\" sourcestartlinenumber=\"1\">Provides events that allow customization of the authentication process in the MonoCloud framework.\nContains virtual methods that can be overridden to handle specific authentication-related events.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.MonoCloudAuthenticationExtension.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.MonoCloudAuthenticationExtension.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.MonoCloudAuthenticationExtension",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.MonoCloudAuthenticationExtension.yml\" sourcestartlinenumber=\"1\">Extension methods for registering the MonoCloud authentication handler with an <xref href=\"Microsoft.AspNetCore.Authentication.AuthenticationBuilder\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.MonoCloudAuthenticationHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.MonoCloudAuthenticationHandler.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.MonoCloudAuthenticationHandler",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.MonoCloudAuthenticationHandler.yml\" sourcestartlinenumber=\"1\">Handles authentication for MonoCloud by providing authentication logic specific to the MonoCloud platform.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.MonoCloudAuthenticationOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.MonoCloudAuthenticationOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.MonoCloudAuthenticationOptions",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.MonoCloudAuthenticationOptions.yml\" sourcestartlinenumber=\"1\">Provides options to configure the MonoCloud authentication scheme for an ASP.NET Core application.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.PostConfigureMonoCloudAuthenticationOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.PostConfigureMonoCloudAuthenticationOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.PostConfigureMonoCloudAuthenticationOptions",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.PostConfigureMonoCloudAuthenticationOptions.yml\" sourcestartlinenumber=\"1\">Supports all classes in the .NET class hierarchy and provides low-level services to derived classes. This is the ultimate base class of all .NET classes; it is the root of the type hierarchy.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.ClientAuth.ClientAuthenticationContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.ClientAuth.ClientAuthenticationContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared.ClientAuth.ClientAuthenticationContext",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.Shared.ClientAuth.ClientAuthenticationContext.yml\" sourcestartlinenumber=\"1\">Represents the context for <xref href=\"MonoCloud.Backend.Shared.ClientAuth.IMonoCloudClientAuth\" data-throw-if-not-resolved=\"false\"></xref>.\nThis context encapsulates all relevant details and state for performing client authentication,\nincluding the authentication options, request message, payload, HTTP context, and scheme.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.ClientAuth.ClientSecretAuth.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.ClientAuth.ClientSecretAuth.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared.ClientAuth.ClientSecretAuth",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.Shared.ClientAuth.ClientSecretAuth.yml\" sourcestartlinenumber=\"1\">Represents a client secret authentication mechanism used for securing\naccess by attaching the client ID and client secret to the requests.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.ClientAuth.IMonoCloudClientAuth.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.ClientAuth.IMonoCloudClientAuth.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared.ClientAuth.IMonoCloudClientAuth",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.Shared.ClientAuth.IMonoCloudClientAuth.yml\" sourcestartlinenumber=\"1\">Defines the contract for MonoCloud client authentication mechanisms.\nImplementing this interface allows custom authentication schemes\nto be integrated into the authentication process for securing client access.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.ClientAuth.JwtAssertionAuth.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.ClientAuth.JwtAssertionAuth.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared.ClientAuth.JwtAssertionAuth",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.Shared.ClientAuth.JwtAssertionAuth.yml\" sourcestartlinenumber=\"1\">Represents a mechanism for authenticating clients using JSON Web Token (JWT) assertions.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.ClientAuth.TlsAuth.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.ClientAuth.TlsAuth.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared.ClientAuth.TlsAuth",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.Shared.ClientAuth.TlsAuth.yml\" sourcestartlinenumber=\"1\">Provides TLS-based authentication for client applications using mutual TLS (mTLS).\nThis class implements the <xref href=\"MonoCloud.Backend.Shared.ClientAuth.IMonoCloudClientAuth\" data-throw-if-not-resolved=\"false\"></xref> interface.</p>\n<p>\nAuthentication is performed using an optional X509 certificate. If a certificate is not\nspecified, it is expected that the <xref href=\"MonoCloud.Backend.MonoCloudAuthenticationOptions.HttpClient\" data-throw-if-not-resolved=\"false\"></xref>\nis configured with a message handler that provides the client certificate.\n</p>\n<p>\nOptionally, a trust store id can be provided. If a trust store id is specified,\nthe corresponding trust store will be used to validate the server certificate.\nIf a trust store id is not specified, the default trust store will be used.\n</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.ClientAuth.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.ClientAuth.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared.ClientAuth",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.Context.AuthenticationFailedContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.Context.AuthenticationFailedContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared.Context.AuthenticationFailedContext",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.Shared.Context.AuthenticationFailedContext.yml\" sourcestartlinenumber=\"1\">Context for AuthenticationFailed Event</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.Context.CertificateBindingValidatedContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.Context.CertificateBindingValidatedContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared.Context.CertificateBindingValidatedContext",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.Shared.Context.CertificateBindingValidatedContext.yml\" sourcestartlinenumber=\"1\">Context for CertificateBinding Event</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.Context.IntrospectionRequestContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.Context.IntrospectionRequestContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared.Context.IntrospectionRequestContext",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.Shared.Context.IntrospectionRequestContext.yml\" sourcestartlinenumber=\"1\">Context for IntrospectionRequest Event</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.Context.JwtAssertionContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.Context.JwtAssertionContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared.Context.JwtAssertionContext",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.Shared.Context.JwtAssertionContext.yml\" sourcestartlinenumber=\"1\">Context for JwtAssertion Event</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.Context.MessageReceivedContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.Context.MessageReceivedContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared.Context.MessageReceivedContext",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.Shared.Context.MessageReceivedContext.yml\" sourcestartlinenumber=\"1\">Context for MessageReceived Event</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.Context.TokenValidatedContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.Context.TokenValidatedContext.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared.Context.TokenValidatedContext",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.Shared.Context.TokenValidatedContext.yml\" sourcestartlinenumber=\"1\">Context for TokenValidated Event</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.Context.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.Context.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared.Context",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.IMonoCloudClaimsCache.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.IMonoCloudClaimsCache.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared.IMonoCloudClaimsCache",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.Shared.IMonoCloudClaimsCache.yml\" sourcestartlinenumber=\"1\">Defines an abstract interface for a claims cache mechanism.\nThis interface is intended to be used to temporarily store and retrieve user\nclaims.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.JwtAssertion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.JwtAssertion.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared.JwtAssertion",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Backend.Shared.JwtAssertion.yml\" sourcestartlinenumber=\"1\">Represents a JWT (JSON Web Token) assertion used for client authentication.\nThis class encapsulates the token (Assertion), its type, and an optional cache expiration time.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.Shared.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.Shared.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend.Shared",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Backend.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Backend.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Backend",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
