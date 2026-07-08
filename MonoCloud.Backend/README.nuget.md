@@ -13,7 +13,7 @@ The SDK handles:
 - **JWT access token validation** with signature and claims verification
 - **Opaque token introspection** (RFC 7662) with automatic JWT vs. opaque detection
 - **Scope and group-based authorization** through the standard policy system
-- **Optional caching** of validated token claims via `IMonoCloudClaimsCache`
+- **Optional caching** of introspection results via `IIntrospectionCache`
 - **mTLS certificate-bound token validation** (RFC 8705)
 - **Multiple client authentication methods** for introspection: `client_secret_basic`, `client_secret_post`, `client_secret_jwt`, `private_key_jwt`, and `tls_client_auth`
 

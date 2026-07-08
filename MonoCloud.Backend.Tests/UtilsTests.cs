@@ -110,7 +110,7 @@ public class UtilsTests
   [Test]
   public async Task SetClaims_Then_GetClaims_RoundTrips()
   {
-    var cache = new MonoCloudClaimsCacheMock();
+    var cache = new IntrospectionCacheMock();
     var options = new MonoCloudAuthenticationOptions();
     var claims = new List<Claim> { new("sub", "123"), ExpClaim(DateTimeOffset.UtcNow.AddHours(1)) };
 
@@ -128,7 +128,7 @@ public class UtilsTests
   {
     // An introspection result without an exp claim (e.g. an inactive token: {"active":false})
     // must still be cached, for the full configured duration.
-    var cache = new MonoCloudClaimsCacheMock();
+    var cache = new IntrospectionCacheMock();
     var options = new MonoCloudAuthenticationOptions();
 
     await cache.SetClaimsAsync(options, "tok", new List<Claim> { new("active", "false") }, TimeSpan.FromMinutes(5), NullLogger.Instance, default);
@@ -142,7 +142,7 @@ public class UtilsTests
   public async Task SetClaims_CachesForFullDuration_When_ExpIsNotNumeric()
   {
     // A non-numeric exp must not throw; it falls back to caching for the configured duration.
-    var cache = new MonoCloudClaimsCacheMock();
+    var cache = new IntrospectionCacheMock();
     var options = new MonoCloudAuthenticationOptions();
     var claims = new List<Claim> { new("sub", "123"), new("exp", "not-a-number") };
 
@@ -155,7 +155,7 @@ public class UtilsTests
   [Test]
   public async Task SetClaims_DoesNotCache_When_TokenAlreadyExpired()
   {
-    var cache = new MonoCloudClaimsCacheMock();
+    var cache = new IntrospectionCacheMock();
     var options = new MonoCloudAuthenticationOptions();
     var claims = new List<Claim> { ExpClaim(DateTimeOffset.UtcNow.AddMinutes(-1)) };
 
@@ -167,7 +167,7 @@ public class UtilsTests
   [Test]
   public async Task SetClaims_CapsTtlToRemainingTokenLifetime()
   {
-    var cache = new MonoCloudClaimsCacheMock();
+    var cache = new IntrospectionCacheMock();
     var options = new MonoCloudAuthenticationOptions();
     // Token expires in ~2 minutes; requested cache duration is 5 minutes.
     var claims = new List<Claim> { ExpClaim(DateTimeOffset.UtcNow.AddMinutes(2)) };
@@ -181,7 +181,7 @@ public class UtilsTests
   [Test]
   public async Task SetClaims_UsesFullDuration_When_TokenOutlivesIt()
   {
-    var cache = new MonoCloudClaimsCacheMock();
+    var cache = new IntrospectionCacheMock();
     var options = new MonoCloudAuthenticationOptions();
     var claims = new List<Claim> { ExpClaim(DateTimeOffset.UtcNow.AddHours(1)) };
 

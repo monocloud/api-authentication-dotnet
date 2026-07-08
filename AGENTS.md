@@ -13,7 +13,7 @@ Capabilities:
 - JWT access-token validation (signature + claims) against the tenant's signing keys.
 - Opaque/reference token introspection (RFC 7662), with automatic JWT-vs-opaque detection.
 - Scope and group based authorization via the standard policy system.
-- Optional caching of validated claims via `IMonoCloudClaimsCache`.
+- Optional caching of introspection results via `IIntrospectionCache`.
 - mTLS certificate-bound access tokens (RFC 8705) — `cnf`/`x5t#S256` validation.
 - Client authentication for introspection: `client_secret_basic`, `client_secret_post`,
   `client_secret_jwt`, `private_key_jwt`, `tls_client_auth`.
@@ -35,7 +35,7 @@ MonoCloud.Backend/                      # the library (multi-targeted)
     Utils.cs                            # cache get/set, cache-key gen, NormalizeGroupClaims, exp/TTL logic
     ClaimConverter.cs                   # System.Text.Json converter for Claim (Type+Value only)
     IntrospectionResult.cs              # parses RFC 7662 JSON -> claims + IsActive
-    IMonoCloudClaimsCache.cs            # the caching abstraction consumers implement
+    IIntrospectionCache.cs              # the caching abstraction consumers implement
     JwtAssertion.cs / MtlsEndpointAliases.cs
     ClientAuth/                         # ClientSecretAuth, JwtAssertionAuth, TlsAuth, IMonoCloudClientAuth, ClientAuthenticationContext
     Context/                            # event context types (ResultContext<MonoCloudAuthenticationOptions> subclasses)
@@ -121,7 +121,7 @@ pnpm changeset     # record a version bump (Changesets; .changeset/, baseBranch 
 2. Routing: if `!IntrospectJwtTokens` and the token parses as a JWT, it goes to the **JWT path**
    (local validation via `JwtTokenHandler` against discovery signing keys + configured params);
    otherwise the **opaque path** (RFC 7662 introspection).
-3. Opaque path: optional read-through of `IMonoCloudClaimsCache` (gated by `EnableCaching`; key = `CacheKeyPrefix` + SHA-256 of
+3. Opaque path: optional read-through of `IIntrospectionCache` (gated by `EnableCaching`; key = `CacheKeyPrefix` + SHA-256 of
    `schemeName|token`, so the same token doesn't collide across schemes); otherwise
    introspect (client auth applied per `Options.ClientAuth`), cache the result, build the principal.
    In-flight introspections for the same token string are de-duplicated via a static `IntrospectionCache`
@@ -142,7 +142,7 @@ pnpm changeset     # record a version bump (Changesets; .changeset/, baseBranch 
   (its instance default is `false`), so the ctor and the property setter must keep them in sync — don't
   drop that sync. With it on, JWT claim types map to legacy WS-* URIs (e.g. `sub` → `…/nameidentifier`)
   unless a consumer sets `MapInboundClaims = false`.
-- **`IMonoCloudClaimsCache` must be registered as a singleton.** The `IPostConfigureOptions`
+- **`IIntrospectionCache` must be registered as a singleton.** The `IPostConfigureOptions`
   implementation that checks for it is itself a singleton, so a scoped registration fails DI scope
   validation. This requirement is documented on the interface.
 - **Claims-cache key** includes the authentication scheme name (assigned to `options.SchemeName` during
@@ -156,7 +156,7 @@ pnpm changeset     # record a version bump (Changesets; .changeset/, baseBranch 
   carrying extra members (e.g. a `jwk`) still validates. The thumbprint comparison uses
   `CryptographicOperations.FixedTimeEquals` — keep it.
 - **Known limitation (intentional):** the in-flight `IntrospectionCache` is keyed by the raw token only
-  (no scheme discriminator), unlike the persisted claims cache.
+  (no scheme discriminator), unlike the persisted introspection cache.
 
 ## Working norms
 

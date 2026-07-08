@@ -4,14 +4,14 @@ namespace MonoCloud.Backend;
 public class PostConfigureMonoCloudAuthenticationOptions : IPostConfigureOptions<MonoCloudAuthenticationOptions>
 {
   private readonly IHttpClientFactory _httpClientFactory;
-  private readonly IMonoCloudClaimsCache? _cache;
+  private readonly IIntrospectionCache? _cache;
 
   /// <summary>
   /// <see cref="PostConfigureMonoCloudAuthenticationOptions"/>
   /// </summary>
   /// <param name="httpClientFactory"></param>
   /// <param name="cache"></param>
-  public PostConfigureMonoCloudAuthenticationOptions(IHttpClientFactory httpClientFactory, IMonoCloudClaimsCache? cache = null)
+  public PostConfigureMonoCloudAuthenticationOptions(IHttpClientFactory httpClientFactory, IIntrospectionCache? cache = null)
   {
     _httpClientFactory = httpClientFactory;
     _cache = cache;
@@ -24,7 +24,7 @@ public class PostConfigureMonoCloudAuthenticationOptions : IPostConfigureOptions
 
     if (options.EnableCaching && _cache == null)
     {
-      throw new ArgumentException("IMonoCloudClaimsCache not found in the services collection", nameof(_cache));
+      throw new ArgumentException("IIntrospectionCache not found in the services collection", nameof(_cache));
     }
 
     if (options.TenantDomain is not null && !options.TenantDomain.StartsWith("https://"))

@@ -10,7 +10,7 @@ internal static class Utils
     Converters = { new ClaimConverter() }
   };
 
-  public static async Task<IList<Claim>?> GetClaimsAsync(this IMonoCloudClaimsCache cache, MonoCloudAuthenticationOptions options, string token, CancellationToken cancellationToken)
+  public static async Task<IList<Claim>?> GetClaimsAsync(this IIntrospectionCache cache, MonoCloudAuthenticationOptions options, string token, CancellationToken cancellationToken)
   {
     var cacheKey = options.CacheKeyGenerator(options, token);
     var json = await cache.GetAsync(cacheKey, cancellationToken).ConfigureAwait(false);
@@ -23,7 +23,7 @@ internal static class Utils
     return JsonSerializer.Deserialize<IList<Claim>>(json, Options);
   }
 
-  public static async Task SetClaimsAsync(this IMonoCloudClaimsCache cache, MonoCloudAuthenticationOptions options, string token, IList<Claim> claims, TimeSpan duration, ILogger logger, CancellationToken cancellationToken)
+  public static async Task SetClaimsAsync(this IIntrospectionCache cache, MonoCloudAuthenticationOptions options, string token, IList<Claim> claims, TimeSpan duration, ILogger logger, CancellationToken cancellationToken)
   {
     var now = DateTimeOffset.UtcNow;
     var ttl = duration;

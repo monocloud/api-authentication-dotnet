@@ -288,7 +288,7 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
   [Test]
   public async Task Should_ReturnClaimsFromCache_OnSecondRequest()
   {
-    var cache = new MonoCloudClaimsCacheMock();
+    var cache = new IntrospectionCacheMock();
     const string token = "opaque-cached-active";
 
     // First request: introspects and caches the claims.
@@ -316,7 +316,7 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
   [Test]
   public async Task Should_Fail_When_CachedTokenIsInactive()
   {
-    var cache = new MonoCloudClaimsCacheMock();
+    var cache = new IntrospectionCacheMock();
     const string token = "opaque-cached-inactive";
 
     var server = new OpenIdServerMock();
@@ -338,7 +338,7 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
   [Test]
   public async Task Should_CacheInactiveToken_AndFailFromCache_OnSecondRequest()
   {
-    var cache = new MonoCloudClaimsCacheMock();
+    var cache = new IntrospectionCacheMock();
     const string token = "opaque-cached-inactive-roundtrip";
 
     // First request: introspection reports the token inactive; the inactive claims are cached.

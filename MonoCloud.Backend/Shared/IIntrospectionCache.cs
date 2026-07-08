@@ -1,14 +1,17 @@
 namespace MonoCloud.Backend.Shared;
 
 /// <summary>
-/// Defines an abstract interface for a claims cache mechanism.
-/// This interface is intended to be used to temporarily store and retrieve user
-/// claims.
+/// Defines an abstract interface for caching access token introspection results.
+/// This interface is intended to be used to temporarily store and retrieve the claims
+/// resolved from token introspection.
 /// </summary>
 /// <remarks>
+/// Only tokens validated via introspection are cached — opaque tokens, and JWTs when
+/// <see cref="MonoCloudAuthenticationOptions.IntrospectJwtTokens"/> is <c>true</c>. Locally
+/// validated JWTs are never cached.
 /// Implementations must be registered in the service collection with a <b>singleton</b> lifetime.
 /// </remarks>
-public interface IMonoCloudClaimsCache
+public interface IIntrospectionCache
 {
   /// <summary>
   /// Asynchronously retrieves a cached value based on the provided key.

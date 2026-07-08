@@ -50,8 +50,10 @@ public class MonoCloudAuthenticationOptions : AuthenticationSchemeOptions
   }
 
   /// <summary>
-  /// Indicates whether caching is enabled for token introspection and validation processes.
-  /// When enabled, reduces redundant network calls or computation by utilizing cached results.
+  /// Indicates whether caching of token introspection results is enabled.
+  /// When enabled, reduces redundant introspection network calls by reusing cached results via
+  /// the registered <see cref="MonoCloud.Backend.Shared.IIntrospectionCache"/>. Only tokens validated
+  /// through introspection are cached; locally validated JWTs are never cached.
   /// </summary>
   public bool EnableCaching { get; set; }
 

@@ -10,7 +10,7 @@ namespace MonoCloud.Backend;
 /// </remarks>
 public class MonoCloudAuthenticationHandler : AuthenticationHandler<MonoCloudAuthenticationOptions>
 {
-  private readonly IMonoCloudClaimsCache _cache;
+  private readonly IIntrospectionCache _cache;
   private OpenIdConnectConfiguration? _configuration;
 
   /// <summary>
@@ -23,7 +23,7 @@ public class MonoCloudAuthenticationHandler : AuthenticationHandler<MonoCloudAut
 #pragma warning disable CS0618 // Type or member is obsolete
     ISystemClock? clock = null,
 #pragma warning restore CS0618 // Type or member is obsolete
-    IMonoCloudClaimsCache? cache = null) : base(options, logger, encoder)
+    IIntrospectionCache? cache = null) : base(options, logger, encoder)
   {
     _cache = cache!;
   }
@@ -33,7 +33,7 @@ public class MonoCloudAuthenticationHandler : AuthenticationHandler<MonoCloudAut
     UrlEncoder encoder,
     ILoggerFactory logger,
     ISystemClock clock,
-    IMonoCloudClaimsCache? cache = null) : base(options, logger, encoder, clock)
+    IIntrospectionCache? cache = null) : base(options, logger, encoder, clock)
   {
     _cache = cache!;
   }

@@ -1,6 +1,6 @@
 namespace MonoCloud.Backend.Tests.Mocks;
 
-public class MonoCloudClaimsCacheMock : IMonoCloudClaimsCache
+public class IntrospectionCacheMock : IIntrospectionCache
 {
   private readonly ConcurrentDictionary<string, string> _cache = new();
 

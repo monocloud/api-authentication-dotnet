@@ -11,7 +11,7 @@ public static class HandlerTestHarness
   public static async Task<(MonoCloudAuthenticationHandler Handler, DefaultHttpContext Context)> CreateAsync(
       MonoCloudAuthenticationOptions options,
       string? token = null,
-      IMonoCloudClaimsCache? cache = null,
+      IIntrospectionCache? cache = null,
       X509Certificate2? clientCertificate = null,
       string scheme = Scheme)
   {

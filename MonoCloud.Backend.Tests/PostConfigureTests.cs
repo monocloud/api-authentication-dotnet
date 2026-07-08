@@ -12,7 +12,7 @@ public class PostConfigureTests
       EnableCaching = true
     };
 
-    Should.Throw<ArgumentException>(() => postConfigureOptions.PostConfigure(null, options)).Message.ShouldBe("IMonoCloudClaimsCache not found in the services collection (Parameter '_cache')");
+    Should.Throw<ArgumentException>(() => postConfigureOptions.PostConfigure(null, options)).Message.ShouldBe("IIntrospectionCache not found in the services collection (Parameter '_cache')");
   }
 
   [Test]
