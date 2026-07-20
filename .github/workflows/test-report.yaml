@@ -25,11 +25,11 @@ jobs:
       github.event.workflow_run.event == 'pull_request' ||
       github.event.workflow_run.event == 'push'
     steps:
-      - name: Publish Backend SDK Unit Tests
+      - name: Publish Authentication API SDK Unit Tests
         uses: dorny/test-reporter@v3
         with:
-          artifact: MonoCloud.Backend.Tests
-          name: "Backend SDK Unit Tests"
+          artifact: MonoCloud.Authentication.Api.Tests
+          name: "Authentication API SDK Unit Tests"
           path: "**/*.trx"
           reporter: dotnet-trx
           fail-on-error: false

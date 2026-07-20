@@ -63,7 +63,7 @@ jobs:
           dotnet format --verify-no-changes
 
   test:
-    name: Backend SDK Unit Tests
+    name: Authentication API SDK Unit Tests
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -82,13 +82,13 @@ jobs:
           key: build-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Test
-        run: dotnet test MonoCloud.Backend.Tests/MonoCloud.Backend.Tests.csproj --no-build --nologo --configuration Release --logger "trx;LogFileName=MonoCloud.Backend.Tests.trx"
+        run: dotnet test MonoCloud.Authentication.Api.Tests/MonoCloud.Authentication.Api.Tests.csproj --no-build --nologo --configuration Release --logger "trx;LogFileName=MonoCloud.Authentication.Api.Tests.trx"
 
       - name: Upload test results
         id: upload_artifact
         if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
-          name: MonoCloud.Backend.Tests
+          name: MonoCloud.Authentication.Api.Tests
           path: "**/*.trx"
           overwrite: true
