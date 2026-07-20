@@ -28,6 +28,6 @@ global using System.Threading;
 global using System.Threading.Tasks;
 global using AuthenticationFailedContext = MonoCloud.Authentication.Api.Shared.Context.AuthenticationFailedContext;
 global using JsonClaimValueTypes = Microsoft.IdentityModel.JsonWebTokens.JsonClaimValueTypes;
-global using TokenValidatedContext = MonoCloud.Authentication.Api.Shared.Context.TokenValidatedContext;
 global using JwtRegisteredClaimNames = System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames;
+global using TokenValidatedContext = MonoCloud.Authentication.Api.Shared.Context.TokenValidatedContext;
 
