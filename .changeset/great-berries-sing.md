@@ -1,5 +1,5 @@
 ---
-"@monocloud/backend-dotnet": minor
+"@monocloud/authentication-api": minor
 ---
 
 - Updated dependencies

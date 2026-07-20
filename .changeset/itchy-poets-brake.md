@@ -1,5 +1,5 @@
 ---
-"@monocloud/backend-dotnet": minor
+"@monocloud/authentication-api": minor
 ---
 
-- Backend .NET SDK Initial Release
+- Authentication API .NET SDK Initial Release

@@ -1,5 +1,5 @@
 {
-  "name": "@monocloud/backend-dotnet",
+  "name": "@monocloud/authentication-api",
   "version": "0.0.1",
   "private": true,
   "scripts": {

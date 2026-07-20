@@ -6,7 +6,7 @@
         {
           "src": "..",
           "files": [
-            "MonoCloud.Backend/MonoCloud.Backend.csproj"
+            "MonoCloud.Authentication.Api/MonoCloud.Authentication.Api.csproj"
           ],
           "exclude": [
             "**/bin/**",

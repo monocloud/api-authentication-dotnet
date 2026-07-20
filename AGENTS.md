@@ -4,7 +4,7 @@ Guidance for AI coding agents working in this repository.
 
 ## What this is
 
-**MonoCloud.Backend** — the MonoCloud Backend SDK for ASP.NET Core APIs / resource servers.
+**MonoCloud.Authentication.Api** — the MonoCloud authentication SDK for ASP.NET Core APIs / resource servers.
 It is a standard ASP.NET Core **authentication handler** that validates incoming MonoCloud
 access tokens. It plugs into `AddAuthentication()`, `[Authorize]`, and the authorization
 policy system.
@@ -18,13 +18,15 @@ Capabilities:
 - Client authentication for introspection: `client_secret_basic`, `client_secret_post`,
   `client_secret_jwt`, `private_key_jwt`, `tls_client_auth`.
 
-Repo conventions mirror the sibling `management-dotnet` SDK. Public package id: `MonoCloud.Backend`.
-The on-disk folder is still named `MonoCloud.SDK.Backend` even though the project/namespace is `MonoCloud.Backend`.
+Repo conventions mirror the sibling `management-dotnet` SDK. There are three intentional, distinct
+naming axes: the public package id / assembly / root namespace / project folder / solution file are
+all `MonoCloud.Authentication.Api`; the GitHub repository is `monocloud/api-authentication-dotnet`;
+and the Changesets/npm tooling name in `package.json` is `@monocloud/authentication-api`.
 
 ## Layout
 
 ```
-MonoCloud.Backend/                      # the library (multi-targeted)
+MonoCloud.Authentication.Api/                      # the library (multi-targeted)
   MonoCloudAuthenticationHandler.cs     # core: HandleAuthenticateAsync, JWT + opaque paths, cert binding, introspection
   MonoCloudAuthenticationOptions.cs     # all configurable options (AuthenticationSchemeOptions)
   MonoCloudAuthenticationExtension.cs   # AddMonoCloudAuthentication(...) DI entry points
@@ -40,10 +42,10 @@ MonoCloud.Backend/                      # the library (multi-targeted)
     ClientAuth/                         # ClientSecretAuth, JwtAssertionAuth, TlsAuth, IMonoCloudClientAuth, ClientAuthenticationContext
     Context/                            # event context types (ResultContext<MonoCloudAuthenticationOptions> subclasses)
   GlobalUsings.cs                       # explicit global imports (implicit usings are off — see Conventions)
-  MonoCloud.Backend.csproj              # multi-target TFMs, packaging, InternalsVisibleTo, SourceLink
+  MonoCloud.Authentication.Api.csproj              # multi-target TFMs, packaging, InternalsVisibleTo, SourceLink
   README.nuget.md                       # readme packed into the NuGet package
-MonoCloud.Backend.Tests/                # NUnit + Moq + Shouldly tests, Mocks/, Helpers/HandlerTestHarness, OpenIdServerMock
-MonoCloud.Backend.slnx                  # solution (new XML slnx format)
+MonoCloud.Authentication.Api.Tests/                # NUnit + Moq + Shouldly tests, Mocks/, Helpers/HandlerTestHarness, OpenIdServerMock
+MonoCloud.Authentication.Api.slnx                  # solution (new XML slnx format)
 Directory.Packages.props                # central package versions + shared build props (nullable, langversion, signing)
 global.json                             # pins .NET SDK 10 (rollForward latestMajor)
 .editorconfig                           # formatting + analyzer rules (source of truth for style)
@@ -58,9 +60,9 @@ docs-gen/                               # docfx site source (docfx.json/index.md
 The library multi-targets **net6.0; net7.0; net8.0; net9.0; net10.0**. The test project targets **net10.0**.
 
 ```bash
-dotnet build MonoCloud.Backend.slnx
-dotnet test  MonoCloud.Backend.slnx                 # all tests
-dotnet test  MonoCloud.Backend.slnx --filter "FullyQualifiedName~CertificateBinding"   # subset
+dotnet build MonoCloud.Authentication.Api.slnx
+dotnet test  MonoCloud.Authentication.Api.slnx                 # all tests
+dotnet test  MonoCloud.Authentication.Api.slnx --filter "FullyQualifiedName~CertificateBinding"   # subset
 ```
 
 Requires the .NET 10 SDK (see `global.json`). The test framework is **NUnit 4** with **Moq** and
@@ -94,7 +96,7 @@ pnpm changeset     # record a version bump (Changesets; .changeset/, baseBranch 
   requires the commenter to have **write access** (`getCollaboratorPermissionLevel`), so untrusted
   fork code never runs in the job that holds `id-token: write` — there is no GitHub Environment gate.
   Publishing needs the `NUGET_USER` secret (nuget.org profile name); there is no long-lived NuGet API
-  key. The fork guard and release `if` pin to `github.repository == 'monocloud/backend-dotnet'`.
+  key. The fork guard and release `if` pin to `github.repository == 'monocloud/api-authentication-dotnet'`.
 
 ## Conventions
 
@@ -164,4 +166,4 @@ pnpm changeset     # record a version bump (Changesets; .changeset/, baseBranch 
   prior code before any commit. Make changes in the working tree and stop.
 - This is security-sensitive auth code. Prefer minimal, surgical changes; preserve existing behavior
   on all target frameworks. When changing token-validation, caching, or certificate-binding logic,
-  add or update tests in `MonoCloud.Backend.Tests`.
+  add or update tests in `MonoCloud.Authentication.Api.Tests`.

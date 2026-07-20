@@ -10,7 +10,7 @@
     <Authors>MonoCloud</Authors>
     <Copyright>MonoCloud</Copyright>
     <PackageProjectUrl>https://www.monocloud.com</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/monocloud/backend-dotnet</RepositoryUrl>
+    <RepositoryUrl>https://github.com/monocloud/api-authentication-dotnet</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>monocloud</PackageTags>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
