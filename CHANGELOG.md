@@ -1,0 +1,9 @@
+# @monocloud/authentication-api
+
+## 0.1.0
+
+### Minor Changes
+
+- 1128b26: - Updated dependencies
+- 1128b26: - Authentication API .NET SDK Initial Release
+- 1128b26: - Rename the `IMonoCloudClaimsCache` interface to `IIntrospectionCache` and clarify that only introspection results are cached.
