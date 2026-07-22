@@ -2,7 +2,7 @@
 
 ## Introduction
 
-**MonoCloud Authentication SDK for .NET – secure access token validation for ASP.NET Core APIs and resource servers.**
+**MonoCloud Api Authentication SDK for .NET – secure access token validation for ASP.NET Core APIs and resource servers.**
 
 [MonoCloud](https://www.monocloud.com?utm_source=github&utm_medium=api_authentication_dotnet) is a modern, developer-friendly Identity & Access Management platform.
 
@@ -15,11 +15,13 @@ The SDK handles:
 - **Scope and group-based authorization** through the standard policy system
 - **Optional caching** of introspection results via `IIntrospectionCache`
 - **mTLS certificate-bound token validation** (RFC 8705)
-- **Multiple client authentication methods** for introspection: `client_secret_basic`, `client_secret_post`, `client_secret_jwt`, `private_key_jwt`, and `tls_client_auth`
+- **Multiple client authentication methods** for introspection
 
 ## 📘 Documentation
 
 - **Documentation:** [https://www.monocloud.com/docs](https://www.monocloud.com/docs?utm_source=github&utm_medium=api_authentication_dotnet)
+- **Quickstart:** [https://www.monocloud.com/docs/quickstarts/dotnet-api-authentication](https://www.monocloud.com/docs/quickstarts/dotnet-api-authentication?utm_source=github&utm_medium=api_authentication_dotnet)
+- **SDK Reference:** [https://www.monocloud.com/docs/sdks/dotnet-api-authentication](https://www.monocloud.com/docs/sdks/dotnet-api-authentication?utm_source=github&utm_medium=api_authentication_dotnet)
 - **API Reference:** [https://monocloud.github.io/api-authentication-dotnet](https://monocloud.github.io/api-authentication-dotnet?utm_source=github&utm_medium=api_authentication_dotnet)
 
 ## Supported Platforms
@@ -72,6 +74,17 @@ The handler detects the token format automatically — JWTs are validated locall
 
 For full usage (scope/group authorization, client authentication methods, claims caching, mTLS certificate binding, and events), see the [documentation](https://www.monocloud.com/docs?utm_source=github&utm_medium=api_authentication_dotnet) and the [GitHub repository](https://github.com/monocloud/api-authentication-dotnet).
 
+## 🤝 Contributing & Support
+
+### Issues & Feedback
+
+- Use **GitHub Issues** for bug reports and feature requests.
+- For tenant or account-specific help, contact MonoCloud Support through your dashboard.
+
+### Security
+
+Do **not** report security issues publicly. Please follow the contact instructions at: [https://www.monocloud.com/contact](https://www.monocloud.com/contact?utm_source=github&utm_medium=api_authentication_dotnet)
+
 ## 📄 License
 
-Licensed under the **MIT License**.
+Licensed under the **MIT License**. See the included [`LICENSE`](https://github.com/monocloud/api-authentication-dotnet/blob/main/LICENSE) file.
