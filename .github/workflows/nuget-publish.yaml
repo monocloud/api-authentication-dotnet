@@ -1,6 +1,12 @@
 name: NuGet Publish
 
 on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Publish to nuget.org and create a GitHub release. Leave unchecked for a pack + validate dry-run.'
+        type: boolean
+        default: false
   pull_request:
     types: [closed]
     branches:
@@ -319,3 +325,77 @@ jobs:
               repo: context.repo.repo,
               body: `🚀 Snapshot published to NuGet!\nVersion: \`${process.env.SNAPSHOT_VERSION}\``
             })
+
+  manual:
+    name: Manual Pack / Publish
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      github.repository == 'monocloud/api-authentication-dotnet'
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.x.x
+
+      - name: Pack SDK
+        run: dotnet pack --configuration Release --output ${{ env.NuGetDirectory }} /p:ContinuousIntegrationBuild=true
+
+      - name: Install nuget validator
+        run: dotnet tool update Meziantou.Framework.NuGetPackageValidation.Tool --global
+
+      - name: Validate package
+        shell: pwsh
+        run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg")
+
+      - name: Resolve version
+        if: ${{ inputs.publish }}
+        id: version
+        run: echo "version=$(jq -r .version package.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Extract changelog
+        if: ${{ inputs.publish }}
+        id: changelog
+        env:
+          TARGET_VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          BODY=""
+          if [ -f CHANGELOG.md ]; then
+            BODY=$(sed -n "/^## $TARGET_VERSION\$/,/^## /{/^## $TARGET_VERSION\$/d; /^## /d; p;}" CHANGELOG.md | sed 's/^[ \t]*//;s/[ \t]*$//' | sed '/^$/d')
+          fi
+          {
+            echo "body<<EOF"
+            echo "$BODY"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: NuGet login (OIDC -> short-lived API key)
+        if: ${{ inputs.publish }}
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
+      - name: Publish NuGet packages
+        if: ${{ inputs.publish }}
+        run: |
+          dotnet nuget push "${{ env.NuGetDirectory }}/*.nupkg" \
+              --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" \
+              --source "https://api.nuget.org/v3/index.json" \
+              --skip-duplicate
+
+      - name: Create GitHub Release
+        if: ${{ inputs.publish }}
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v${{ steps.version.outputs.version }}
+          name: v${{ steps.version.outputs.version }}
+          artifacts: ${{ env.NuGetDirectory }}/*.nupkg
+          body: ${{ steps.changelog.outputs.body }}
+          skipIfReleaseExists: true
