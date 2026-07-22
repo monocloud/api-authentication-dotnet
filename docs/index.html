@@ -16,7 +16,7 @@
       
       
       
-      <meta name="docfx:docurl" content="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/docs-gen/index.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/docs-gen/index.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -69,26 +69,26 @@
         <article data-uid="">
 
 <div align="center">
-  <a href="https://www.monocloud.com?utm_source=github&utm_medium=backend_dotnet" target="_blank" rel="noopener noreferrer">
+  <a href="https://www.monocloud.com?utm_source=github&utm_medium=api_authentication_dotnet" target="_blank" rel="noopener noreferrer">
     <picture>
-      <img src="https://raw.githubusercontent.com/monocloud/backend-dotnet/refs/heads/main/banner.svg" alt="MonoCloud Banner">
+      <img src="https://raw.githubusercontent.com/monocloud/api-authentication-dotnet/refs/heads/main/banner.svg" alt="MonoCloud Banner">
     </picture>
   </a>
   <div align="right">
-    <a href="https://www.nuget.org/packages/MonoCloud.Backend" target="_blank">
-      <img src="https://img.shields.io/nuget/v/MonoCloud.Backend" alt="NuGet">
+    <a href="https://www.nuget.org/packages/MonoCloud.Authentication.Api" target="_blank">
+      <img src="https://img.shields.io/nuget/v/MonoCloud.Authentication.Api" alt="NuGet">
     </a>
     <a href="https://opensource.org/licenses/MIT">
       <img src="https://img.shields.io/:license-MIT-blue.svg?style=flat" alt="License: MIT">
     </a>
-    <a href="https://github.com/monocloud/backend-dotnet/actions/workflows/build.yaml">
-      <img src="https://github.com/monocloud/backend-dotnet/actions/workflows/build.yaml/badge.svg" alt="Build Status">
+    <a href="https://github.com/monocloud/api-authentication-dotnet/actions/workflows/build.yaml">
+      <img src="https://github.com/monocloud/api-authentication-dotnet/actions/workflows/build.yaml/badge.svg" alt="Build Status">
     </a>
   </div>
 </div>
 <h2 id="introduction">Introduction</h2>
-<p><strong>MonoCloud Backend SDK for .NET – secure access token validation for ASP.NET Core APIs and resource servers.</strong></p>
-<p><a href="https://www.monocloud.com?utm_source=github&amp;utm_medium=backend_dotnet">MonoCloud</a> is a modern, developer-friendly Identity &amp; Access Management platform.</p>
+<p><strong>MonoCloud Api Authentication SDK for .NET – secure access token validation for ASP.NET Core APIs and resource servers.</strong></p>
+<p><a href="https://www.monocloud.com?utm_source=github&amp;utm_medium=api_authentication_dotnet">MonoCloud</a> is a modern, developer-friendly Identity &amp; Access Management platform.</p>
 <p>This SDK enables <strong>ASP.NET Core APIs</strong> to validate incoming access tokens issued by MonoCloud. It is implemented as a standard ASP.NET Core authentication handler, so it plugs directly into <code>AddAuthentication()</code>, <code>[Authorize]</code>, and the authorization policy system.</p>
 <p>The SDK handles:</p>
 <ul>
@@ -96,14 +96,16 @@
 <li><strong>Opaque token introspection</strong> via the OpenID Connect introspection endpoint</li>
 <li><strong>Automatic token format detection</strong> (JWT vs. opaque)</li>
 <li><strong>Scope and group-based authorization</strong> through the standard policy system</li>
-<li><strong>Optional caching</strong> of validated token claims via <code>IMonoCloudClaimsCache</code></li>
+<li><strong>Optional caching</strong> of introspection results via <code>IIntrospectionCache</code></li>
 <li><strong>mTLS certificate-bound token validation</strong></li>
-<li><strong>Multiple client authentication methods</strong> for introspection: <code>client_secret_basic</code>, <code>client_secret_post</code>, <code>client_secret_jwt</code>, <code>private_key_jwt</code>, and <code>tls_client_auth</code></li>
+<li><strong>Multiple client authentication methods</strong> for introspection</li>
 </ul>
 <h2 id="-documentation">📘 Documentation</h2>
 <ul>
-<li><strong>Documentation:</strong> <a href="https://www.monocloud.com/docs?utm_source=github&amp;utm_medium=backend_dotnet">https://www.monocloud.com/docs</a></li>
-<li><strong>API Reference:</strong> <a href="https://monocloud.github.io/backend-dotnet?utm_source=github&amp;utm_medium=backend_dotnet">https://monocloud.github.io/backend-dotnet</a></li>
+<li><strong>Documentation:</strong> <a href="https://www.monocloud.com/docs?utm_source=github&amp;utm_medium=api_authentication_dotnet">https://www.monocloud.com/docs</a></li>
+<li><strong>Quickstart:</strong> <a href="https://www.monocloud.com/docs/quickstarts/dotnet-api-authentication?utm_source=github&amp;utm_medium=api_authentication_dotnet">https://www.monocloud.com/docs/quickstarts/dotnet-api-authentication</a></li>
+<li><strong>SDK Reference:</strong> <a href="https://www.monocloud.com/docs/sdks/dotnet-api-authentication?utm_source=github&amp;utm_medium=api_authentication_dotnet">https://www.monocloud.com/docs/sdks/dotnet-api-authentication</a></li>
+<li><strong>API Reference:</strong> <a href="https://monocloud.github.io/api-authentication-dotnet?utm_source=github&amp;utm_medium=api_authentication_dotnet">https://monocloud.github.io/api-authentication-dotnet</a></li>
 </ul>
 <h2 id="supported-platforms">Supported Platforms</h2>
 <p>This SDK supports applications targeting <strong>&gt;= .NET 6.0</strong></p>
@@ -112,19 +114,19 @@
 <ul>
 <li>A <strong>MonoCloud tenant</strong></li>
 <li>An <strong>API identifier</strong> (the audience for your API)</li>
-<li>For <strong>opaque token introspection</strong>: a <strong>Client ID</strong> and a client authentication method (e.g. a client secret)</li>
+<li>For <strong>opaque token introspection</strong>: a <strong>Client ID</strong> and a <strong>client secret</strong></li>
 </ul>
 <h3 id="installation">Installation</h3>
-<pre><code class="lang-powershell">Install-Package MonoCloud.Backend
+<pre><code class="lang-powershell">Install-Package MonoCloud.Authentication.Api
 
 # or
 
-dotnet add package MonoCloud.Backend
+dotnet add package MonoCloud.Authentication.Api
 </code></pre>
 <h3 id="usage">Usage</h3>
 <h4 id="validate-jwt-access-tokens">Validate JWT access tokens</h4>
 <pre><code class="lang-csharp">using System.Security.Claims;
-using MonoCloud.Backend;
+using MonoCloud.Authentication.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -154,10 +156,7 @@ app.Run();
 </div>
 <h4 id="validate-opaque-tokens-introspection">Validate opaque tokens (introspection)</h4>
 <p>Opaque (reference) tokens are validated by calling the tenant's introspection endpoint. This requires a <strong>Client ID</strong> and a client authentication method:</p>
-<pre><code class="lang-csharp">using MonoCloud.Backend;
-using MonoCloud.Backend.Shared.ClientAuth;
-
-builder.Services
+<pre><code class="lang-csharp">builder.Services
     .AddAuthentication(MonoCloudAuthenticationDefaults.AuthenticationScheme)
     .AddMonoCloudAuthentication(options =&gt;
     {
@@ -168,11 +167,11 @@ builder.Services
     });
 </code></pre>
 <p>The handler <strong>detects the token format automatically</strong> — JWTs are validated locally against the tenant's signing keys, and opaque tokens are introspected. To force introspection even for JWTs, set <code>options.IntrospectJwtTokens = true</code>.</p>
-<h2 id="when-should-i-use-monocloudbackend">When should I use <code>MonoCloud.Backend</code>?</h2>
-<p>Use <strong><code>MonoCloud.Backend</code></strong> if you are building an <strong>ASP.NET Core API</strong> that needs to validate access tokens from incoming requests.</p>
+<h2 id="when-should-i-use-monocloudauthenticationapi">When should I use <code>MonoCloud.Authentication.Api</code>?</h2>
+<p>Use <strong><code>MonoCloud.Authentication.Api</code></strong> if you are building an <strong>ASP.NET Core API</strong> that needs to validate access tokens from incoming requests.</p>
 <p>This package is a good fit if you:</p>
 <ul>
-<li>Are building a <strong>backend API</strong> or <strong>resource server</strong> that accepts access tokens from clients or frontends</li>
+<li>Are building <strong>applications or microservices</strong> that accept access tokens from clients or frontends</li>
 <li>Need to validate <strong>JWT</strong> or <strong>opaque</strong> access tokens</li>
 <li>Want <strong>scope and group-based authorization</strong> through the standard policy system</li>
 <li>Need to <strong>validate certificate binding</strong> for mTLS-protected tokens</li>
@@ -187,9 +186,9 @@ builder.Services
 <li>For tenant or account-specific help, contact MonoCloud Support through your dashboard.</li>
 </ul>
 <h3 id="security">Security</h3>
-<p>Do <strong>not</strong> report security issues publicly. Please follow the contact instructions at: <a href="https://www.monocloud.com/contact?utm_source=github&amp;utm_medium=backend_dotnet">https://www.monocloud.com/contact</a></p>
+<p>Do <strong>not</strong> report security issues publicly. Please follow the contact instructions at: <a href="https://www.monocloud.com/contact?utm_source=github&amp;utm_medium=api_authentication_dotnet">https://www.monocloud.com/contact</a></p>
 <h2 id="-license">📄 License</h2>
-<p>Licensed under the <strong>MIT License</strong>. See the included <a href="https://github.com/monocloud/backend-dotnet/blob/main/LICENSE"><code>LICENSE</code></a> file.</p>
+<p>Licensed under the <strong>MIT License</strong>. See the included <a href="https://github.com/monocloud/api-authentication-dotnet/blob/main/LICENSE"><code>LICENSE</code></a> file.</p>
 
 </article>
 

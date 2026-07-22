@@ -16,7 +16,7 @@
       
       
       
-      <meta name="docfx:docurl" content="https://github.com/monocloud/backend-dotnet/new/feat/v0.1.0/apiSpec/new?filename=MonoCloud_Backend_MonoCloudAuthenticationEvents.md&amp;value=---%0Auid%3A%20MonoCloud.Backend.MonoCloudAuthenticationEvents%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/monocloud/api-authentication-dotnet/new/feat/v0.1.0/apiSpec/new?filename=MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents.md&amp;value=---%0Auid%3A%20MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -80,17 +80,17 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents">
+        <article data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents">
 
 
 
-  <h1 id="MonoCloud_Backend_MonoCloudAuthenticationEvents" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents" class="text-break">
-Class MonoCloudAuthenticationEvents  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationEvents.cs/#L7"><i class="bi bi-code-slash"></i></a>
+  <h1 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents" class="text-break">
+Class MonoCloudAuthenticationEvents  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/MonoCloudAuthenticationEvents.cs/#L7"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="MonoCloud.html">MonoCloud</a>.<a class="xref" href="MonoCloud.Backend.html">Backend</a></dd></dl>
-  <dl><dt>Assembly</dt><dd>MonoCloud.Backend.dll</dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="MonoCloud.html">MonoCloud</a>.<a class="xref" href="MonoCloud.Authentication.html">Authentication</a>.<a class="xref" href="MonoCloud.Authentication.Api.html">Api</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MonoCloud.Authentication.Api.dll</dd></dl>
   </div>
 
   <div class="markdown summary"><p>Provides events that allow customization of the authentication process in the MonoCloud framework.
@@ -150,11 +150,11 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 </h2>
 
 
-  <a id="MonoCloud_Backend_MonoCloudAuthenticationEvents_OnAuthenticationFailed_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.OnAuthenticationFailed*"></a>
+  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnAuthenticationFailed_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnAuthenticationFailed*"></a>
 
-  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationEvents_OnAuthenticationFailed" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.OnAuthenticationFailed">
+  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnAuthenticationFailed" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnAuthenticationFailed">
   OnAuthenticationFailed
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationEvents.cs/#L12"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/MonoCloudAuthenticationEvents.cs/#L12"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Invoked if exceptions are thrown during request processing. The exceptions will be re-thrown after this event unless suppressed.</p>
@@ -171,7 +171,7 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="MonoCloud.Backend.Shared.Context.AuthenticationFailedContext.html">AuthenticationFailedContext</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="MonoCloud.Authentication.Api.Shared.Context.AuthenticationFailedContext.html">AuthenticationFailedContext</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -182,11 +182,11 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
 
 
-  <a id="MonoCloud_Backend_MonoCloudAuthenticationEvents_OnCertificateBindingValidated_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.OnCertificateBindingValidated*"></a>
+  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnCertificateBindingValidated_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnCertificateBindingValidated*"></a>
 
-  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationEvents_OnCertificateBindingValidated" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.OnCertificateBindingValidated">
+  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnCertificateBindingValidated" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnCertificateBindingValidated">
   OnCertificateBindingValidated
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationEvents.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/MonoCloudAuthenticationEvents.cs/#L22"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Invoked after the security token has passed certificate binding validation</p>
@@ -203,7 +203,7 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="MonoCloud.Backend.Shared.Context.CertificateBindingValidatedContext.html">CertificateBindingValidatedContext</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="MonoCloud.Authentication.Api.Shared.Context.CertificateBindingValidatedContext.html">CertificateBindingValidatedContext</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -214,11 +214,11 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
 
 
-  <a id="MonoCloud_Backend_MonoCloudAuthenticationEvents_OnCreatingJwtAssertion_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.OnCreatingJwtAssertion*"></a>
+  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnCreatingJwtAssertion_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnCreatingJwtAssertion*"></a>
 
-  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationEvents_OnCreatingJwtAssertion" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.OnCreatingJwtAssertion">
+  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnCreatingJwtAssertion" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnCreatingJwtAssertion">
   OnCreatingJwtAssertion
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationEvents.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/MonoCloudAuthenticationEvents.cs/#L37"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Invoked before creating jwt assertion. Users can customize the jwt assertion using this event.</p>
@@ -235,7 +235,7 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="MonoCloud.Backend.Shared.Context.JwtAssertionContext.html">JwtAssertionContext</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="MonoCloud.Authentication.Api.Shared.Context.JwtAssertionContext.html">JwtAssertionContext</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -246,11 +246,11 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
 
 
-  <a id="MonoCloud_Backend_MonoCloudAuthenticationEvents_OnIntrospection_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.OnIntrospection*"></a>
+  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnIntrospection_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnIntrospection*"></a>
 
-  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationEvents_OnIntrospection" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.OnIntrospection">
+  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnIntrospection" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnIntrospection">
   OnIntrospection
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationEvents.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/MonoCloudAuthenticationEvents.cs/#L32"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Invoked before an introspection request is sent.</p>
@@ -267,7 +267,7 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="MonoCloud.Backend.Shared.Context.IntrospectionRequestContext.html">IntrospectionRequestContext</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="MonoCloud.Authentication.Api.Shared.Context.IntrospectionRequestContext.html">IntrospectionRequestContext</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -278,11 +278,11 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
 
 
-  <a id="MonoCloud_Backend_MonoCloudAuthenticationEvents_OnMessageReceived_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.OnMessageReceived*"></a>
+  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnMessageReceived_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnMessageReceived*"></a>
 
-  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationEvents_OnMessageReceived" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.OnMessageReceived">
+  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnMessageReceived" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnMessageReceived">
   OnMessageReceived
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationEvents.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/MonoCloudAuthenticationEvents.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Invoked when a protocol message is first received.</p>
@@ -299,7 +299,7 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="MonoCloud.Backend.Shared.Context.MessageReceivedContext.html">MessageReceivedContext</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="MonoCloud.Authentication.Api.Shared.Context.MessageReceivedContext.html">MessageReceivedContext</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -310,11 +310,11 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
 
 
-  <a id="MonoCloud_Backend_MonoCloudAuthenticationEvents_OnTokenValidated_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.OnTokenValidated*"></a>
+  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnTokenValidated_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnTokenValidated*"></a>
 
-  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationEvents_OnTokenValidated" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.OnTokenValidated">
+  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnTokenValidated" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnTokenValidated">
   OnTokenValidated
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationEvents.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/MonoCloudAuthenticationEvents.cs/#L17"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Invoked after the security token has passed validation and a ClaimsIdentity has been generated.</p>
@@ -331,7 +331,7 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="MonoCloud.Backend.Shared.Context.TokenValidatedContext.html">TokenValidatedContext</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="MonoCloud.Authentication.Api.Shared.Context.TokenValidatedContext.html">TokenValidatedContext</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a>&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -346,11 +346,11 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 </h2>
 
 
-  <a id="MonoCloud_Backend_MonoCloudAuthenticationEvents_AuthenticationFailed_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.AuthenticationFailed*"></a>
+  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_AuthenticationFailed_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.AuthenticationFailed*"></a>
 
-  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationEvents_AuthenticationFailed_MonoCloud_Backend_Shared_Context_AuthenticationFailedContext_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.AuthenticationFailed(MonoCloud.Backend.Shared.Context.AuthenticationFailedContext)">
+  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_AuthenticationFailed_MonoCloud_Authentication_Api_Shared_Context_AuthenticationFailedContext_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.AuthenticationFailed(MonoCloud.Authentication.Api.Shared.Context.AuthenticationFailedContext)">
   AuthenticationFailed(AuthenticationFailedContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationEvents.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/MonoCloudAuthenticationEvents.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Invoked if exceptions are thrown during request processing. The exceptions will be re-thrown after this event unless suppressed.</p>
@@ -363,7 +363,7 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>context</code> <a class="xref" href="MonoCloud.Backend.Shared.Context.AuthenticationFailedContext.html">AuthenticationFailedContext</a></dt>
+    <dt><code>context</code> <a class="xref" href="MonoCloud.Authentication.Api.Shared.Context.AuthenticationFailedContext.html">AuthenticationFailedContext</a></dt>
     <dd></dd>
   </dl>
 
@@ -383,11 +383,11 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
 
 
-  <a id="MonoCloud_Backend_MonoCloudAuthenticationEvents_CertificateBindingValidated_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.CertificateBindingValidated*"></a>
+  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_CertificateBindingValidated_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.CertificateBindingValidated*"></a>
 
-  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationEvents_CertificateBindingValidated_MonoCloud_Backend_Shared_Context_CertificateBindingValidatedContext_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.CertificateBindingValidated(MonoCloud.Backend.Shared.Context.CertificateBindingValidatedContext)">
+  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_CertificateBindingValidated_MonoCloud_Authentication_Api_Shared_Context_CertificateBindingValidatedContext_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.CertificateBindingValidated(MonoCloud.Authentication.Api.Shared.Context.CertificateBindingValidatedContext)">
   CertificateBindingValidated(CertificateBindingValidatedContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationEvents.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/MonoCloudAuthenticationEvents.cs/#L52"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Invoked after the security token has passed certificate binding validation</p>
@@ -400,7 +400,7 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>context</code> <a class="xref" href="MonoCloud.Backend.Shared.Context.CertificateBindingValidatedContext.html">CertificateBindingValidatedContext</a></dt>
+    <dt><code>context</code> <a class="xref" href="MonoCloud.Authentication.Api.Shared.Context.CertificateBindingValidatedContext.html">CertificateBindingValidatedContext</a></dt>
     <dd></dd>
   </dl>
 
@@ -420,11 +420,11 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
 
 
-  <a id="MonoCloud_Backend_MonoCloudAuthenticationEvents_CreatingJwtAssertion_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.CreatingJwtAssertion*"></a>
+  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_CreatingJwtAssertion_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.CreatingJwtAssertion*"></a>
 
-  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationEvents_CreatingJwtAssertion_MonoCloud_Backend_Shared_Context_JwtAssertionContext_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.CreatingJwtAssertion(MonoCloud.Backend.Shared.Context.JwtAssertionContext)">
+  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_CreatingJwtAssertion_MonoCloud_Authentication_Api_Shared_Context_JwtAssertionContext_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.CreatingJwtAssertion(MonoCloud.Authentication.Api.Shared.Context.JwtAssertionContext)">
   CreatingJwtAssertion(JwtAssertionContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationEvents.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/MonoCloudAuthenticationEvents.cs/#L67"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Invoked before creating jwt assertion. Users can customize the jwt assertion using this event.</p>
@@ -437,7 +437,7 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>context</code> <a class="xref" href="MonoCloud.Backend.Shared.Context.JwtAssertionContext.html">JwtAssertionContext</a></dt>
+    <dt><code>context</code> <a class="xref" href="MonoCloud.Authentication.Api.Shared.Context.JwtAssertionContext.html">JwtAssertionContext</a></dt>
     <dd></dd>
   </dl>
 
@@ -457,11 +457,11 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
 
 
-  <a id="MonoCloud_Backend_MonoCloudAuthenticationEvents_Introspection_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.Introspection*"></a>
+  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_Introspection_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.Introspection*"></a>
 
-  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationEvents_Introspection_MonoCloud_Backend_Shared_Context_IntrospectionRequestContext_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.Introspection(MonoCloud.Backend.Shared.Context.IntrospectionRequestContext)">
+  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_Introspection_MonoCloud_Authentication_Api_Shared_Context_IntrospectionRequestContext_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.Introspection(MonoCloud.Authentication.Api.Shared.Context.IntrospectionRequestContext)">
   Introspection(IntrospectionRequestContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationEvents.cs/#L62"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/MonoCloudAuthenticationEvents.cs/#L62"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Invoked before an introspection request is sent.</p>
@@ -474,7 +474,7 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>context</code> <a class="xref" href="MonoCloud.Backend.Shared.Context.IntrospectionRequestContext.html">IntrospectionRequestContext</a></dt>
+    <dt><code>context</code> <a class="xref" href="MonoCloud.Authentication.Api.Shared.Context.IntrospectionRequestContext.html">IntrospectionRequestContext</a></dt>
     <dd></dd>
   </dl>
 
@@ -494,11 +494,11 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
 
 
-  <a id="MonoCloud_Backend_MonoCloudAuthenticationEvents_MessageReceived_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.MessageReceived*"></a>
+  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_MessageReceived_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.MessageReceived*"></a>
 
-  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationEvents_MessageReceived_MonoCloud_Backend_Shared_Context_MessageReceivedContext_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.MessageReceived(MonoCloud.Backend.Shared.Context.MessageReceivedContext)">
+  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_MessageReceived_MonoCloud_Authentication_Api_Shared_Context_MessageReceivedContext_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.MessageReceived(MonoCloud.Authentication.Api.Shared.Context.MessageReceivedContext)">
   MessageReceived(MessageReceivedContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationEvents.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/MonoCloudAuthenticationEvents.cs/#L57"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Invoked when a protocol message is first received.</p>
@@ -511,7 +511,7 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>context</code> <a class="xref" href="MonoCloud.Backend.Shared.Context.MessageReceivedContext.html">MessageReceivedContext</a></dt>
+    <dt><code>context</code> <a class="xref" href="MonoCloud.Authentication.Api.Shared.Context.MessageReceivedContext.html">MessageReceivedContext</a></dt>
     <dd></dd>
   </dl>
 
@@ -531,11 +531,11 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
 
 
-  <a id="MonoCloud_Backend_MonoCloudAuthenticationEvents_TokenValidated_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.TokenValidated*"></a>
+  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_TokenValidated_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.TokenValidated*"></a>
 
-  <h3 id="MonoCloud_Backend_MonoCloudAuthenticationEvents_TokenValidated_MonoCloud_Backend_Shared_Context_TokenValidatedContext_" data-uid="MonoCloud.Backend.MonoCloudAuthenticationEvents.TokenValidated(MonoCloud.Backend.Shared.Context.TokenValidatedContext)">
+  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_TokenValidated_MonoCloud_Authentication_Api_Shared_Context_TokenValidatedContext_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.TokenValidated(MonoCloud.Authentication.Api.Shared.Context.TokenValidatedContext)">
   TokenValidated(TokenValidatedContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/MonoCloudAuthenticationEvents.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/MonoCloudAuthenticationEvents.cs/#L47"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Invoked after the security token has passed validation and a ClaimsIdentity has been generated.</p>
@@ -548,7 +548,7 @@ Contains virtual methods that can be overridden to handle specific authenticatio
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>context</code> <a class="xref" href="MonoCloud.Backend.Shared.Context.TokenValidatedContext.html">TokenValidatedContext</a></dt>
+    <dt><code>context</code> <a class="xref" href="MonoCloud.Authentication.Api.Shared.Context.TokenValidatedContext.html">TokenValidatedContext</a></dt>
     <dd></dd>
   </dl>
 

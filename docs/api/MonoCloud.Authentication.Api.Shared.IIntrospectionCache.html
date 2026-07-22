@@ -2,11 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Interface IMonoCloudClaimsCache </title>
+      <title>Interface IIntrospectionCache </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Interface IMonoCloudClaimsCache ">
+      <meta name="title" content="Interface IIntrospectionCache ">
       
-      <meta name="description" content="Defines an abstract interface for a claims cache mechanism. This interface is intended to be used to temporarily store and retrieve user claims.">
+      <meta name="description" content="Defines an abstract interface for caching access token introspection results. This interface is intended to be used to temporarily store and retrieve the claims resolved from token introspection.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
@@ -16,7 +16,7 @@
       
       
       
-      <meta name="docfx:docurl" content="https://github.com/monocloud/backend-dotnet/new/feat/v0.1.0/apiSpec/new?filename=MonoCloud_Backend_Shared_IMonoCloudClaimsCache.md&amp;value=---%0Auid%3A%20MonoCloud.Backend.Shared.IMonoCloudClaimsCache%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/monocloud/api-authentication-dotnet/new/feat/v0.1.0/apiSpec/new?filename=MonoCloud_Authentication_Api_Shared_IIntrospectionCache.md&amp;value=---%0Auid%3A%20MonoCloud.Authentication.Api.Shared.IIntrospectionCache%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -80,27 +80,27 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="MonoCloud.Backend.Shared.IMonoCloudClaimsCache">
+        <article data-uid="MonoCloud.Authentication.Api.Shared.IIntrospectionCache">
 
 
 
-  <h1 id="MonoCloud_Backend_Shared_IMonoCloudClaimsCache" data-uid="MonoCloud.Backend.Shared.IMonoCloudClaimsCache" class="text-break">
-Interface IMonoCloudClaimsCache  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/Shared/IMonoCloudClaimsCache.cs/#L11"><i class="bi bi-code-slash"></i></a>
+  <h1 id="MonoCloud_Authentication_Api_Shared_IIntrospectionCache" data-uid="MonoCloud.Authentication.Api.Shared.IIntrospectionCache" class="text-break">
+Interface IIntrospectionCache  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/Shared/IIntrospectionCache.cs/#L14"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="MonoCloud.html">MonoCloud</a>.<a class="xref" href="MonoCloud.Backend.html">Backend</a>.<a class="xref" href="MonoCloud.Backend.Shared.html">Shared</a></dd></dl>
-  <dl><dt>Assembly</dt><dd>MonoCloud.Backend.dll</dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="MonoCloud.html">MonoCloud</a>.<a class="xref" href="MonoCloud.Authentication.html">Authentication</a>.<a class="xref" href="MonoCloud.Authentication.Api.html">Api</a>.<a class="xref" href="MonoCloud.Authentication.Api.Shared.html">Shared</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MonoCloud.Authentication.Api.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>Defines an abstract interface for a claims cache mechanism.
-This interface is intended to be used to temporarily store and retrieve user
-claims.</p>
+  <div class="markdown summary"><p>Defines an abstract interface for caching access token introspection results.
+This interface is intended to be used to temporarily store and retrieve the claims
+resolved from token introspection.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IMonoCloudClaimsCache</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IIntrospectionCache</code></pre>
   </div>
 
 
@@ -113,8 +113,11 @@ claims.</p>
 
 
 
-  <h2 id="MonoCloud_Backend_Shared_IMonoCloudClaimsCache_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p>Implementations must be registered in the service collection with a <b>singleton</b> lifetime.</p>
+  <h2 id="MonoCloud_Authentication_Api_Shared_IIntrospectionCache_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>Only tokens validated via introspection are cached — opaque tokens, and JWTs when
+<a class="xref" href="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_IntrospectJwtTokens">IntrospectJwtTokens</a> is <code>true</code>. Locally
+validated JWTs are never cached.
+Implementations must be registered in the service collection with a <b>singleton</b> lifetime.</p>
 </div>
 
 
@@ -122,11 +125,11 @@ claims.</p>
 </h2>
 
 
-  <a id="MonoCloud_Backend_Shared_IMonoCloudClaimsCache_GetAsync_" data-uid="MonoCloud.Backend.Shared.IMonoCloudClaimsCache.GetAsync*"></a>
+  <a id="MonoCloud_Authentication_Api_Shared_IIntrospectionCache_GetAsync_" data-uid="MonoCloud.Authentication.Api.Shared.IIntrospectionCache.GetAsync*"></a>
 
-  <h3 id="MonoCloud_Backend_Shared_IMonoCloudClaimsCache_GetAsync_System_String_System_Threading_CancellationToken_" data-uid="MonoCloud.Backend.Shared.IMonoCloudClaimsCache.GetAsync(System.String,System.Threading.CancellationToken)">
+  <h3 id="MonoCloud_Authentication_Api_Shared_IIntrospectionCache_GetAsync_System_String_System_Threading_CancellationToken_" data-uid="MonoCloud.Authentication.Api.Shared.IIntrospectionCache.GetAsync(System.String,System.Threading.CancellationToken)">
   GetAsync(string, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/Shared/IMonoCloudClaimsCache.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/Shared/IIntrospectionCache.cs/#L22"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Asynchronously retrieves a cached value based on the provided key.</p>
@@ -164,11 +167,11 @@ claims.</p>
 
 
 
-  <a id="MonoCloud_Backend_Shared_IMonoCloudClaimsCache_SetAsync_" data-uid="MonoCloud.Backend.Shared.IMonoCloudClaimsCache.SetAsync*"></a>
+  <a id="MonoCloud_Authentication_Api_Shared_IIntrospectionCache_SetAsync_" data-uid="MonoCloud.Authentication.Api.Shared.IIntrospectionCache.SetAsync*"></a>
 
-  <h3 id="MonoCloud_Backend_Shared_IMonoCloudClaimsCache_SetAsync_System_String_System_String_System_TimeSpan_System_Threading_CancellationToken_" data-uid="MonoCloud.Backend.Shared.IMonoCloudClaimsCache.SetAsync(System.String,System.String,System.TimeSpan,System.Threading.CancellationToken)">
+  <h3 id="MonoCloud_Authentication_Api_Shared_IIntrospectionCache_SetAsync_System_String_System_String_System_TimeSpan_System_Threading_CancellationToken_" data-uid="MonoCloud.Authentication.Api.Shared.IIntrospectionCache.SetAsync(System.String,System.String,System.TimeSpan,System.Threading.CancellationToken)">
   SetAsync(string, string, TimeSpan, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/backend-dotnet/blob/feat/v0.1.0/MonoCloud.Backend/Shared/IMonoCloudClaimsCache.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/feat/v0.1.0/MonoCloud.Authentication.Api/Shared/IIntrospectionCache.cs/#L32"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Asynchronously stores a key-value pair in the cache with a specified expiration time.</p>
