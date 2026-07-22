@@ -1,6 +1,0 @@
-<Solution>
-  <Folder Name="/Tests/">
-    <Project Path="MonoCloud.Backend.Tests/MonoCloud.Backend.Tests.csproj" />
-  </Folder>
-  <Project Path="MonoCloud.Backend/MonoCloud.Backend.csproj" />
-</Solution>

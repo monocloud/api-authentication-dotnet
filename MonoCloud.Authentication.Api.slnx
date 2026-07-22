@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Tests/">
+    <Project Path="MonoCloud.Authentication.Api.Tests/MonoCloud.Authentication.Api.Tests.csproj" />
+  </Folder>
+  <Project Path="MonoCloud.Authentication.Api/MonoCloud.Authentication.Api.csproj" />
+</Solution>
