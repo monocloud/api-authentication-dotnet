@@ -13,6 +13,8 @@ public class OpenIdServerMock
 
   public const string MtlsThumbprint = "8Coyzj9l6bodEROsdwvUKBQTpY9fPoYuHnNdqwHUULA";
 
+  public const string SpiffeJwtSvid = "test-spiffe-jwt-svid";
+
   public const string Issuer = "https://localhost";
   public const string DiscoveryEndpoint = "https://localhost/.well-known/openid-configuration";
   public const string TokenEndpoint = "https://localhost/token";
@@ -50,9 +52,9 @@ public class OpenIdServerMock
 
   };
 
-  public void SetupIntrospection(bool? failure = null, HttpStatusCode? status = null, string? authType = null, string? endpoint = null)
+  public void SetupIntrospection(bool? failure = null, HttpStatusCode? status = null, string? authType = null, string? endpoint = null, object? body = null, Func<Task>? beforeRespond = null)
   {
-    var body = failure.HasValue && failure.Value ? new { active = false } : IntrospectionSuccessResponse;
+    body ??= failure.HasValue && failure.Value ? new { active = false } : IntrospectionSuccessResponse;
 
     status ??= HttpStatusCode.OK;
 
@@ -71,7 +73,23 @@ public class OpenIdServerMock
         req.Content.Headers.ContentType.MediaType == "application/x-www-form-urlencoded" &&
         CheckAuth(req, authType));
 
-    Setup(matcher, status, body);
+    var json = JsonSerializer.Serialize(body);
+
+    _handlerMock.Protected()
+        .Setup<Task<HttpResponseMessage>>("SendAsync", matcher, ItExpr.IsAny<CancellationToken>())
+        .Returns(async () =>
+        {
+          if (beforeRespond is not null)
+          {
+            await beforeRespond();
+          }
+
+          return new HttpResponseMessage
+          {
+            StatusCode = status.Value,
+            Content = new StringContent(json)
+          };
+        });
   }
 
   public void SetupDiscovery(HttpStatusCode? status = null, bool? includeBody = true, bool? includeMtls = true, bool? includeAdditionalMtls = true, bool? includeCustomMtls = true)
@@ -129,7 +147,7 @@ public class OpenIdServerMock
     return new HttpClient(_handlerMock.Object);
   }
 
-  public static string CreateAccessToken(IList<Claim>? payload = null, IEnumerable<string>? excludeClaims = null)
+  public static string CreateAccessToken(IList<Claim>? payload = null, IEnumerable<string>? excludeClaims = null, SigningCredentials? signingCredentials = null)
   {
     var now = DateTime.UtcNow;
 
@@ -165,7 +183,7 @@ public class OpenIdServerMock
     var tokenDescriptor = new SecurityTokenDescriptor
     {
       Subject = new ClaimsIdentity(standardClaims),
-      SigningCredentials = new SigningCredentials(JwksPrivateKey, SecurityAlgorithms.RsaSha256)
+      SigningCredentials = signingCredentials ?? new SigningCredentials(JwksPrivateKey, SecurityAlgorithms.RsaSha256)
     };
 
     return tokenHandler.CreateToken(tokenDescriptor);
@@ -188,7 +206,18 @@ public class OpenIdServerMock
          StatusCode = status ?? HttpStatusCode.OK,
          // String bodies (e.g. the raw JWKS document) are used verbatim; objects are JSON-serialized.
          Content = body is null ? null : new StringContent(body as string ?? JsonSerializer.Serialize(body))
-       }).Verifiable();
+       });
+  }
+
+  public void VerifyDiscoveryCalled(Times? times = null) => VerifyEndpointCalled(DiscoveryEndpoint, HttpMethod.Get, times);
+
+  public void VerifyJwksCalled(Times? times = null) => VerifyEndpointCalled(JwksEndpoint, HttpMethod.Get, times);
+
+  public void VerifyIntrospectionCalled(Times? times = null, string? endpoint = null) => VerifyEndpointCalled(endpoint ?? IntrospectionEndpoint, HttpMethod.Post, times);
+
+  private void VerifyEndpointCalled(string endpoint, HttpMethod method, Times? times)
+  {
+    _handlerMock.Protected().Verify<Task<HttpResponseMessage>>("SendAsync", times ?? Times.Once(), ItExpr.Is<HttpRequestMessage>(req => req.RequestUri != null && req.RequestUri.GetLeftPart(UriPartial.Path) == endpoint && req.Method == method), ItExpr.IsAny<CancellationToken>());
   }
 
   private static bool CheckAuth(HttpRequestMessage request, string? authType)
@@ -276,12 +305,22 @@ public class OpenIdServerMock
         }
       }
 
-      case "tls_client_auth" or "self_signed_tls_client_auth":
+      case "spiffe_jwt":
       {
-        throw new NotImplementedException("Write tests that check http client handler when using TlsAuth using reflection");
+        var requestBody = request.Content?.ReadAsStringAsync().GetAwaiter().GetResult();
+        if (requestBody is null)
+        {
+          return false;
+        }
+
+        var body = ParseFormUrlEncodedString(requestBody);
+
+        return body.TryGetValue("client_id", out var clientId) && clientId == ClientId &&
+               body.TryGetValue("client_assertion_type", out var assertionType) && assertionType == "urn:ietf:params:oauth:client-assertion-type:jwt-spiffe" &&
+               body.TryGetValue("client_assertion", out var assertion) && assertion == SpiffeJwtSvid;
       }
 
-      case "none":
+      case "tls_client_auth" or "self_signed_tls_client_auth" or "spiffe_x509":
       {
         var noAuthHeader = request.Headers.Authorization is null;
 

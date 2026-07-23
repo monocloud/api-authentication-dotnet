@@ -144,6 +144,34 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.yml\" sourcestartlinenumber=\"1\">Represents the SPIFFE JWT-SVID based client authentication mechanism ('spiffe_jwt').\nThe workload's JWT-SVID is forwarded as the client assertion on introspection requests,\nusing the 'urn:ietf:params:oauth:client-assertion-type:jwt-spiffe' assertion type.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth.yml\" sourcestartlinenumber=\"1\">Represents the SPIFFE X.509-SVID based client authentication mechanism ('spiffe_x509'),\nperformed over mutual TLS.</p>\n<p>\nAuthentication is performed using an optional X509 certificate (the workload's X.509-SVID).\nIf a certificate is not specified, it is expected that the\n<xref href=\"MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.HttpClient\" data-throw-if-not-resolved=\"false\"></xref> is configured with a message handler\nthat provides the client certificate.\n</p>\n<p>\nOptionally, a trust store id can be provided. If a trust store id is specified,\nthe corresponding trust store will be used to validate the server certificate.\nIf a trust store id is not specified, the default trust store will be used.\n</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/MonoCloud.Authentication.Api.Shared.ClientAuth.TlsAuth.yml",
       "output": {
         ".html": {

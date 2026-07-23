@@ -4,10 +4,7 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
 {
   private const string OpaqueToken = "opaque-access-token";
 
-  private static MonoCloudAuthenticationOptions OpaqueOptions(
-      OpenIdServerMock server,
-      IMonoCloudClientAuth? clientAuth = null,
-      Action<MonoCloudAuthenticationOptions>? configure = null)
+  private static MonoCloudAuthenticationOptions OpaqueOptions(OpenIdServerMock server, IMonoCloudClientAuth? clientAuth = null, Action<MonoCloudAuthenticationOptions>? configure = null)
   {
     var options = new MonoCloudAuthenticationOptions
     {
@@ -37,8 +34,12 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
 
     result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
     result.Principal!.FindFirst("sub")!.Value.ShouldBe("1234567890");
-    result.Principal!.FindAll("scope").Select(c => c.Value).ShouldBe(new[] { "openid", "resource" }, ignoreOrder: true);
+    result.Principal!.FindAll("scope").Select(c => c.Value).ShouldBe(["openid", "resource"], ignoreOrder: true);
     result.Principal!.HasClaim("active", "true").ShouldBeTrue();
+
+    server.VerifyDiscoveryCalled();
+    server.VerifyJwksCalled();
+    server.VerifyIntrospectionCalled();
   }
 
   [Test]
@@ -49,8 +50,6 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
     server.SetupJwks();
     server.SetupIntrospection(authType: "client_secret_post");
 
-    // The introspection response sends groups as an OBJECT array:
-    //   [{ "id": "adminId", "name": "admin" }, { "id": "moderatorId", "name": "moderator" }]
     var options = OpaqueOptions(server, configure: o => o.RoleClaimType = "groups");
 
     var (handler, _) = await HandlerTestHarness.CreateAsync(options, OpaqueToken);
@@ -58,19 +57,14 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
 
     result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
 
-    // Each { id, name } object must be expanded into BOTH its id and its name under the role
-    // claim type, so introspection tokens get the same role checks as JWTs.
     result.Principal!.IsInRole("admin").ShouldBeTrue();
     result.Principal!.IsInRole("moderator").ShouldBeTrue();
     result.Principal!.IsInRole("adminId").ShouldBeTrue();
     result.Principal!.IsInRole("moderatorId").ShouldBeTrue();
 
-    // The raw group object JSON must NOT survive as a role value — proves normalization actually
-    // ran (rather than the assertion matching a pre-existing claim).
     result.Principal!.IsInRole("""{"id":"adminId","name":"admin"}""").ShouldBeFalse();
 
-    result.Principal!.FindAll("groups").Select(c => c.Value)
-        .ShouldBe(new[] { "adminId", "admin", "moderatorId", "moderator" }, ignoreOrder: true);
+    result.Principal!.FindAll("groups").Select(c => c.Value).ShouldBe(["adminId", "admin", "moderatorId", "moderator"], ignoreOrder: true);
   }
 
   [Test]
@@ -81,7 +75,6 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
     server.SetupJwks();
     server.SetupIntrospection(authType: "client_secret_post");
 
-    // No RoleClaimType configured, so group normalization must not run.
     var options = OpaqueOptions(server);
 
     var (handler, _) = await HandlerTestHarness.CreateAsync(options, OpaqueToken);
@@ -89,7 +82,6 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
 
     result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
 
-    // The two group objects remain unexpanded (still 2 object-valued claims, not 4 id/name claims).
     var groups = result.Principal!.FindAll("groups").Select(c => c.Value).ToList();
     groups.Count.ShouldBe(2);
     groups.ShouldAllBe(v => v.Contains("\"id\"") && v.Contains("\"name\""));
@@ -104,7 +96,6 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
     server.SetupJwks();
     server.SetupIntrospection(authType: "client_secret_post");
 
-    // A tenant can surface groups under a custom claim name; the shape is still { id, name } objects.
     var options = OpaqueOptions(server, configure: o => o.RoleClaimType = "groupsAlt");
 
     var (handler, _) = await HandlerTestHarness.CreateAsync(options, OpaqueToken);
@@ -112,13 +103,11 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
 
     result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
 
-    // groupsAlt = [{ id = "editorId", name = "editor" }, { id = "viewerId", name = "viewer" }]
     result.Principal!.IsInRole("editor").ShouldBeTrue();
     result.Principal!.IsInRole("viewer").ShouldBeTrue();
     result.Principal!.IsInRole("editorId").ShouldBeTrue();
     result.Principal!.IsInRole("viewerId").ShouldBeTrue();
 
-    // Specificity: the default "groups" claim has a different name, so its values must NOT be roles.
     result.Principal!.IsInRole("admin").ShouldBeFalse();
     result.Principal!.IsInRole("moderator").ShouldBeFalse();
   }
@@ -226,14 +215,14 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
     server.SetupIntrospection(authType: "client_secret_post");
 
     var options = OpaqueOptions(server, configure: o => o.IntrospectJwtTokens = true);
-    // A real JWT — but it must be routed through introspection, not signature validation.
     var jwt = OpenIdServerMock.CreateAccessToken();
 
     var (handler, _) = await HandlerTestHarness.CreateAsync(options, jwt);
     var result = await handler.AuthenticateAsync();
 
     result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
-    result.Principal!.FindAll("scope").Select(c => c.Value).ShouldBe(new[] { "openid", "resource" }, ignoreOrder: true);
+    result.Principal!.FindAll("scope").Select(c => c.Value).ShouldBe(["openid", "resource"], ignoreOrder: true);
+    server.VerifyIntrospectionCalled();
   }
 
   [Test]
@@ -286,6 +275,23 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
   }
 
   [Test]
+  public async Task Should_AuthenticateWithSpiffeJwt()
+  {
+    var server = new OpenIdServerMock();
+    server.SetupDiscovery();
+    server.SetupJwks();
+    server.SetupIntrospection(authType: "spiffe_jwt");
+
+    var options = OpaqueOptions(server, new SpiffeJwtAuth(OpenIdServerMock.SpiffeJwtSvid));
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, OpaqueToken);
+    var result = await handler.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
+    server.VerifyIntrospectionCalled();
+  }
+
+  [Test]
   public async Task Should_ReturnClaimsFromCache_OnSecondRequest()
   {
     var cache = new IntrospectionCacheMock();
@@ -311,6 +317,8 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
 
     result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
     cache.SetCount.ShouldBe(1); // not written again
+    server1.VerifyIntrospectionCalled();
+    server2.VerifyIntrospectionCalled(Times.Never()); // served entirely from the cache
   }
 
   [Test]
@@ -333,6 +341,7 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
 
     result.Succeeded.ShouldBeFalse();
     result.Failure!.Message.ShouldBe("Token inactive");
+    server.VerifyIntrospectionCalled(Times.Never()); // the cached inactive verdict short-circuits introspection
   }
 
   [Test]
@@ -361,6 +370,97 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
 
     result.Succeeded.ShouldBeFalse();
     result.Failure!.Message.ShouldBe("Token inactive");
+    cache.SetCount.ShouldBe(1);
+    server1.VerifyIntrospectionCalled();
+    server2.VerifyIntrospectionCalled(Times.Never());
+  }
+
+  [Test]
+  public async Task Should_CacheInactiveVerdict_When_ResponseLacksActiveProperty()
+  {
+    var cache = new IntrospectionCacheMock();
+    const string token = "opaque-cached-no-active-property";
+
+    // First request: the introspection response has NO "active" property at all, which RFC 7662
+    // parsing treats as inactive. The handler must synthesize an active=false claim before caching.
+    var server1 = new OpenIdServerMock();
+    server1.SetupDiscovery();
+    server1.SetupJwks();
+    server1.SetupIntrospection(authType: "client_secret_post", body: new { sub = "1234567890" });
+    var options1 = OpaqueOptions(server1, configure: o => o.EnableCaching = true);
+    var (handler1, _) = await HandlerTestHarness.CreateAsync(options1, token, cache);
+    var first = await handler1.AuthenticateAsync();
+    first.Succeeded.ShouldBeFalse();
+    first.Failure!.Message.ShouldBe("Token inactive");
+    cache.SetCount.ShouldBe(1);
+
+    // Second request: no introspection endpoint configured — the verdict can only come from the
+    // cache. Without the synthesized claim the cached copy would be treated as ACTIVE and accepted.
+    var server2 = new OpenIdServerMock();
+    server2.SetupDiscovery();
+    server2.SetupJwks();
+    var options2 = OpaqueOptions(server2, configure: o => o.EnableCaching = true);
+    var (handler2, _) = await HandlerTestHarness.CreateAsync(options2, token, cache);
+    var result = await handler2.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeFalse();
+    result.Failure!.Message.ShouldBe("Token inactive");
     cache.SetCount.ShouldBe(1); // not written again
+    server1.VerifyIntrospectionCalled();
+    server2.VerifyIntrospectionCalled(Times.Never()); // the inactive verdict came from the cache
+  }
+
+  [Test]
+  public async Task Should_FallBackToIntrospection_When_CacheReadThrows()
+  {
+    var cache = new IntrospectionCacheMock { ThrowOnGet = true };
+
+    var server = new OpenIdServerMock();
+    server.SetupDiscovery();
+    server.SetupJwks();
+    server.SetupIntrospection(authType: "client_secret_post");
+
+    var options = OpaqueOptions(server, configure: o => o.EnableCaching = true);
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, "opaque-cache-error-token", cache);
+    var result = await handler.AuthenticateAsync();
+
+    // An unavailable cache must degrade to a live introspection, not fail authentication.
+    result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
+    server.VerifyIntrospectionCalled();
+    cache.SetCount.ShouldBe(1);
+  }
+
+  [Test]
+  public async Task Should_CollapseConcurrentIntrospections_ForTheSameToken()
+  {
+    const string token = "opaque-concurrent-token";
+
+    var firstCallStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+    var releaseIntrospection = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+
+    var server = new OpenIdServerMock();
+    server.SetupDiscovery();
+    server.SetupJwks();
+    server.SetupIntrospection(authType: "client_secret_post", beforeRespond: async () =>
+    {
+      firstCallStarted.TrySetResult();
+      await releaseIntrospection.Task;
+    });
+
+    var options = OpaqueOptions(server);
+    var (handler1, _) = await HandlerTestHarness.CreateAsync(options, token);
+    var (handler2, _) = await HandlerTestHarness.CreateAsync(options, token);
+
+    var first = handler1.AuthenticateAsync();
+    await firstCallStarted.Task.WaitAsync(TimeSpan.FromSeconds(10));
+    var second = handler2.AuthenticateAsync();
+    releaseIntrospection.SetResult();
+
+    var results = await Task.WhenAll(first, second);
+
+    results[0].Succeeded.ShouldBeTrue(results[0].Failure?.ToString() ?? "no failure");
+    results[1].Succeeded.ShouldBeTrue(results[1].Failure?.ToString() ?? "no failure");
+    server.VerifyIntrospectionCalled();
   }
 }

@@ -2,10 +2,17 @@ namespace MonoCloud.Authentication.Api.Tests;
 
 public class PostConfigureTests
 {
+  private static X509CertificateCollection ClientCertificatesOf(HttpClient client)
+  {
+    var handler = (HttpClientHandler)typeof(HttpMessageInvoker).GetField("_handler", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(client)!;
+
+    return handler.ClientCertificates;
+  }
+
   [Test]
   public void Should_ThrowArgumentException_When_CachingIsEnabledWithoutCache()
   {
-    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(null!, null);
+    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(null!);
 
     var options = new MonoCloudAuthenticationOptions
     {
@@ -23,7 +30,7 @@ public class PostConfigureTests
       TenantDomain = "example.com"
     };
 
-    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock(), null);
+    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
     postConfigureOptions.PostConfigure(null, options);
 
     options.TenantDomain.ShouldBe("https://example.com");
@@ -37,7 +44,7 @@ public class PostConfigureTests
       TenantDomain = "https://example.com",
     };
 
-    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock(), null);
+    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
     postConfigureOptions.PostConfigure(null, options);
 
     options.TenantDomain.ShouldBe("https://example.com");
@@ -55,7 +62,7 @@ public class PostConfigureTests
       }
     };
 
-    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock(), null);
+    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
     postConfigureOptions.PostConfigure(null, options);
 
     options.ConfigurationManager.ShouldBeOfType<StaticConfigurationManager<OpenIdConnectConfiguration>>();
@@ -74,7 +81,7 @@ public class PostConfigureTests
       Configuration = null
     };
 
-    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock(), null);
+    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
     postConfigureOptions.PostConfigure(null, options);
 
     options.ConfigurationManager.ShouldBeOfType<ConfigurationManager<OpenIdConnectConfiguration>>();
@@ -88,7 +95,7 @@ public class PostConfigureTests
       Audience = "https://api.example.com",
     };
 
-    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock(), null);
+    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
     postConfigureOptions.PostConfigure(null, options);
 
     options.JwtTokenValidationParameters.ValidAudience.ShouldBe(options.Audience);
@@ -106,7 +113,7 @@ public class PostConfigureTests
       }
     };
 
-    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock(), null);
+    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
     postConfigureOptions.PostConfigure(null, options);
 
     options.JwtTokenValidationParameters.ValidAudience.ShouldBe("existing-audience");
@@ -115,19 +122,35 @@ public class PostConfigureTests
   [Test]
   public void Should_CreateHttpClientWithCertificate_When_TlsAuthIsConfiguredAndNoClientProvided()
   {
-    var certMock = new Mock<X509Certificate2>().Object;
-    var clientAuth = new TlsAuth(certMock);
-
     var options = new MonoCloudAuthenticationOptions
     {
       HttpClient = null!,
-      ClientAuth = clientAuth
+      ClientAuth = new TlsAuth(OpenIdServerMock.MtlsClientCert)
     };
 
-    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(null!, null);
+    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(null!);
     postConfigureOptions.PostConfigure(null, options);
 
-    options.HttpClient.ShouldBeOfType<HttpClient>();
+    var certificates = ClientCertificatesOf(options.HttpClient);
+    certificates.Count.ShouldBe(1);
+    certificates[0].ShouldBe(OpenIdServerMock.MtlsClientCert);
+  }
+
+  [Test]
+  public void Should_CreateHttpClientWithCertificate_When_SpiffeX509AuthIsConfiguredAndNoClientProvided()
+  {
+    var options = new MonoCloudAuthenticationOptions
+    {
+      HttpClient = null!,
+      ClientAuth = new SpiffeX509Auth(OpenIdServerMock.PrivateKeyCert)
+    };
+
+    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(null!);
+    postConfigureOptions.PostConfigure(null, options);
+
+    var certificates = ClientCertificatesOf(options.HttpClient);
+    certificates.Count.ShouldBe(1);
+    certificates[0].ShouldBe(OpenIdServerMock.PrivateKeyCert);
   }
 
   [Test]

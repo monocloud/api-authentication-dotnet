@@ -894,6 +894,78 @@ references:
   isSpec: "True"
   fullName: MonoCloud.Authentication.Api.Shared.ClientAuth.JwtAssertionAuth.AuthenticateAsync
   nameWithType: JwtAssertionAuth.AuthenticateAsync
+- uid: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth
+  name: SpiffeJwtAuth
+  href: api/MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.html
+  commentId: T:MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth
+  fullName: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth
+  nameWithType: SpiffeJwtAuth
+- uid: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.#ctor(System.Func{Microsoft.AspNetCore.Http.HttpContext,System.Threading.CancellationToken,System.Threading.Tasks.Task{System.String}})
+  name: SpiffeJwtAuth(Func<HttpContext, CancellationToken, Task<string>>)
+  href: api/MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.html#MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeJwtAuth__ctor_System_Func_Microsoft_AspNetCore_Http_HttpContext_System_Threading_CancellationToken_System_Threading_Tasks_Task_System_String___
+  commentId: M:MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.#ctor(System.Func{Microsoft.AspNetCore.Http.HttpContext,System.Threading.CancellationToken,System.Threading.Tasks.Task{System.String}})
+  name.vb: New(Func(Of HttpContext, CancellationToken, Task(Of String)))
+  fullName: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.SpiffeJwtAuth(System.Func<Microsoft.AspNetCore.Http.HttpContext, System.Threading.CancellationToken, System.Threading.Tasks.Task<string>>)
+  fullName.vb: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.New(System.Func(Of Microsoft.AspNetCore.Http.HttpContext, System.Threading.CancellationToken, System.Threading.Tasks.Task(Of String)))
+  nameWithType: SpiffeJwtAuth.SpiffeJwtAuth(Func<HttpContext, CancellationToken, Task<string>>)
+  nameWithType.vb: SpiffeJwtAuth.New(Func(Of HttpContext, CancellationToken, Task(Of String)))
+- uid: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.#ctor(System.String)
+  name: SpiffeJwtAuth(string)
+  href: api/MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.html#MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeJwtAuth__ctor_System_String_
+  commentId: M:MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.#ctor(System.String)
+  name.vb: New(String)
+  fullName: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.SpiffeJwtAuth(string)
+  fullName.vb: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.New(String)
+  nameWithType: SpiffeJwtAuth.SpiffeJwtAuth(string)
+  nameWithType.vb: SpiffeJwtAuth.New(String)
+- uid: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.#ctor*
+  name: SpiffeJwtAuth
+  href: api/MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.html#MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeJwtAuth__ctor_
+  commentId: Overload:MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.SpiffeJwtAuth
+  fullName.vb: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.New
+  nameWithType: SpiffeJwtAuth.SpiffeJwtAuth
+  nameWithType.vb: SpiffeJwtAuth.New
+- uid: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.AuthenticateAsync(MonoCloud.Authentication.Api.Shared.ClientAuth.ClientAuthenticationContext,System.Threading.CancellationToken)
+  name: AuthenticateAsync(ClientAuthenticationContext, CancellationToken)
+  href: api/MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.html#MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeJwtAuth_AuthenticateAsync_MonoCloud_Authentication_Api_Shared_ClientAuth_ClientAuthenticationContext_System_Threading_CancellationToken_
+  commentId: M:MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.AuthenticateAsync(MonoCloud.Authentication.Api.Shared.ClientAuth.ClientAuthenticationContext,System.Threading.CancellationToken)
+  fullName: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.AuthenticateAsync(MonoCloud.Authentication.Api.Shared.ClientAuth.ClientAuthenticationContext, System.Threading.CancellationToken)
+  nameWithType: SpiffeJwtAuth.AuthenticateAsync(ClientAuthenticationContext, CancellationToken)
+- uid: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.AuthenticateAsync*
+  name: AuthenticateAsync
+  href: api/MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.html#MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeJwtAuth_AuthenticateAsync_
+  commentId: Overload:MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.AuthenticateAsync
+  isSpec: "True"
+  fullName: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.AuthenticateAsync
+  nameWithType: SpiffeJwtAuth.AuthenticateAsync
+- uid: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth
+  name: SpiffeX509Auth
+  href: api/MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth.html
+  commentId: T:MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth
+  fullName: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth
+  nameWithType: SpiffeX509Auth
+- uid: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth.#ctor(System.Security.Cryptography.X509Certificates.X509Certificate2,System.String)
+  name: SpiffeX509Auth(X509Certificate2?, string?)
+  href: api/MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth.html#MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeX509Auth__ctor_System_Security_Cryptography_X509Certificates_X509Certificate2_System_String_
+  commentId: M:MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth.#ctor(System.Security.Cryptography.X509Certificates.X509Certificate2,System.String)
+  name.vb: New(X509Certificate2, String)
+  fullName: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth.SpiffeX509Auth(System.Security.Cryptography.X509Certificates.X509Certificate2?, string?)
+  fullName.vb: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth.New(System.Security.Cryptography.X509Certificates.X509Certificate2, String)
+  nameWithType: SpiffeX509Auth.SpiffeX509Auth(X509Certificate2?, string?)
+  nameWithType.vb: SpiffeX509Auth.New(X509Certificate2, String)
+- uid: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth.#ctor*
+  name: SpiffeX509Auth
+  href: api/MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth.html#MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeX509Auth__ctor_
+  commentId: Overload:MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth.SpiffeX509Auth
+  fullName.vb: MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth.New
+  nameWithType: SpiffeX509Auth.SpiffeX509Auth
+  nameWithType.vb: SpiffeX509Auth.New
 - uid: MonoCloud.Authentication.Api.Shared.ClientAuth.TlsAuth
   name: TlsAuth
   href: api/MonoCloud.Authentication.Api.Shared.ClientAuth.TlsAuth.html

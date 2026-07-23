@@ -16,7 +16,8 @@ Capabilities:
 - Optional caching of introspection results via `IIntrospectionCache`.
 - mTLS certificate-bound access tokens (RFC 8705) — `cnf`/`x5t#S256` validation.
 - Client authentication for introspection: `client_secret_basic`, `client_secret_post`,
-  `client_secret_jwt`, `private_key_jwt`, `tls_client_auth`.
+  `client_secret_jwt`, `private_key_jwt`, `tls_client_auth`, `spiffe_jwt` (JWT-SVID forwarded as a
+  client assertion), and `spiffe_x509` (X.509-SVID over mTLS; behaves like `tls_client_auth`).
 
 Repo conventions mirror the sibling `management-dotnet` SDK. There are three intentional, distinct
 naming axes: the public package id / assembly / root namespace / project folder / solution file are
@@ -39,7 +40,7 @@ MonoCloud.Authentication.Api/                      # the library (multi-targeted
     IntrospectionResult.cs              # parses RFC 7662 JSON -> claims + IsActive
     IIntrospectionCache.cs              # the caching abstraction consumers implement
     JwtAssertion.cs / MtlsEndpointAliases.cs
-    ClientAuth/                         # ClientSecretAuth, JwtAssertionAuth, TlsAuth, IMonoCloudClientAuth, ClientAuthenticationContext
+    ClientAuth/                         # ClientSecretAuth, JwtAssertionAuth, TlsAuth, SpiffeJwtAuth, SpiffeX509Auth (: TlsAuth), IMonoCloudClientAuth, ClientAuthenticationContext
     Context/                            # event context types (ResultContext<MonoCloudAuthenticationOptions> subclasses)
   GlobalUsings.cs                       # explicit global imports (implicit usings are off — see Conventions)
   MonoCloud.Authentication.Api.csproj              # multi-target TFMs, packaging, InternalsVisibleTo, SourceLink

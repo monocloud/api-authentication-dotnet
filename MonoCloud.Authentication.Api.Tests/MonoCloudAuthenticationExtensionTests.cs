@@ -15,8 +15,7 @@ public class MonoCloudAuthenticationExtensionTests
   {
     var sp = BuildProvider(b => b.AddMonoCloudAuthentication());
 
-    var scheme = await sp.GetRequiredService<IAuthenticationSchemeProvider>()
-        .GetSchemeAsync(MonoCloudAuthenticationDefaults.AuthenticationScheme);
+    var scheme = await sp.GetRequiredService<IAuthenticationSchemeProvider>().GetSchemeAsync(MonoCloudAuthenticationDefaults.AuthenticationScheme);
 
     scheme.ShouldNotBeNull();
     scheme!.HandlerType.ShouldBe(typeof(MonoCloudAuthenticationHandler));
@@ -27,8 +26,7 @@ public class MonoCloudAuthenticationExtensionTests
   {
     var sp = BuildProvider(b => b.AddMonoCloudAuthentication());
 
-    sp.GetServices<IPostConfigureOptions<MonoCloudAuthenticationOptions>>()
-        .ShouldContain(x => x is PostConfigureMonoCloudAuthenticationOptions);
+    sp.GetServices<IPostConfigureOptions<MonoCloudAuthenticationOptions>>().ShouldContain(x => x is PostConfigureMonoCloudAuthenticationOptions);
   }
 
   [Test]
@@ -44,8 +42,7 @@ public class MonoCloudAuthenticationExtensionTests
   {
     var sp = BuildProvider(b => b.AddMonoCloudAuthentication(o => o.ClientId = "configured-client"));
 
-    var options = sp.GetRequiredService<IOptionsMonitor<MonoCloudAuthenticationOptions>>()
-        .Get(MonoCloudAuthenticationDefaults.AuthenticationScheme);
+    var options = sp.GetRequiredService<IOptionsMonitor<MonoCloudAuthenticationOptions>>().Get(MonoCloudAuthenticationDefaults.AuthenticationScheme);
 
     options.ClientId.ShouldBe("configured-client");
   }

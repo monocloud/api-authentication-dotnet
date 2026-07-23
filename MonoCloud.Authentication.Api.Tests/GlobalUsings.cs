@@ -23,6 +23,7 @@ global using System.Linq;
 global using System.Linq.Expressions;
 global using System.Net;
 global using System.Net.Http;
+global using System.Reflection;
 global using System.Security.Claims;
 global using System.Security.Cryptography;
 global using System.Security.Cryptography.X509Certificates;
