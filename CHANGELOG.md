@@ -1,5 +1,11 @@
 # @monocloud/authentication-api
 
+## 0.1.1
+
+### Patch Changes
+
+- 002a9ef: Added spiffe auth and reviewed tests
+
 ## 0.1.0
 
 ### Minor Changes
