@@ -27,8 +27,7 @@ public class IntrospectionResultTests
   {
     var result = Parse("""{"active":true,"scope":"openid resource profile"}""");
 
-    result.Claims.Where(c => c.Type == "scope").Select(c => c.Value)
-        .ShouldBe(new[] { "openid", "resource", "profile" });
+    result.Claims.Where(c => c.Type == "scope").Select(c => c.Value).ShouldBe(["openid", "resource", "profile"]);
   }
 
   [Test]
@@ -36,8 +35,7 @@ public class IntrospectionResultTests
   {
     var result = Parse("""{"active":true,"scope":["openid","resource"]}""");
 
-    result.Claims.Where(c => c.Type == "scope").Select(c => c.Value)
-        .ShouldBe(new[] { "openid", "resource" });
+    result.Claims.Where(c => c.Type == "scope").Select(c => c.Value).ShouldBe(["openid", "resource"]);
   }
 
   [Test]
@@ -46,7 +44,7 @@ public class IntrospectionResultTests
     var result = Parse("""{"active":true,"roles":["admin","editor"]}""");
 
     var roles = result.Claims.Where(c => c.Type == "roles").ToList();
-    roles.Select(c => c.Value).ShouldBe(new[] { "admin", "editor" });
+    roles.Select(c => c.Value).ShouldBe(["admin", "editor"]);
   }
 
   [Test]
@@ -76,7 +74,7 @@ public class IntrospectionResultTests
 
     result.IsActive.ShouldBeTrue();
     result.Claims.Where(c => c.Type == "scope").Select(c => c.Value)
-        .ShouldBe(new[] { "openid", "resource" });
+        .ShouldBe(["openid", "resource"]);
   }
 
   [Test]

@@ -8,8 +8,15 @@ public class IntrospectionCacheMock : IIntrospectionCache
 
   public TimeSpan? LastExpiresIn { get; private set; }
 
+  public bool ThrowOnGet { get; set; }
+
   public Task<string?> GetAsync(string key, CancellationToken cancellationToken = default)
   {
+    if (ThrowOnGet)
+    {
+      throw new InvalidOperationException("[Test] Cache is unavailable");
+    }
+
     _cache.TryGetValue(key, out var value);
     return Task.FromResult(value);
   }

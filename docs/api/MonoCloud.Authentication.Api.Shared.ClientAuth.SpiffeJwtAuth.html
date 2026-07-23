@@ -2,11 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class TlsAuth </title>
+      <title>Class SpiffeJwtAuth </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class TlsAuth ">
+      <meta name="title" content="Class SpiffeJwtAuth ">
       
-      <meta name="description" content="Provides TLS-based authentication for client applications using mutual TLS (mTLS). This class implements the  interface.  Authentication is performed using an optional X509 certificate. If a certificate is not specified, it is expected that the  is configured with a message handler that provides the client certificate.   Optionally, a trust store id can be provided. If a trust store id is specified, the corresponding trust store will be used to validate the server certificate. If a trust store id is not specified, the default trust store will be used.">
+      <meta name="description" content="Represents the SPIFFE JWT-SVID based client authentication mechanism (&#39;spiffe_jwt&#39;). The workload&#39;s JWT-SVID is forwarded as the client assertion on introspection requests, using the &#39;urn:ietf:params:oauth:client-assertion-type:jwt-spiffe&#39; assertion type.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
@@ -16,7 +16,7 @@
       
       
       
-      <meta name="docfx:docurl" content="https://github.com/monocloud/api-authentication-dotnet/new/main/apiSpec/new?filename=MonoCloud_Authentication_Api_Shared_ClientAuth_TlsAuth.md&amp;value=---%0Auid%3A%20MonoCloud.Authentication.Api.Shared.ClientAuth.TlsAuth%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/monocloud/api-authentication-dotnet/new/main/apiSpec/new?filename=MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeJwtAuth.md&amp;value=---%0Auid%3A%20MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -80,12 +80,12 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="MonoCloud.Authentication.Api.Shared.ClientAuth.TlsAuth">
+        <article data-uid="MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth">
 
 
 
-  <h1 id="MonoCloud_Authentication_Api_Shared_ClientAuth_TlsAuth" data-uid="MonoCloud.Authentication.Api.Shared.ClientAuth.TlsAuth" class="text-break">
-Class TlsAuth  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/Shared/ClientAuth/TlsAuth.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  <h1 id="MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeJwtAuth" data-uid="MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth" class="text-break">
+Class SpiffeJwtAuth  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/Shared/ClientAuth/SpiffeJwtAuth.cs/#L15"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -93,23 +93,14 @@ Class TlsAuth  <a class="header-action link-secondary" title="View source" href=
   <dl><dt>Assembly</dt><dd>MonoCloud.Authentication.Api.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>Provides TLS-based authentication for client applications using mutual TLS (mTLS).
-This class implements the <a class="xref" href="MonoCloud.Authentication.Api.Shared.ClientAuth.IMonoCloudClientAuth.html">IMonoCloudClientAuth</a> interface.</p>
-<p>
-Authentication is performed using an optional X509 certificate. If a certificate is not
-specified, it is expected that the <a class="xref" href="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_HttpClient">HttpClient</a>
-is configured with a message handler that provides the client certificate.
-</p>
-<p>
-Optionally, a trust store id can be provided. If a trust store id is specified,
-the corresponding trust store will be used to validate the server certificate.
-If a trust store id is not specified, the default trust store will be used.
-</p>
+  <div class="markdown summary"><p>Represents the SPIFFE JWT-SVID based client authentication mechanism ('spiffe_jwt').
+The workload's JWT-SVID is forwarded as the client assertion on introspection requests,
+using the 'urn:ietf:params:oauth:client-assertion-type:jwt-spiffe' assertion type.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class TlsAuth : IMonoCloudClientAuth</code></pre>
+    <pre><code class="lang-csharp hljs">public class SpiffeJwtAuth : IMonoCloudClientAuth</code></pre>
   </div>
 
 
@@ -119,7 +110,7 @@ If a trust store id is not specified, the default trust store will be used.
     <dt>Inheritance</dt>
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
-      <div><span class="xref">TlsAuth</span></div>
+      <div><span class="xref">SpiffeJwtAuth</span></div>
     </dd>
   </dl>
 
@@ -130,12 +121,6 @@ If a trust store id is not specified, the default trust store will be used.
     </dd>
   </dl>
 
-  <dl class="typelist derived">
-    <dt>Derived</dt>
-    <dd>
-      <div><a class="xref" href="MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeX509Auth.html">SpiffeX509Auth</a></div>
-    </dd>
-  </dl>
 
   <dl class="typelist inheritedMembers">
     <dt>Inherited Members</dt>
@@ -166,44 +151,74 @@ If a trust store id is not specified, the default trust store will be used.
 
 
 
+  <h2 id="MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeJwtAuth_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>JWT-SVIDs are short-lived. Prefer the provider based constructor
+(<a class="xref" href="MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.html#MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeJwtAuth__ctor_System_Func_Microsoft_AspNetCore_Http_HttpContext_System_Threading_CancellationToken_System_Threading_Tasks_Task_System_String___">SpiffeJwtAuth(Func&lt;HttpContext, CancellationToken, Task&lt;string&gt;&gt;)</a>) with a delegate
+that returns the current SVID (e.g. from the SPIFFE Workload API), so rotated SVIDs are picked up
+without restarting the application. The delegate receives the current <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.http.httpcontext">HttpContext</a>,
+so it can resolve services from <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.http.httpcontext.requestservices">RequestServices</a> (e.g. a Workload API client).</p>
+</div>
 
 
   <h2 class="section" id="constructors">Constructors
 </h2>
 
 
-  <a id="MonoCloud_Authentication_Api_Shared_ClientAuth_TlsAuth__ctor_" data-uid="MonoCloud.Authentication.Api.Shared.ClientAuth.TlsAuth.#ctor*"></a>
+  <a id="MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeJwtAuth__ctor_" data-uid="MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.#ctor*"></a>
 
-  <h3 id="MonoCloud_Authentication_Api_Shared_ClientAuth_TlsAuth__ctor_System_Security_Cryptography_X509Certificates_X509Certificate2_System_String_" data-uid="MonoCloud.Authentication.Api.Shared.ClientAuth.TlsAuth.#ctor(System.Security.Cryptography.X509Certificates.X509Certificate2,System.String)">
-  TlsAuth(X509Certificate2?, string?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/Shared/ClientAuth/TlsAuth.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  <h3 id="MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeJwtAuth__ctor_System_Func_Microsoft_AspNetCore_Http_HttpContext_System_Threading_CancellationToken_System_Threading_Tasks_Task_System_String___" data-uid="MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.#ctor(System.Func{Microsoft.AspNetCore.Http.HttpContext,System.Threading.CancellationToken,System.Threading.Tasks.Task{System.String}})">
+  SpiffeJwtAuth(Func&lt;HttpContext, CancellationToken, Task&lt;string&gt;&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/Shared/ClientAuth/SpiffeJwtAuth.cs/#L36"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Provides TLS-based authentication for client applications using mutual TLS (mTLS).
-This class implements the <a class="xref" href="MonoCloud.Authentication.Api.Shared.ClientAuth.IMonoCloudClientAuth.html">IMonoCloudClientAuth</a> interface.</p>
-<p>
-Authentication is performed using an optional X509 certificate. If a certificate is not
-specified, it is expected that the <a class="xref" href="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_HttpClient">HttpClient</a>
-is configured with a message handler that provides the client certificate.
-</p>
-<p>
-Optionally, a trust store id can be provided. If a trust store id is specified,
-the corresponding trust store will be used to validate the server certificate.
-If a trust store id is not specified, the default trust store will be used.
-</p>
+  <div class="markdown level1 summary"><p>Spiffe jwt authentication with a JWT-SVID provider that is invoked for each introspection request.
+The provider receives the current <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.http.httpcontext">HttpContext</a>, allowing it to resolve services from
+<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.http.httpcontext.requestservices">RequestServices</a> (e.g. a SPIFFE Workload API client).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TlsAuth(X509Certificate2? certificate = null, string? trustStore = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public SpiffeJwtAuth(Func&lt;HttpContext, CancellationToken, Task&lt;string&gt;&gt; jwtSvidProvider)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>certificate</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.security.cryptography.x509certificates.x509certificate2">X509Certificate2</a></dt>
-    <dd></dd>
-    <dt><code>trustStore</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd></dd>
+    <dt><code>jwtSvidProvider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.http.httpcontext">HttpContext</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</dt>
+    <dd><p>A delegate returning the current SPIFFE JWT-SVID</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeJwtAuth__ctor_" data-uid="MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.#ctor*"></a>
+
+  <h3 id="MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeJwtAuth__ctor_System_String_" data-uid="MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.#ctor(System.String)">
+  SpiffeJwtAuth(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/Shared/ClientAuth/SpiffeJwtAuth.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Spiffe jwt authentication with a fixed JWT-SVID.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SpiffeJwtAuth(string jwtSvid)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>jwtSvid</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The SPIFFE JWT-SVID (obtained from the SPIFFE Workload API)</p>
+</dd>
   </dl>
 
 
@@ -221,11 +236,11 @@ If a trust store id is not specified, the default trust store will be used.
 </h2>
 
 
-  <a id="MonoCloud_Authentication_Api_Shared_ClientAuth_TlsAuth_AuthenticateAsync_" data-uid="MonoCloud.Authentication.Api.Shared.ClientAuth.TlsAuth.AuthenticateAsync*"></a>
+  <a id="MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeJwtAuth_AuthenticateAsync_" data-uid="MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.AuthenticateAsync*"></a>
 
-  <h3 id="MonoCloud_Authentication_Api_Shared_ClientAuth_TlsAuth_AuthenticateAsync_MonoCloud_Authentication_Api_Shared_ClientAuth_ClientAuthenticationContext_System_Threading_CancellationToken_" data-uid="MonoCloud.Authentication.Api.Shared.ClientAuth.TlsAuth.AuthenticateAsync(MonoCloud.Authentication.Api.Shared.ClientAuth.ClientAuthenticationContext,System.Threading.CancellationToken)">
+  <h3 id="MonoCloud_Authentication_Api_Shared_ClientAuth_SpiffeJwtAuth_AuthenticateAsync_MonoCloud_Authentication_Api_Shared_ClientAuth_ClientAuthenticationContext_System_Threading_CancellationToken_" data-uid="MonoCloud.Authentication.Api.Shared.ClientAuth.SpiffeJwtAuth.AuthenticateAsync(MonoCloud.Authentication.Api.Shared.ClientAuth.ClientAuthenticationContext,System.Threading.CancellationToken)">
   AuthenticateAsync(ClientAuthenticationContext, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/Shared/ClientAuth/TlsAuth.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/Shared/ClientAuth/SpiffeJwtAuth.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Attempts to authenticate a client using the provided authentication context and token.</p>

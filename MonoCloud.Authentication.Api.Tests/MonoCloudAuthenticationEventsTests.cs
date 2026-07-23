@@ -2,9 +2,7 @@ namespace MonoCloud.Authentication.Api.Tests;
 
 public class MonoCloudAuthenticationEventsTests
 {
-  private static readonly AuthenticationScheme TestScheme =
-      new("MonoCloud", "MonoCloud", typeof(MonoCloudAuthenticationHandler));
-
+  private static readonly AuthenticationScheme TestScheme = new("MonoCloud", "MonoCloud", typeof(MonoCloudAuthenticationHandler));
   private static readonly HttpContext HttpContext = new DefaultHttpContext();
   private static readonly MonoCloudAuthenticationOptions Opts = new();
 

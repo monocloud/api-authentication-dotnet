@@ -4,8 +4,7 @@ public class ClientAuthTests
 {
   private const string AssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
 
-  private static (ClientAuthenticationContext Context, Dictionary<string, string> Payload, HttpRequestMessage Request) Build(
-      Action<MonoCloudAuthenticationOptions>? configure = null)
+  private static (ClientAuthenticationContext Context, Dictionary<string, string> Payload, HttpRequestMessage Request) Build(Action<MonoCloudAuthenticationOptions>? configure = null)
   {
     var options = new MonoCloudAuthenticationOptions
     {
@@ -171,4 +170,96 @@ public class ClientAuthTests
 
     await Should.ThrowAsync<ArgumentNullException>(() => new JwtAssertionAuth(OpenIdServerMock.SymmetricSecret).AuthenticateAsync(context, default));
   }
+
+  [Test]
+  public async Task SpiffeJwtAuth_ForwardsJwtSvidAsClientAssertion()
+  {
+    var (context, payload, request) = Build();
+
+    await new SpiffeJwtAuth("spiffe-jwt-svid").AuthenticateAsync(context, default);
+
+    payload["client_id"].ShouldBe(OpenIdServerMock.ClientId);
+    payload["client_assertion_type"].ShouldBe("urn:ietf:params:oauth:client-assertion-type:jwt-spiffe");
+    payload["client_assertion"].ShouldBe("spiffe-jwt-svid");
+    request.Headers.Authorization.ShouldBeNull();
+  }
+
+  [Test]
+  public async Task SpiffeJwtAuth_InvokesProvider_ForEachRequest()
+  {
+    var svids = new Queue<string>(new[] { "svid-1", "svid-2" });
+    var auth = new SpiffeJwtAuth((_, _) => Task.FromResult(svids.Dequeue()));
+
+    var (context1, payload1, _) = Build();
+    await auth.AuthenticateAsync(context1, default);
+    payload1["client_assertion"].ShouldBe("svid-1");
+
+    // A rotated SVID must be picked up on the next request without recreating the auth instance.
+    var (context2, payload2, _) = Build();
+    await auth.AuthenticateAsync(context2, default);
+    payload2["client_assertion"].ShouldBe("svid-2");
+  }
+
+  [Test]
+  public async Task SpiffeJwtAuth_ProviderCanResolveServices_FromHttpContext()
+  {
+    var (context, payload, _) = Build();
+
+    // A per-request SVID source registered in DI (e.g. a SPIFFE Workload API client) must be
+    // reachable from the provider via HttpContext.RequestServices.
+    var services = new ServiceCollection();
+    services.AddSingleton(new SvidSource("svid-from-di"));
+    context.HttpContext.RequestServices = services.BuildServiceProvider();
+
+    var auth = new SpiffeJwtAuth((httpContext, _) => Task.FromResult(httpContext.RequestServices.GetRequiredService<SvidSource>().Svid));
+
+    await auth.AuthenticateAsync(context, default);
+
+    payload["client_assertion"].ShouldBe("svid-from-di");
+  }
+
+  [Test]
+  public async Task SpiffeJwtAuth_Throws_When_ClientIdMissing()
+  {
+    var (context, _, _) = Build(o => o.ClientId = null);
+
+    await Should.ThrowAsync<ArgumentNullException>(() => new SpiffeJwtAuth("spiffe-jwt-svid").AuthenticateAsync(context, default));
+  }
+
+  [Test]
+  public async Task SpiffeJwtAuth_Throws_When_ProviderReturnsNoSvid()
+  {
+    var (context, _, _) = Build();
+
+    await Should.ThrowAsync<InvalidOperationException>(() => new SpiffeJwtAuth((_, _) => Task.FromResult<string>(null!)).AuthenticateAsync(context, default));
+  }
+
+  [Test]
+  public async Task SpiffeX509Auth_IsAnMtlsMethod_AndAddsOnlyClientIdToPayload()
+  {
+    var (context, payload, request) = Build();
+
+    var auth = new SpiffeX509Auth();
+
+    // Must remain a TlsAuth so the handler resolves the mTLS introspection endpoint alias and
+    // PostConfigure attaches the X.509-SVID to the HttpClient.
+    auth.ShouldBeAssignableTo<TlsAuth>();
+
+    await auth.AuthenticateAsync(context, default);
+
+    payload["client_id"].ShouldBe(OpenIdServerMock.ClientId);
+    payload.Count.ShouldBe(1);
+    request.Headers.Authorization.ShouldBeNull();
+  }
+
+  [Test]
+  public async Task SpiffeX509Auth_Throws_When_ClientIdMissing()
+  {
+    var (context, _, _) = Build(o => o.ClientId = null);
+
+    await Should.ThrowAsync<ArgumentNullException>(() => new SpiffeX509Auth().AuthenticateAsync(context, default));
+  }
+
+  // A stand-in for a service (e.g. a SPIFFE Workload API client) resolved from HttpContext.RequestServices.
+  private sealed record SvidSource(string Svid);
 }

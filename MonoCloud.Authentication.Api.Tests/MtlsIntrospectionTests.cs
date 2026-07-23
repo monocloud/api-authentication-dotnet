@@ -1,9 +1,5 @@
 namespace MonoCloud.Authentication.Api.Tests;
 
-/// <summary>
-/// Covers the mutual-TLS (<see cref="TlsAuth"/>) introspection path, where the introspection endpoint is
-/// resolved from the discovery document's <c>mtls_endpoint_aliases</c> (or <c>mtls_additional_endpoint_aliases</c>).
-/// </summary>
 public class MtlsIntrospectionTests
 {
   private const string OpaqueToken = "opaque-mtls-token";
@@ -25,7 +21,7 @@ public class MtlsIntrospectionTests
     var server = new OpenIdServerMock();
     server.SetupDiscovery();
     server.SetupJwks();
-    server.SetupIntrospection(authType: "none", endpoint: OpenIdServerMock.MtlsIntrospectionEndpoint);
+    server.SetupIntrospection(authType: "tls_client_auth", endpoint: OpenIdServerMock.MtlsIntrospectionEndpoint);
 
     var options = TlsOptions(server, new TlsAuth());
 
@@ -33,6 +29,8 @@ public class MtlsIntrospectionTests
     var result = await handler.AuthenticateAsync();
 
     result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
+    server.VerifyIntrospectionCalled(endpoint: OpenIdServerMock.MtlsIntrospectionEndpoint);
+    server.VerifyIntrospectionCalled(Times.Never());
   }
 
   [Test]
@@ -41,7 +39,7 @@ public class MtlsIntrospectionTests
     var server = new OpenIdServerMock();
     server.SetupDiscovery();
     server.SetupJwks();
-    server.SetupIntrospection(authType: "none", endpoint: OpenIdServerMock.CustomTrustStoreMtlsIntrospectionEndpoint);
+    server.SetupIntrospection(authType: "tls_client_auth", endpoint: OpenIdServerMock.CustomTrustStoreMtlsIntrospectionEndpoint);
 
     var options = TlsOptions(server, new TlsAuth(trustStore: "id"));
 
@@ -49,6 +47,44 @@ public class MtlsIntrospectionTests
     var result = await handler.AuthenticateAsync();
 
     result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
+    server.VerifyIntrospectionCalled(endpoint: OpenIdServerMock.CustomTrustStoreMtlsIntrospectionEndpoint);
+    server.VerifyIntrospectionCalled(Times.Never(), OpenIdServerMock.MtlsIntrospectionEndpoint);
+  }
+
+  [Test]
+  public async Task Should_UseMtlsIntrospectionEndpoint_When_SpiffeX509Auth()
+  {
+    var server = new OpenIdServerMock();
+    server.SetupDiscovery();
+    server.SetupJwks();
+    server.SetupIntrospection(authType: "spiffe_x509", endpoint: OpenIdServerMock.MtlsIntrospectionEndpoint);
+
+    var options = TlsOptions(server, new SpiffeX509Auth());
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, OpaqueToken);
+    var result = await handler.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
+    server.VerifyIntrospectionCalled(endpoint: OpenIdServerMock.MtlsIntrospectionEndpoint);
+    server.VerifyIntrospectionCalled(Times.Never());
+  }
+
+  [Test]
+  public async Task Should_UseCustomTrustStoreEndpoint_When_SpiffeX509AuthSpecifiesTrustStore()
+  {
+    var server = new OpenIdServerMock();
+    server.SetupDiscovery();
+    server.SetupJwks();
+    server.SetupIntrospection(authType: "spiffe_x509", endpoint: OpenIdServerMock.CustomTrustStoreMtlsIntrospectionEndpoint);
+
+    var options = TlsOptions(server, new SpiffeX509Auth(trustStore: "id"));
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, OpaqueToken);
+    var result = await handler.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
+    server.VerifyIntrospectionCalled(endpoint: OpenIdServerMock.CustomTrustStoreMtlsIntrospectionEndpoint);
+    server.VerifyIntrospectionCalled(Times.Never(), OpenIdServerMock.MtlsIntrospectionEndpoint);
   }
 
   [Test]
@@ -57,7 +93,7 @@ public class MtlsIntrospectionTests
     var server = new OpenIdServerMock();
     server.SetupDiscovery(includeMtls: false);
     server.SetupJwks();
-    server.SetupIntrospection(authType: "none", endpoint: OpenIdServerMock.MtlsIntrospectionEndpoint);
+    server.SetupIntrospection(authType: "tls_client_auth", endpoint: OpenIdServerMock.MtlsIntrospectionEndpoint);
 
     var options = TlsOptions(server, new TlsAuth());
 
@@ -66,5 +102,8 @@ public class MtlsIntrospectionTests
 
     result.Succeeded.ShouldBeFalse();
     result.Failure!.Message.ShouldBe("Introspection failed");
+
+    server.VerifyIntrospectionCalled(Times.Never(), OpenIdServerMock.MtlsIntrospectionEndpoint);
+    server.VerifyIntrospectionCalled(Times.Never());
   }
 }
