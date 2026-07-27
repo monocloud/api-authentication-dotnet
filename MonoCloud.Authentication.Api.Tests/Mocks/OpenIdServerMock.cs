@@ -284,7 +284,7 @@ public class OpenIdServerMock
           ValidateIssuer = true,
           ValidIssuer = ClientId,
           ValidateAudience = true,
-          ValidAudiences = [Issuer, TokenEndpoint],
+          ValidAudiences = [Issuer],
           ValidateLifetime = true,
           ValidateIssuerSigningKey = true,
           IssuerSigningKey = securityKey,
