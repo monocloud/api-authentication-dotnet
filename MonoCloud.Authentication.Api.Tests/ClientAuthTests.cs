@@ -33,7 +33,7 @@ public class ClientAuthTests
       ValidateIssuer = true,
       ValidIssuer = OpenIdServerMock.ClientId,
       ValidateAudience = true,
-      ValidAudience = OpenIdServerMock.TokenEndpoint,
+      ValidAudience = OpenIdServerMock.Issuer,
       ValidateLifetime = true,
       // Signature is still verified against IssuerSigningKey; we skip signing-key (X509 lifetime)
       // validation so the test does not depend on the fixture certificate's validity period.
@@ -45,6 +45,12 @@ public class ClientAuthTests
     result.IsValid.ShouldBeTrue(result.Exception?.ToString() ?? "assertion invalid");
     result.ClaimsIdentity.FindFirst("sub")!.Value.ShouldBe(OpenIdServerMock.ClientId);
     result.ClaimsIdentity.FindFirst("jti").ShouldNotBeNull();
+
+    var rawPayload = JsonDocument.Parse(Base64UrlEncoder.Decode(assertion.Split('.')[1])).RootElement;
+
+    var aud = rawPayload.GetProperty("aud");
+    aud.ValueKind.ShouldBe(JsonValueKind.String, "aud must be a single string, not an array");
+    aud.GetString().ShouldBe(OpenIdServerMock.Issuer);
   }
 
   [Test]

@@ -95,7 +95,7 @@ public class JwtAssertionAuth : IMonoCloudClientAuth
             {
                 new(JwtRegisteredClaimNames.Iss, context.Options.ClientId),
                 new(JwtRegisteredClaimNames.Sub, context.Options.ClientId),
-                new(JwtRegisteredClaimNames.Aud, config.TokenEndpoint),
+                new(JwtRegisteredClaimNames.Aud, config.Issuer),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new(JwtRegisteredClaimNames.Nbf, now.ToUnixTimeStamp().ToString()),
                 new(JwtRegisteredClaimNames.Iat, now.ToUnixTimeStamp().ToString()),
