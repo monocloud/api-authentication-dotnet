@@ -1,5 +1,11 @@
 # @monocloud/authentication-api
 
+## 0.1.2
+
+### Patch Changes
+
+- 39dfa56: Use the issuer identifier as the JWT client assertion audience
+
 ## 0.1.1
 
 ### Patch Changes
