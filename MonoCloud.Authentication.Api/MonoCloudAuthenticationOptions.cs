@@ -3,22 +3,23 @@ namespace MonoCloud.Authentication.Api;
 /// <summary>
 /// Provides options to configure the MonoCloud authentication scheme for an ASP.NET Core application.
 /// </summary>
-public class MonoCloudAuthenticationOptions : AuthenticationSchemeOptions
+/// <remarks>
+/// This type derives from <see cref="JwtBearerOptions"/>, so all of the standard JWT bearer options
+/// (<see cref="JwtBearerOptions.Authority"/>, <see cref="JwtBearerOptions.TokenValidationParameters"/>,
+/// <see cref="JwtBearerOptions.Audience"/>, <see cref="JwtBearerOptions.SaveToken"/>,
+/// <see cref="JwtBearerOptions.MapInboundClaims"/>, <see cref="JwtBearerOptions.IncludeErrorDetails"/>, ...)
+/// apply here as well and behave exactly as they do for <c>AddJwtBearer</c>. Set
+/// <see cref="JwtBearerOptions.Authority"/> to the tenant domain; a value without a scheme is prefixed
+/// with <c>https://</c> during post-configuration. The members declared below are the MonoCloud specific
+/// additions.
+/// </remarks>
+public class MonoCloudAuthenticationOptions : JwtBearerOptions
 {
   /// <inheritdoc />
   public MonoCloudAuthenticationOptions()
   {
     Events = new MonoCloudAuthenticationEvents();
-    JwtTokenHandler.MapInboundClaims = _mapInboundClaims;
   }
-
-  private bool _mapInboundClaims = true;
-
-  /// <summary>
-  /// Authority URL (issuer) expected during validation of tokens.
-  /// This value should be the tenant domain.
-  /// </summary>
-  public string? TenantDomain { get; set; }
 
   /// <summary>
   /// Client identifier used for authentication
@@ -30,13 +31,6 @@ public class MonoCloudAuthenticationOptions : AuthenticationSchemeOptions
   /// when making secure API calls. Checkout <see cref="ClientSecretAuth"/>, <see cref="JwtAssertionAuth"/> and <see cref="TlsAuth"/>
   /// </summary>
   public IMonoCloudClientAuth? ClientAuth { get; set; }
-
-  /// <summary>
-  /// Specifies the expected audience for the token validation.
-  /// This value is used to match with the audience claim in the token
-  /// to ensure the token is issued for the intended recipient.
-  /// </summary>
-  public string? Audience { get; set; }
 
   /// <summary>
   /// Handler for authentication-related events during the processing of the authentication workflow.
@@ -70,13 +64,9 @@ public class MonoCloudAuthenticationOptions : AuthenticationSchemeOptions
   public string CacheKeyPrefix { get; set; } = string.Empty;
 
   /// <summary>
-  /// Defines whether the bearer token should be stored in the
-  /// <see cref="AuthenticationProperties"/> after a successful authorization.
-  /// </summary>
-  public bool SaveToken { get; set; }
-
-  /// <summary>
   /// Specifies the amount of clock skew to tolerate during token validation.
+  /// When set, this value is applied to <see cref="TokenValidationParameters.ClockSkew"/> during
+  /// post-configuration.
   /// </summary>
   public TimeSpan? ClockSkew { get; set; }
 
@@ -132,42 +122,6 @@ public class MonoCloudAuthenticationOptions : AuthenticationSchemeOptions
   public string? RoleClaimType { get; set; }
 
   /// <summary>
-  /// Represents the OpenID configuration metadata.
-  /// If this property is set, it will be used to initialize a <see cref="StaticConfigurationManager{T}"/>.
-  /// Which is a static, pre-configured set of metadata instead of fetching it from a discovery endpoint.
-  /// </summary>
-  public OpenIdConnectConfiguration? Configuration { get; set; }
-
-  /// <summary>
-  /// This property provides access to the configured configuration manager, which is responsible for
-  /// retrieving and caching the <see cref="OpenIdConnectConfiguration"/>.
-  /// By default, it's configured to fetch metadata from the discovery endpoint.
-  /// </summary>
-  public IConfigurationManager<OpenIdConnectConfiguration>? ConfigurationManager { get; set; }
-
-  /// <summary>
-  /// Parameters used for validating JWT tokens.
-  /// This property configures token validation settings such as issuer, audience,
-  /// signing keys, and other security-related parameters to ensure the integrity and
-  /// authenticity of received tokens during authentication.
-  /// </summary>
-  public TokenValidationParameters JwtTokenValidationParameters { get; set; } = new();
-
-  /// <summary>
-  /// Specifies the time interval after which the cached configuration is considered outdated and will be automatically refreshed
-  /// when accessed. This helps ensure that the application always has up-to-date metadata
-  /// about the identity provider, such as keys and endpoints, without requiring manual intervention.
-  /// </summary>
-  public TimeSpan AutomaticRefreshInterval { get; set; } = ConfigurationManager<OpenIdConnectConfiguration>.DefaultAutomaticRefreshInterval;
-
-  /// <summary>
-  /// Specifies the interval at which the configuration metadata (e.g., OpenID Connect discovery document)
-  /// is retrieved to ensure the latest information is used for token validation.
-  /// This property controls how frequently the metadata is refreshed in the background.
-  /// </summary>
-  public TimeSpan RefreshInterval { get; set; } = ConfigurationManager<OpenIdConnectConfiguration>.DefaultRefreshInterval;
-
-  /// <summary>
   /// A delegate used to generate a unique cache key based on the provided
   /// authentication options and token. This is primarily used in conjunction
   /// with distributed caching of token-related data.
@@ -175,37 +129,17 @@ public class MonoCloudAuthenticationOptions : AuthenticationSchemeOptions
   public Func<MonoCloudAuthenticationOptions, string, string> CacheKeyGenerator { get; set; } = Utils.CacheKeyGenerator;
 
   /// <summary>
-  /// Gets or sets the <see cref="MapInboundClaims"/> property on the internal <see cref="JsonWebTokenHandler"/> used for JWT validation, which is used when determining
-  /// whether to map claim types that are extracted when validating a <see cref="JsonWebToken"/>.
-  /// <para>If this is set to true, the Claim Type is set to the JSON claim 'name' after translating using this mapping. Otherwise, no mapping occurs.</para>
-  /// <para>The default value is true.</para>
-  /// </summary>
-  public bool MapInboundClaims
-  {
-    get => _mapInboundClaims;
-    set
-    {
-      _mapInboundClaims = value;
-      JwtTokenHandler.MapInboundClaims = value;
-    }
-  }
-
-  /// <summary>
-  /// Indicates whether the token validation process should attempt to refresh the issuer's keys
-  /// when a <see cref="SecurityTokenSignatureKeyNotFoundException"/> occurs.
-  /// </summary>
-  public bool RefreshOnIssuerKeyNotFound { get; set; }
-
-  /// <summary>
-  /// Provides an instance of <see cref="HttpClient"/> used to send HTTP requests
+  /// Provides an instance of <see cref="System.Net.Http.HttpClient"/> used to send HTTP requests
   /// and receive HTTP responses during authentication and token-related operations.
   /// This property is essential for managing HTTP communications, such as retrieving
   /// OpenID Connect configuration documents, performing token introspection,
   /// and handling certificate-based authentication in mutual TLS (mTLS) scenarios.
   /// </summary>
+  /// <remarks>
+  /// During post-configuration this client is also assigned to <see cref="JwtBearerOptions.Backchannel"/>,
+  /// so discovery document retrieval shares it (and therefore any configured client certificate).
+  /// </remarks>
   public HttpClient HttpClient { get; set; } = null!;
-
-  internal readonly JsonWebTokenHandler JwtTokenHandler = new();
 
   /// <summary>
   /// The authentication scheme name this options instance was configured for. Assigned during

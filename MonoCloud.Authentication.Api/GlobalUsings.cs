@@ -1,4 +1,5 @@
 global using Microsoft.AspNetCore.Authentication;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -26,8 +27,6 @@ global using System.Text.Json.Nodes;
 global using System.Text.Json.Serialization;
 global using System.Threading;
 global using System.Threading.Tasks;
-global using AuthenticationFailedContext = MonoCloud.Authentication.Api.Shared.Context.AuthenticationFailedContext;
 global using JsonClaimValueTypes = Microsoft.IdentityModel.JsonWebTokens.JsonClaimValueTypes;
 global using JwtRegisteredClaimNames = System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames;
-global using TokenValidatedContext = MonoCloud.Authentication.Api.Shared.Context.TokenValidatedContext;
 

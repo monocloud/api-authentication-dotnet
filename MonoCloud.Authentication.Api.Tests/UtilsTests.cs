@@ -108,6 +108,53 @@ public class UtilsTests
   }
 
   [Test]
+  public void HasNormalizableGroupClaims_IsTrue_ForAJsonArrayClaim()
+  {
+    var claims = new List<Claim>
+        {
+            new("groups", """["admin","editor"]""", JsonClaimValueTypes.JsonArray)
+        };
+
+    claims.HasNormalizableGroupClaims("groups").ShouldBeTrue();
+  }
+
+  [Test]
+  public void HasNormalizableGroupClaims_IsTrue_ForAJsonObjectValue()
+  {
+    var claims = new List<Claim>
+        {
+            new("groups", """{"id":"adminId","name":"admin"}""")
+        };
+
+    claims.HasNormalizableGroupClaims("groups").ShouldBeTrue();
+  }
+
+  [Test]
+  public void HasNormalizableGroupClaims_IsFalse_ForPlainStringClaims()
+  {
+    var claims = new List<Claim>
+        {
+            new("groups", "admin"),
+            new("groups", "editor"),
+            new("sub", "123")
+        };
+
+    claims.HasNormalizableGroupClaims("groups").ShouldBeFalse();
+  }
+
+  [Test]
+  public void HasNormalizableGroupClaims_IsFalse_When_TheShapeIsOnAnotherClaimType()
+  {
+    var claims = new List<Claim>
+        {
+            new("permissions", """["read","write"]""", JsonClaimValueTypes.JsonArray),
+            new("address", """{"street":"main"}""")
+        };
+
+    claims.HasNormalizableGroupClaims("groups").ShouldBeFalse();
+  }
+
+  [Test]
   public async Task SetClaims_Then_GetClaims_RoundTrips()
   {
     var cache = new IntrospectionCacheMock();

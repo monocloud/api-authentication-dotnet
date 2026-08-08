@@ -85,7 +85,7 @@
 
 
   <h1 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions" class="text-break">
-Class MonoCloudAuthenticationOptions  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L6"><i class="bi bi-code-slash"></i></a>
+Class MonoCloudAuthenticationOptions  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L16"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -98,7 +98,7 @@ Class MonoCloudAuthenticationOptions  <a class="header-action link-secondary" ti
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class MonoCloudAuthenticationOptions : AuthenticationSchemeOptions</code></pre>
+    <pre><code class="lang-csharp hljs">public class MonoCloudAuthenticationOptions : JwtBearerOptions</code></pre>
   </div>
 
 
@@ -109,6 +109,7 @@ Class MonoCloudAuthenticationOptions  <a class="header-action link-secondary" ti
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationschemeoptions">AuthenticationSchemeOptions</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions">JwtBearerOptions</a></div>
       <div><span class="xref">MonoCloudAuthenticationOptions</span></div>
     </dd>
   </dl>
@@ -118,6 +119,66 @@ Class MonoCloudAuthenticationOptions  <a class="header-action link-secondary" ti
   <dl class="typelist inheritedMembers">
     <dt>Inherited Members</dt>
     <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.requirehttpsmetadata">JwtBearerOptions.RequireHttpsMetadata</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.metadataaddress">JwtBearerOptions.MetadataAddress</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.authority">JwtBearerOptions.Authority</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.audience">JwtBearerOptions.Audience</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.challenge">JwtBearerOptions.Challenge</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.backchannelhttphandler">JwtBearerOptions.BackchannelHttpHandler</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.backchannel">JwtBearerOptions.Backchannel</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.backchanneltimeout">JwtBearerOptions.BackchannelTimeout</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.configuration">JwtBearerOptions.Configuration</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.configurationmanager">JwtBearerOptions.ConfigurationManager</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.refreshonissuerkeynotfound">JwtBearerOptions.RefreshOnIssuerKeyNotFound</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.securitytokenvalidators">JwtBearerOptions.SecurityTokenValidators</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.tokenhandlers">JwtBearerOptions.TokenHandlers</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.tokenvalidationparameters">JwtBearerOptions.TokenValidationParameters</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.savetoken">JwtBearerOptions.SaveToken</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.includeerrordetails">JwtBearerOptions.IncludeErrorDetails</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.mapinboundclaims">JwtBearerOptions.MapInboundClaims</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.automaticrefreshinterval">JwtBearerOptions.AutomaticRefreshInterval</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.refreshinterval">JwtBearerOptions.RefreshInterval</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.usesecuritytokenvalidators">JwtBearerOptions.UseSecurityTokenValidators</a>
+    </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationschemeoptions.validate#microsoft-aspnetcore-authentication-authenticationschemeoptions-validate">AuthenticationSchemeOptions.Validate()</a>
     </div>
@@ -152,6 +213,9 @@ Class MonoCloudAuthenticationOptions  <a class="header-action link-secondary" ti
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationschemeoptions.forwarddefaultselector">AuthenticationSchemeOptions.ForwardDefaultSelector</a>
     </div>
     <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationschemeoptions.timeprovider">AuthenticationSchemeOptions.TimeProvider</a>
+    </div>
+    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
@@ -177,6 +241,16 @@ Class MonoCloudAuthenticationOptions  <a class="header-action link-secondary" ti
 
 
 
+  <h2 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>This type derives from <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions">JwtBearerOptions</a>, so all of the standard JWT bearer options
+(<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.authority">Authority</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.tokenvalidationparameters">TokenValidationParameters</a>,
+<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.audience">Audience</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.savetoken">SaveToken</a>,
+<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.mapinboundclaims">MapInboundClaims</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.includeerrordetails">IncludeErrorDetails</a>, ...)
+apply here as well and behave exactly as they do for <code>AddJwtBearer</code>. Set
+<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.authority">Authority</a> to the tenant domain; a value without a scheme is prefixed
+with <code>https://</code> during post-configuration. The members declared below are the MonoCloud specific
+additions.</p>
+</div>
 
 
   <h2 class="section" id="constructors">Constructors
@@ -187,10 +261,11 @@ Class MonoCloudAuthenticationOptions  <a class="header-action link-secondary" ti
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions__ctor" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.#ctor">
   MonoCloudAuthenticationOptions()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L9"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L19"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Initializes a new instance of <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions">JwtBearerOptions</a>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
@@ -213,45 +288,11 @@ Class MonoCloudAuthenticationOptions  <a class="header-action link-secondary" ti
 </h2>
 
 
-  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_Audience_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Audience*"></a>
-
-  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_Audience" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Audience">
-  Audience
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L39"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Specifies the expected audience for the token validation.
-This value is used to match with the audience claim in the token
-to ensure the token is issued for the intended recipient.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string? Audience { get; set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
   <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_AuthenticationType_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.AuthenticationType*"></a>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_AuthenticationType" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.AuthenticationType">
   AuthenticationType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L111"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Specifies the authentication type associated with the identity,
@@ -281,45 +322,11 @@ If not explicitly set, the authentication scheme name will be used as the defaul
 
 
 
-  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_AutomaticRefreshInterval_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.AutomaticRefreshInterval*"></a>
-
-  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_AutomaticRefreshInterval" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.AutomaticRefreshInterval">
-  AutomaticRefreshInterval
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L161"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Specifies the time interval after which the cached configuration is considered outdated and will be automatically refreshed
-when accessed. This helps ensure that the application always has up-to-date metadata
-about the identity provider, such as keys and endpoints, without requiring manual intervention.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TimeSpan AutomaticRefreshInterval { get; set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
   <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_CacheDuration_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.CacheDuration*"></a>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_CacheDuration" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.CacheDuration">
   CacheDuration
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L59"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Specifies the duration for which token claims are cached.
@@ -353,7 +360,7 @@ before they are revalidated or refreshed.</p>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_CacheKeyGenerator" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.CacheKeyGenerator">
   CacheKeyGenerator
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L175"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L129"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A delegate used to generate a unique cache key based on the provided
@@ -387,7 +394,7 @@ with distributed caching of token-related data.</p>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_CacheKeyPrefix" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.CacheKeyPrefix">
   CacheKeyPrefix
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L64"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Specifies a prefix to be applied to all cache keys generated by the caching mechanism.</p>
@@ -419,7 +426,7 @@ with distributed caching of token-related data.</p>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_CertificateRetriever" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.CertificateRetriever">
   CertificateRetriever
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L107"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L97"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A delegate function used to retrieve an X.509 certificate from the current HTTP context.
@@ -454,7 +461,7 @@ or authentication validation.</p>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_ClientAuth" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.ClientAuth">
   ClientAuth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L33"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Represents the client authentication mechanism used during token validation or
@@ -487,7 +494,7 @@ when making secure API calls. Checkout <a class="xref" href="MonoCloud.Authentic
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_ClientId" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.ClientId">
   ClientId
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Client identifier used for authentication</p>
@@ -519,10 +526,12 @@ when making secure API calls. Checkout <a class="xref" href="MonoCloud.Authentic
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_ClockSkew" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.ClockSkew">
   ClockSkew
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L81"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L71"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Specifies the amount of clock skew to tolerate during token validation.</p>
+  <div class="markdown level1 summary"><p>Specifies the amount of clock skew to tolerate during token validation.
+When set, this value is applied to <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.identitymodel.tokens.tokenvalidationparameters.clockskew">ClockSkew</a> during
+post-configuration.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -547,79 +556,11 @@ when making secure API calls. Checkout <a class="xref" href="MonoCloud.Authentic
 
 
 
-  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_Configuration_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Configuration*"></a>
-
-  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_Configuration" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Configuration">
-  Configuration
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L139"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Represents the OpenID configuration metadata.
-If this property is set, it will be used to initialize a <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.identitymodel.protocols.staticconfigurationmanager-1">StaticConfigurationManager&lt;T&gt;</a>.
-Which is a static, pre-configured set of metadata instead of fetching it from a discovery endpoint.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public OpenIdConnectConfiguration? Configuration { get; set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.identitymodel.protocols.openidconnect.openidconnectconfiguration">OpenIdConnectConfiguration</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_ConfigurationManager_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.ConfigurationManager*"></a>
-
-  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_ConfigurationManager" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.ConfigurationManager">
-  ConfigurationManager
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L146"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>This property provides access to the configured configuration manager, which is responsible for
-retrieving and caching the <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.identitymodel.protocols.openidconnect.openidconnectconfiguration">OpenIdConnectConfiguration</a>.
-By default, it's configured to fetch metadata from the discovery endpoint.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IConfigurationManager&lt;OpenIdConnectConfiguration&gt;? ConfigurationManager { get; set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.identitymodel.protocols.iconfigurationmanager-1">IConfigurationManager</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.identitymodel.protocols.openidconnect.openidconnectconfiguration">OpenIdConnectConfiguration</a>&gt;</dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
   <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_EnableCaching_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.EnableCaching*"></a>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_EnableCaching" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.EnableCaching">
   EnableCaching
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L52"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Indicates whether caching of token introspection results is enabled.
@@ -654,7 +595,7 @@ through introspection are cached; locally validated JWTs are never cached.</p>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_Events" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Events">
   Events
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L40"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Handler for authentication-related events during the processing of the authentication workflow.
@@ -688,10 +629,10 @@ such as token validation, assertion creation, or introspection.</p>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_HttpClient" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.HttpClient">
   HttpClient
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L206"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L142"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Provides an instance of <a class="xref" href="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_HttpClient">HttpClient</a> used to send HTTP requests
+  <div class="markdown level1 summary"><p>Provides an instance of <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.net.http.httpclient">HttpClient</a> used to send HTTP requests
 and receive HTTP responses during authentication and token-related operations.
 This property is essential for managing HTTP communications, such as retrieving
 OpenID Connect configuration documents, performing token introspection,
@@ -716,6 +657,10 @@ and handling certificate-based authentication in mutual TLS (mTLS) scenarios.</p
 
 
 
+  <h4 class="section" id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_HttpClient_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>During post-configuration this client is also assigned to <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions.backchannel">Backchannel</a>,
+so discovery document retrieval shares it (and therefore any configured client certificate).</p>
+</div>
 
 
 
@@ -724,7 +669,7 @@ and handling certificate-based authentication in mutual TLS (mTLS) scenarios.</p
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_IntrospectJwtTokens" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.IntrospectJwtTokens">
   IntrospectJwtTokens
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L104"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Indicates whether JWT tokens must be introspected during authentication.
@@ -758,7 +703,7 @@ typically for scenarios where token validation is delegated to a remote authorit
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_JwtAssertionDuration" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.JwtAssertionDuration">
   JwtAssertionDuration
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L88"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L78"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Specifies the duration for which the generated JWT assertion is valid before expiration.
@@ -792,7 +737,7 @@ The assertion will be cached for this duration to improve performance.</p>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_JwtAssertionSigningAlgorithm" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.JwtAssertionSigningAlgorithm">
   JwtAssertionSigningAlgorithm
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L84"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Specifies the algorithm used for signing JWT assertions in client authentication flows.
@@ -821,81 +766,11 @@ When not explicitly set, a default algorithm is typically applied.</p>
 
 
 
-  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_JwtTokenValidationParameters_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.JwtTokenValidationParameters*"></a>
-
-  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_JwtTokenValidationParameters" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.JwtTokenValidationParameters">
-  JwtTokenValidationParameters
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L154"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Parameters used for validating JWT tokens.
-This property configures token validation settings such as issuer, audience,
-signing keys, and other security-related parameters to ensure the integrity and
-authenticity of received tokens during authentication.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TokenValidationParameters JwtTokenValidationParameters { get; set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.identitymodel.tokens.tokenvalidationparameters">TokenValidationParameters</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_MapInboundClaims_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.MapInboundClaims*"></a>
-
-  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_MapInboundClaims" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.MapInboundClaims">
-  MapInboundClaims
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L183"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Gets or sets the <a class="xref" href="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_MapInboundClaims">MapInboundClaims</a> property on the internal <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.identitymodel.jsonwebtokens.jsonwebtokenhandler">JsonWebTokenHandler</a> used for JWT validation, which is used when determining
-whether to map claim types that are extracted when validating a <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.identitymodel.jsonwebtokens.jsonwebtoken">JsonWebToken</a>.</p>
-<p>If this is set to true, the Claim Type is set to the JSON claim 'name' after translating using this mapping. Otherwise, no mapping occurs.</p>
-<p>The default value is true.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool MapInboundClaims { get; set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
   <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_NameClaimType_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.NameClaimType*"></a>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_NameClaimType" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.NameClaimType">
   NameClaimType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L127"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L117"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Specifies the claim type to be used as the username in the identity.
@@ -924,78 +799,11 @@ This value determines which claim in the token will be mapped to the user's iden
 
 
 
-  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_RefreshInterval_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshInterval*"></a>
-
-  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_RefreshInterval" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshInterval">
-  RefreshInterval
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L168"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Specifies the interval at which the configuration metadata (e.g., OpenID Connect discovery document)
-is retrieved to ensure the latest information is used for token validation.
-This property controls how frequently the metadata is refreshed in the background.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TimeSpan RefreshInterval { get; set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_RefreshOnIssuerKeyNotFound_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshOnIssuerKeyNotFound*"></a>
-
-  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_RefreshOnIssuerKeyNotFound" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshOnIssuerKeyNotFound">
-  RefreshOnIssuerKeyNotFound
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L197"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Indicates whether the token validation process should attempt to refresh the issuer's keys
-when a <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.identitymodel.tokens.securitytokensignaturekeynotfoundexception">SecurityTokenSignatureKeyNotFoundException</a> occurs.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool RefreshOnIssuerKeyNotFound { get; set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
   <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_RoleClaimType_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RoleClaimType*"></a>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_RoleClaimType" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RoleClaimType">
   RoleClaimType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L122"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Specifies the claim type used to determine the roles of a user during token validation.</p>
@@ -1023,77 +831,11 @@ when a <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.id
 
 
 
-  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_SaveToken_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.SaveToken*"></a>
-
-  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_SaveToken" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.SaveToken">
-  SaveToken
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L76"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Defines whether the bearer token should be stored in the
-<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationproperties">AuthenticationProperties</a> after a successful authorization.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool SaveToken { get; set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-  <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_TenantDomain_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.TenantDomain*"></a>
-
-  <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_TenantDomain" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.TenantDomain">
-  TenantDomain
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L21"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Authority URL (issuer) expected during validation of tokens.
-This value should be the tenant domain.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string? TenantDomain { get; set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
   <a id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_ValidateCertificateBinding_" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.ValidateCertificateBinding*"></a>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_ValidateCertificateBinding" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.ValidateCertificateBinding">
   ValidateCertificateBinding
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L89"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Delegate used to determine whether certificate binding validation should be performed for the current request.</p>

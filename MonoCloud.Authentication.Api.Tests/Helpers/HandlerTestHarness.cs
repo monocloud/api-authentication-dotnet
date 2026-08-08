@@ -31,7 +31,7 @@ public static class HandlerTestHarness
 
     var monitor = new MonoCloudAuthenticationOptionMonitorMock(options);
 
-    var handler = new MonoCloudAuthenticationHandler(monitor, UrlEncoder.Default, NullLoggerFactory.Instance, cache: cache);
+    var handler = new MonoCloudAuthenticationHandler(monitor, NullLoggerFactory.Instance, UrlEncoder.Default, cache);
 
     var authScheme = new AuthenticationScheme(scheme, scheme, typeof(MonoCloudAuthenticationHandler));
 

@@ -9,7 +9,7 @@ public class CertificateBindingTests
 
     var options = new MonoCloudAuthenticationOptions
     {
-      TenantDomain = OpenIdServerMock.Issuer,
+      Authority = OpenIdServerMock.Issuer,
       Audience = OpenIdServerMock.Issuer,
       MapInboundClaims = false,
       ValidateCertificateBinding = _ => true,
@@ -28,7 +28,7 @@ public class CertificateBindingTests
 
     var options = new MonoCloudAuthenticationOptions
     {
-      TenantDomain = OpenIdServerMock.Issuer,
+      Authority = OpenIdServerMock.Issuer,
       ClientId = OpenIdServerMock.ClientId,
       ClientAuth = new ClientSecretAuth(OpenIdServerMock.SymmetricSecret),
       ValidateCertificateBinding = _ => true,
@@ -135,6 +135,65 @@ public class CertificateBindingTests
   }
 
   [Test]
+  public async Task Should_NotRaiseTokenValidated_When_BindingFailsOnTheJwtPath()
+  {
+    var tokenValidated = false;
+    var authenticationFailed = false;
+
+    var options = BindingOptions(new OpenIdServerMock(), o =>
+    {
+      o.Events.OnTokenValidated = _ =>
+      {
+        tokenValidated = true;
+        return Task.CompletedTask;
+      };
+      o.Events.OnAuthenticationFailed = _ =>
+      {
+        authenticationFailed = true;
+        return Task.CompletedTask;
+      };
+    });
+
+    var token = OpenIdServerMock.CreateAccessToken(new List<Claim>
+    {
+      new("cnf", "{\"x5t#S256\":\"a-different-thumbprint\"}", JsonClaimValueTypes.Json)
+    });
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, token, clientCertificate: OpenIdServerMock.MtlsClientCert);
+    var result = await handler.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeFalse();
+    tokenValidated.ShouldBeFalse();
+    authenticationFailed.ShouldBeTrue();
+  }
+
+  [Test]
+  public async Task Should_RaiseTokenValidated_AfterBindingSucceedsOnTheJwtPath()
+  {
+    var order = new List<string>();
+
+    var options = BindingOptions(new OpenIdServerMock(), o =>
+    {
+      o.Events.OnCertificateBindingValidated = _ =>
+      {
+        order.Add("binding");
+        return Task.CompletedTask;
+      };
+      o.Events.OnTokenValidated = _ =>
+      {
+        order.Add("token-validated");
+        return Task.CompletedTask;
+      };
+    });
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, OpenIdServerMock.CreateAccessToken(), clientCertificate: OpenIdServerMock.MtlsClientCert);
+    var result = await handler.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
+    order.ShouldBe(["binding", "token-validated"]);
+  }
+
+  [Test]
   public async Task Should_NotValidateBinding_When_PredicateReturnsFalse()
   {
     // Default predicate is false; even with no client certificate present, auth should succeed.
@@ -144,7 +203,7 @@ public class CertificateBindingTests
 
     var options = new MonoCloudAuthenticationOptions
     {
-      TenantDomain = OpenIdServerMock.Issuer,
+      Authority = OpenIdServerMock.Issuer,
       Audience = OpenIdServerMock.Issuer,
       MapInboundClaims = false,
       HttpClient = server.Build()

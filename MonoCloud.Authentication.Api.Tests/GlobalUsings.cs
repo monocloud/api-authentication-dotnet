@@ -1,4 +1,5 @@
 global using Microsoft.AspNetCore.Authentication;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging.Abstractions;
@@ -33,5 +34,3 @@ global using System.Text.Json;
 global using System.Threading;
 global using System.Threading.Tasks;
 global using System.Web;
-global using AuthenticationFailedContext = MonoCloud.Authentication.Api.Shared.Context.AuthenticationFailedContext;
-global using TokenValidatedContext = MonoCloud.Authentication.Api.Shared.Context.TokenValidatedContext;

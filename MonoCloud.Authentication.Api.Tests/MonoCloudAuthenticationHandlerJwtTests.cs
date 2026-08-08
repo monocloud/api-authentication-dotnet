@@ -9,7 +9,7 @@ public class MonoCloudAuthenticationHandlerJwtTests
 
     var options = new MonoCloudAuthenticationOptions
     {
-      TenantDomain = OpenIdServerMock.Issuer,
+      Authority = OpenIdServerMock.Issuer,
       Audience = OpenIdServerMock.Issuer,
       MapInboundClaims = false,
       HttpClient = server.Build()
@@ -54,19 +54,19 @@ public class MonoCloudAuthenticationHandlerJwtTests
   }
 
   [Test]
-  public async Task Should_Fail_When_TokenIsMissing()
+  public async Task Should_ReturnNoResult_When_TokenIsMissing()
   {
     var options = JwtOptions(new OpenIdServerMock());
 
     var (handler, _) = await HandlerTestHarness.CreateAsync(options);
     var result = await handler.AuthenticateAsync();
 
-    result.Succeeded.ShouldBeFalse();
-    result.Failure!.Message.ShouldBe("Missing Token");
+    result.None.ShouldBeTrue();
+    result.Failure.ShouldBeNull();
   }
 
   [Test]
-  public async Task Should_Fail_When_AuthorizationHeaderIsNotBearer()
+  public async Task Should_ReturnNoResult_When_AuthorizationHeaderIsNotBearer()
   {
     var options = JwtOptions(new OpenIdServerMock());
 
@@ -75,8 +75,8 @@ public class MonoCloudAuthenticationHandlerJwtTests
 
     var result = await handler.AuthenticateAsync();
 
-    result.Succeeded.ShouldBeFalse();
-    result.Failure!.Message.ShouldBe("Missing Token");
+    result.None.ShouldBeTrue();
+    result.Failure.ShouldBeNull();
   }
 
   [Test]
@@ -153,7 +153,7 @@ public class MonoCloudAuthenticationHandlerJwtTests
   [Test]
   public async Task Should_NotStoreAccessToken_When_SaveTokenIsDisabled()
   {
-    var options = JwtOptions(new OpenIdServerMock());
+    var options = JwtOptions(new OpenIdServerMock(), o => o.SaveToken = false);
     var token = OpenIdServerMock.CreateAccessToken();
 
     var (handler, _) = await HandlerTestHarness.CreateAsync(options, token);
@@ -341,8 +341,11 @@ public class MonoCloudAuthenticationHandlerJwtTests
     configuration.SigningKeys.Add(OpenIdServerMock.PublicJwkKey);
     var configurationManager = new ConfigurationManagerMock(configuration);
 
-    // RefreshOnIssuerKeyNotFound defaults to false.
-    var options = JwtOptions(new OpenIdServerMock(), o => o.ConfigurationManager = configurationManager);
+    var options = JwtOptions(new OpenIdServerMock(), o =>
+    {
+      o.ConfigurationManager = configurationManager;
+      o.RefreshOnIssuerKeyNotFound = false;
+    });
 
     var (handler, _) = await HandlerTestHarness.CreateAsync(options, TokenSignedWithUnknownKey());
     var result = await handler.AuthenticateAsync();
@@ -362,7 +365,7 @@ public class MonoCloudAuthenticationHandlerJwtTests
 
     var options = new MonoCloudAuthenticationOptions
     {
-      TenantDomain = OpenIdServerMock.Issuer,
+      Authority = OpenIdServerMock.Issuer,
       Audience = OpenIdServerMock.Issuer,
       MapInboundClaims = false,
       HttpClient = server.Build(),

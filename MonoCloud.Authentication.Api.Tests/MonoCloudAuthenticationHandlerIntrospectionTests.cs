@@ -8,7 +8,7 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
   {
     var options = new MonoCloudAuthenticationOptions
     {
-      TenantDomain = OpenIdServerMock.Issuer,
+      Authority = OpenIdServerMock.Issuer,
       ClientId = OpenIdServerMock.ClientId,
       ClientAuth = clientAuth ?? new ClientSecretAuth(OpenIdServerMock.SymmetricSecret),
       HttpClient = server.Build()
@@ -158,10 +158,10 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
   }
 
   [Test]
-  public async Task Should_Throw_When_TenantDomainIsMissing()
+  public async Task Should_Throw_When_AuthorityIsMissing()
   {
     var server = new OpenIdServerMock();
-    var options = OpaqueOptions(server, configure: o => o.TenantDomain = null);
+    var options = OpaqueOptions(server, configure: o => o.Authority = null);
 
     var (handler, _) = await HandlerTestHarness.CreateAsync(options, OpaqueToken);
 
@@ -319,6 +319,87 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
     cache.SetCount.ShouldBe(1); // not written again
     server1.VerifyIntrospectionCalled();
     server2.VerifyIntrospectionCalled(Times.Never()); // served entirely from the cache
+  }
+
+  [Test]
+  public async Task Should_ReIntrospect_AfterCachedClaimsAreDeleted()
+  {
+    var cache = new IntrospectionCacheMock();
+    const string token = "opaque-evicted-active";
+
+    // First request: introspects and caches the claims.
+    var server1 = new OpenIdServerMock();
+    server1.SetupDiscovery();
+    server1.SetupJwks();
+    server1.SetupIntrospection(authType: "client_secret_post");
+    var options1 = OpaqueOptions(server1, configure: o => o.EnableCaching = true);
+    var (handler1, _) = await HandlerTestHarness.CreateAsync(options1, token, cache);
+    (await handler1.AuthenticateAsync()).Succeeded.ShouldBeTrue();
+    cache.SetCount.ShouldBe(1);
+
+    // Evict the entry the way a consumer would (e.g. on token revocation): generate the key and delete.
+    await cache.DeleteAsync(options1.CacheKeyGenerator(options1, token));
+    cache.DeleteCount.ShouldBe(1);
+
+    // Second request: the cache no longer answers, so the handler must introspect again.
+    var server2 = new OpenIdServerMock();
+    server2.SetupDiscovery();
+    server2.SetupJwks();
+    server2.SetupIntrospection(authType: "client_secret_post");
+    var options2 = OpaqueOptions(server2, configure: o => o.EnableCaching = true);
+    var (handler2, _) = await HandlerTestHarness.CreateAsync(options2, token, cache);
+    var result = await handler2.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
+    server2.VerifyIntrospectionCalled();
+    cache.SetCount.ShouldBe(2);
+  }
+
+  [Test]
+  public async Task Should_Authenticate_AfterCachedInactiveTokenIsDeleted()
+  {
+    var cache = new IntrospectionCacheMock();
+    const string token = "opaque-evicted-inactive";
+
+    // Seed the cache with an inactive verdict, as a prior introspection would have left it.
+    var server1 = new OpenIdServerMock();
+    var options1 = OpaqueOptions(server1, configure: o => o.EnableCaching = true);
+    var (handler1, _) = await HandlerTestHarness.CreateAsync(options1, token, cache);
+    var key = options1.CacheKeyGenerator(options1, token);
+    await cache.SetAsync(key, "[{\"Type\":\"active\",\"Value\":\"false\"},{\"Type\":\"exp\",\"Value\":\"9999999999\"}]", TimeSpan.FromMinutes(5));
+
+    (await handler1.AuthenticateAsync()).Failure!.Message.ShouldBe("Token inactive");
+    server1.VerifyIntrospectionCalled(Times.Never());
+
+    // Evicting the stale inactive verdict lets the next request reach the introspection endpoint again.
+    await cache.DeleteAsync(key);
+
+    var server2 = new OpenIdServerMock();
+    server2.SetupDiscovery();
+    server2.SetupJwks();
+    server2.SetupIntrospection(authType: "client_secret_post");
+    var options2 = OpaqueOptions(server2, configure: o => o.EnableCaching = true);
+    var (handler2, _) = await HandlerTestHarness.CreateAsync(options2, token, cache);
+    var result = await handler2.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
+    server2.VerifyIntrospectionCalled();
+  }
+
+  [Test]
+  public async Task DeleteAsync_RemovesOnlyTheRequestedEntry()
+  {
+    var cache = new IntrospectionCacheMock();
+
+    await cache.SetAsync("key-one", "value-one", TimeSpan.FromMinutes(5));
+    await cache.SetAsync("key-two", "value-two", TimeSpan.FromMinutes(5));
+
+    await cache.DeleteAsync("key-one");
+
+    (await cache.GetAsync("key-one")).ShouldBeNull();
+    (await cache.GetAsync("key-two")).ShouldBe("value-two");
+
+    await Should.NotThrowAsync(() => cache.DeleteAsync("key-one"));
   }
 
   [Test]

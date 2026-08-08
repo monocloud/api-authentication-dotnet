@@ -8,7 +8,7 @@ public class MtlsIntrospectionTests
   {
     return new MonoCloudAuthenticationOptions
     {
-      TenantDomain = OpenIdServerMock.Issuer,
+      Authority = OpenIdServerMock.Issuer,
       ClientId = OpenIdServerMock.ClientId,
       ClientAuth = clientAuth,
       HttpClient = server.Build()
