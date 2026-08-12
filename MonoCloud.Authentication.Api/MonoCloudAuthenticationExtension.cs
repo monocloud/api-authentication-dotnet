@@ -36,10 +36,38 @@ public static class MonoCloudAuthenticationExtension
   /// <param name="authenticationScheme">The authentication scheme to use.</param>
   /// <param name="configureOptions">An action to configure the <see cref="MonoCloudAuthenticationOptions"/>.</param>
   /// <returns>The <see cref="AuthenticationBuilder"/> so that additional schemes can be chained.</returns>
+  /// <remarks>
+  /// The scheme is registered manually rather than through <see cref="AuthenticationBuilder.AddScheme{TOptions,THandler}(string,Action{TOptions})"/>:
+  /// that overload requires the handler to derive from <c>AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;</c>,
+  /// which a <see cref="JwtBearerHandler"/> subclass cannot satisfy. The registrations below mirror what the
+  /// framework does internally for any authentication scheme.
+  /// </remarks>
   public static AuthenticationBuilder AddMonoCloudAuthentication(this AuthenticationBuilder builder, string authenticationScheme, Action<MonoCloudAuthenticationOptions>? configureOptions)
   {
     builder.Services.AddHttpClient(MonoCloudAuthenticationDefaults.HttpClientName);
+
     builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IPostConfigureOptions<MonoCloudAuthenticationOptions>, PostConfigureMonoCloudAuthenticationOptions>());
-    return builder.AddScheme<MonoCloudAuthenticationOptions, MonoCloudAuthenticationHandler>(authenticationScheme, configureOptions);
+    builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IPostConfigureOptions<MonoCloudAuthenticationOptions>, PostConfigureMonoCloudAuthenticationTimeProvider>());
+
+    builder.Services.Configure<AuthenticationOptions>(o => o.AddScheme(authenticationScheme, scheme =>
+    {
+      scheme.HandlerType = typeof(MonoCloudAuthenticationHandler);
+      scheme.DisplayName = null;
+    }));
+
+    if (configureOptions is not null)
+    {
+      builder.Services.Configure(authenticationScheme, configureOptions);
+    }
+
+    builder.Services.AddOptions<MonoCloudAuthenticationOptions>(authenticationScheme).Validate(o =>
+    {
+      o.Validate(authenticationScheme);
+      return true;
+    });
+
+    builder.Services.AddTransient<MonoCloudAuthenticationHandler>();
+
+    return builder;
   }
 }

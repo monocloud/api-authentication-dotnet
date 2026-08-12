@@ -6,9 +6,18 @@ namespace MonoCloud.Authentication.Api;
 /// Handles authentication for MonoCloud by providing authentication logic specific to the MonoCloud platform.
 /// </summary>
 /// <remarks>
-/// This handler processes authentication tokens and performs token introspection to validate incoming requests.
+/// <para>
+/// This handler extends <see cref="JwtBearerHandler"/>. JWT access tokens are validated by the base handler
+/// (signing keys, issuer, audience, lifetime) while opaque access tokens are validated through RFC 7662
+/// introspection by this handler. Certificate binding (RFC 8705) and group claim normalization are applied on
+/// both paths.
+/// </para>
+/// <para>
+/// Because <see cref="IOptionsMonitor{TOptions}"/> is covariant, the base handler's <c>Options</c> holds the
+/// <see cref="MonoCloudAuthenticationOptions"/> instance produced by this scheme's options pipeline.
+/// </para>
 /// </remarks>
-public class MonoCloudAuthenticationHandler : AuthenticationHandler<MonoCloudAuthenticationOptions>
+public class MonoCloudAuthenticationHandler : JwtBearerHandler
 {
   private readonly IIntrospectionCache _cache;
   private OpenIdConnectConfiguration? _configuration;
@@ -16,30 +25,19 @@ public class MonoCloudAuthenticationHandler : AuthenticationHandler<MonoCloudAut
   /// <summary>
   /// Initializes a new instance of the <see cref="MonoCloudAuthenticationHandler"/> class.
   /// </summary>
-#if NET8_0_OR_GREATER
-  public MonoCloudAuthenticationHandler(IOptionsMonitor<MonoCloudAuthenticationOptions> options,
-    UrlEncoder encoder,
-    ILoggerFactory logger,
-#pragma warning disable CS0618 // Type or member is obsolete
-    ISystemClock? clock = null,
-#pragma warning restore CS0618 // Type or member is obsolete
-    IIntrospectionCache? cache = null) : base(options, logger, encoder)
+  public MonoCloudAuthenticationHandler(IOptionsMonitor<MonoCloudAuthenticationOptions> options, ILoggerFactory logger, UrlEncoder encoder, IIntrospectionCache? cache = null) : base(options, logger, encoder)
   {
     _cache = cache!;
   }
-#else
-  [Obsolete("ISystemClock is obsolete, use TimeProvider on AuthenticationSchemeOptions instead.")]
-  public MonoCloudAuthenticationHandler(IOptionsMonitor<MonoCloudAuthenticationOptions> options,
-    UrlEncoder encoder,
-    ILoggerFactory logger,
-    ISystemClock clock,
-    IIntrospectionCache? cache = null) : base(options, logger, encoder, clock)
-  {
-    _cache = cache!;
-  }
-#endif
 
   private static readonly ConcurrentDictionary<string, Lazy<Task<IntrospectionResult>>> IntrospectionCache = new();
+
+  private static readonly JsonWebTokenHandler TokenReader = new();
+
+  /// <summary>
+  /// <see cref="MonoCloudAuthenticationOptions"/>
+  /// </summary>
+  protected new MonoCloudAuthenticationOptions Options => (MonoCloudAuthenticationOptions)base.Options;
 
   /// <summary>
   /// <see cref="MonoCloudAuthenticationEvents"/>
@@ -83,125 +81,37 @@ public class MonoCloudAuthenticationHandler : AuthenticationHandler<MonoCloudAut
 
     if (string.IsNullOrEmpty(token))
     {
-      Logger.LogWarning("Authentication failed for scheme {SchemeName}: Missing token", Scheme.Name);
-      return AuthenticateResult.Fail("Missing Token");
+      Logger.LogDebug("Authentication skipped for scheme {SchemeName}: no bearer token present", Scheme.Name);
+      return AuthenticateResult.NoResult();
     }
 
-    if (!Options.IntrospectJwtTokens && new JsonWebTokenHandler().CanReadToken(token))
+    if (!Options.IntrospectJwtTokens && TokenReader.CanReadToken(token))
     {
       Logger.LogDebug("Token is a JWT. Handling with JWT bearer authentication");
       return await HandleJwtBearerAuthenticationAsync(token);
     }
 
     Logger.LogDebug("Handling with introspection");
-    return await HandleOpaqueTokenAuthenticationAsync(token);
+    return await HandleOpaqueTokenAuthenticationAsync(token!);
   }
 
   private async Task<AuthenticateResult> HandleJwtBearerAuthenticationAsync(string token)
   {
-    Logger.LogDebug("Starting JWT token validation");
+    // The base handler always raises MessageReceived and re-reads the Authorization header itself. Swapping
+    // in an interceptor for the duration of the call keeps the consumer's MessageReceived to a single
+    // invocation, guarantees the base handler validates exactly the token routed here, and lets group
+    // normalization and certificate binding run before the consumer's TokenValidated hook.
+    var events = Events;
+
+    Events = new InterceptingEvents(events, token, this);
 
     try
     {
-      if (_configuration is null && Options.ConfigurationManager is not null)
-      {
-        _configuration ??= await Options.ConfigurationManager.GetConfigurationAsync(Context.RequestAborted);
-      }
-
-      var validationParameters = Options.JwtTokenValidationParameters.Clone();
-
-      if (_configuration != null)
-      {
-        var issuers = new[] { _configuration.Issuer };
-
-        validationParameters.ValidIssuers = validationParameters.ValidIssuers?.Concat(issuers) ?? issuers;
-
-        validationParameters.IssuerSigningKeys = validationParameters.IssuerSigningKeys?.Concat(_configuration.SigningKeys) ?? _configuration.SigningKeys;
-      }
-
-      if (Options.ClockSkew.HasValue)
-      {
-        validationParameters.ClockSkew = Options.ClockSkew.Value;
-      }
-
-      var tokenValidationResult = await Options.JwtTokenHandler.ValidateTokenAsync(token, validationParameters);
-
-      if (tokenValidationResult.IsValid)
-      {
-        var claims = tokenValidationResult.ClaimsIdentity.Claims.ToList();
-
-        var authenticationType = Options.AuthenticationType ?? Options.JwtTokenValidationParameters.AuthenticationType ?? Scheme.Name;
-        var roleClaimType = Options.RoleClaimType ?? Options.JwtTokenValidationParameters.RoleClaimType;
-        var nameClaimType = Options.NameClaimType ?? Options.JwtTokenValidationParameters.NameClaimType;
-
-        claims.NormalizeGroupClaims(roleClaimType);
-
-        var identity = new ClaimsIdentity(claims, authenticationType, nameClaimType, roleClaimType);
-
-        var principal = new ClaimsPrincipal(identity);
-
-        Logger.LogInformation("JWT token successfully validated for user: {NameClaim}", principal.Identity?.Name);
-
-        if (Options.ValidateCertificateBinding(Context))
-        {
-          var certificateBindingResult = await ValidateCertificateBinding(identity.Claims);
-          if (certificateBindingResult is not null)
-          {
-            return certificateBindingResult;
-          }
-        }
-
-        var validatedToken = tokenValidationResult.SecurityToken;
-
-        var tokenValidatedContext = new TokenValidatedContext(Context, Scheme, Options)
-        {
-          Principal = principal,
-          Token = validatedToken,
-          Properties =
-              {
-                ExpiresUtc = GetSafeDateTime(validatedToken.ValidTo),
-                IssuedUtc = GetSafeDateTime(validatedToken.ValidFrom)
-              }
-        };
-
-        await Events.TokenValidated(tokenValidatedContext);
-
-        if (tokenValidatedContext.Result is not null)
-        {
-          return tokenValidatedContext.Result;
-        }
-
-        if (Options.SaveToken)
-        {
-          tokenValidatedContext.Properties.StoreTokens(new List<AuthenticationToken> { new() { Name = "access_token", Value = token } });
-        }
-
-        tokenValidatedContext.Success();
-
-        return tokenValidatedContext.Result!;
-      }
-
-      Logger.LogWarning(tokenValidationResult.Exception, "JWT validation failed for token. Message: {ErrorMessage}", tokenValidationResult.Exception?.Message ?? "Validation failed with no exception");
-
-      if (Options.ConfigurationManager is not null && Options is { RefreshOnIssuerKeyNotFound: true } && tokenValidationResult.Exception is SecurityTokenSignatureKeyNotFoundException)
-      {
-        Options.ConfigurationManager.RequestRefresh();
-      }
-
-      tokenValidationResult.Exception ??= new SecurityTokenValidationException("Unable to validate the Token");
-
-      return await AuthenticationFailed(tokenValidationResult.Exception.Message, Context, Scheme, Events, Options);
+      return await base.HandleAuthenticateAsync();
     }
-    catch (Exception e)
+    finally
     {
-      Logger.LogError(e, "An unhandled exception occurred during JWT token authentication for scheme {SchemeName}", Scheme.Name);
-
-      if (Options.ConfigurationManager is not null && Options is { RefreshOnIssuerKeyNotFound: true } && e is SecurityTokenSignatureKeyNotFoundException)
-      {
-        Options.ConfigurationManager.RequestRefresh();
-      }
-
-      return await AuthenticationFailed(e.Message, Context, Scheme, Events, Options);
+      Events = events;
     }
   }
 
@@ -212,9 +122,9 @@ public class MonoCloudAuthenticationHandler : AuthenticationHandler<MonoCloudAut
       throw new ArgumentNullException(nameof(Options.ClientId), "Client ID must be set");
     }
 
-    if (string.IsNullOrEmpty(Options.TenantDomain))
+    if (string.IsNullOrEmpty(Options.Authority))
     {
-      throw new ArgumentNullException(nameof(Options.TenantDomain), "Tenant Domain must be set");
+      throw new ArgumentNullException(nameof(Options.Authority), "Authority must be set");
     }
 
     try
@@ -259,10 +169,8 @@ public class MonoCloudAuthenticationHandler : AuthenticationHandler<MonoCloudAut
 
           return await CreateOpaqueTokenTicket(claims, token, Context, Scheme, Events, Options, Logger);
         }
-        else
-        {
-          Logger.LogDebug("Proceeding to introspection");
-        }
+
+        Logger.LogDebug("Proceeding to introspection");
       }
 
       Logger.LogDebug("Starting token introspection process");
@@ -293,24 +201,22 @@ public class MonoCloudAuthenticationHandler : AuthenticationHandler<MonoCloudAut
 
         return await CreateOpaqueTokenTicket(introspectionClaims, token, Context, Scheme, Events, Options, Logger);
       }
-      else
+
+      Logger.LogInformation("Introspection successful. Token is inactive");
+
+      if (introspectionClaims.All(x => x.Type != "active"))
       {
-        Logger.LogInformation("Introspection successful. Token is inactive");
-
-        if (introspectionClaims.All(x => x.Type != "active"))
-        {
-          introspectionClaims.Add(new Claim("active", "false", ClaimValueTypes.Boolean));
-        }
-
-        if (Options.EnableCaching)
-        {
-          Logger.LogDebug("Caching inactive token claims");
-
-          await _cache.SetClaimsAsync(Options, token, introspectionClaims, Options.CacheDuration, Logger, Context.RequestAborted).ConfigureAwait(false);
-        }
-
-        return await AuthenticationFailed("Token inactive", Context, Scheme, Events, Options);
+        introspectionClaims.Add(new Claim("active", "false", ClaimValueTypes.Boolean));
       }
+
+      if (Options.EnableCaching)
+      {
+        Logger.LogDebug("Caching inactive token claims");
+
+        await _cache.SetClaimsAsync(Options, token, introspectionClaims, Options.CacheDuration, Logger, Context.RequestAborted).ConfigureAwait(false);
+      }
+
+      return await AuthenticationFailed("Token inactive", Context, Scheme, Events, Options);
     }
     catch (Exception e)
     {
@@ -415,14 +321,7 @@ public class MonoCloudAuthenticationHandler : AuthenticationHandler<MonoCloudAut
     return authenticationFailedContext.Result ?? AuthenticateResult.Fail(error);
   }
 
-  private static async Task<AuthenticateResult> CreateOpaqueTokenTicket(
-      IList<Claim> claims,
-      string token,
-      HttpContext httpContext,
-      AuthenticationScheme scheme,
-      MonoCloudAuthenticationEvents events,
-      MonoCloudAuthenticationOptions options,
-      ILogger logger)
+  private static async Task<AuthenticateResult> CreateOpaqueTokenTicket(IList<Claim> claims, string token, HttpContext httpContext, AuthenticationScheme scheme, MonoCloudAuthenticationEvents events, MonoCloudAuthenticationOptions options, ILogger logger)
   {
     var authenticationType = options.AuthenticationType ?? scheme.Name;
 
@@ -438,8 +337,7 @@ public class MonoCloudAuthenticationHandler : AuthenticationHandler<MonoCloudAut
 
     var tokenValidatedContext = new TokenValidatedContext(httpContext, scheme, options)
     {
-      Principal = principal,
-      Token = token
+      Principal = principal
     };
 
     await events.TokenValidated(tokenValidatedContext);
@@ -518,15 +416,81 @@ public class MonoCloudAuthenticationHandler : AuthenticationHandler<MonoCloudAut
     return context.Result;
   }
 
-  private static DateTime? GetSafeDateTime(DateTime dateTime)
+  private void NormalizeGroups(TokenValidatedContext context)
   {
-    // Assigning DateTime.MinValue or default(DateTime) to a DateTimeOffset when in a UTC+X timezone will throw
-    // Since we don't really care about DateTime.MinValue in this case let's just set the field to null
-    if (dateTime == DateTime.MinValue)
+    if (context.Principal?.Identity is not ClaimsIdentity identity)
     {
-      return null;
+      return;
     }
 
-    return dateTime;
+    var roleClaimType = Options.RoleClaimType ?? Options.TokenValidationParameters.RoleClaimType;
+
+    if (string.IsNullOrEmpty(roleClaimType) || !identity.Claims.HasNormalizableGroupClaims(roleClaimType))
+    {
+      return;
+    }
+
+    var claims = identity.Claims.ToList();
+
+    claims.NormalizeGroupClaims(roleClaimType);
+
+    context.Principal = new ClaimsPrincipal(new ClaimsIdentity(claims, identity.AuthenticationType, identity.NameClaimType, identity.RoleClaimType));
+  }
+
+  private static void Apply(AuthenticateResult result, TokenValidatedContext context)
+  {
+    if (result.Failure is not null)
+    {
+      context.Fail(result.Failure);
+    }
+    else if (result.Succeeded)
+    {
+      context.Principal = result.Principal;
+      context.Properties = result.Properties!;
+      context.Success();
+    }
+    else
+    {
+      context.NoResult();
+    }
+  }
+
+  private sealed class InterceptingEvents(MonoCloudAuthenticationEvents inner, string token, MonoCloudAuthenticationHandler handler) : MonoCloudAuthenticationEvents
+  {
+    public override Task MessageReceived(MessageReceivedContext context)
+    {
+      context.Token = token;
+      return Task.CompletedTask;
+    }
+
+    public override async Task TokenValidated(TokenValidatedContext context)
+    {
+      handler.NormalizeGroups(context);
+
+      if (handler.Options.ValidateCertificateBinding(context.HttpContext))
+      {
+        var result = await handler.ValidateCertificateBinding(context.Principal!.Claims);
+
+        if (result is not null)
+        {
+          Apply(result, context);
+          return;
+        }
+      }
+
+      await inner.TokenValidated(context);
+    }
+
+    public override Task AuthenticationFailed(AuthenticationFailedContext context) => inner.AuthenticationFailed(context);
+
+    public override Task Challenge(JwtBearerChallengeContext context) => inner.Challenge(context);
+
+    public override Task Forbidden(ForbiddenContext context) => inner.Forbidden(context);
+
+    public override Task CertificateBindingValidated(CertificateBindingValidatedContext context) => inner.CertificateBindingValidated(context);
+
+    public override Task Introspection(IntrospectionRequestContext context) => inner.Introspection(context);
+
+    public override Task CreatingJwtAssertion(JwtAssertionContext context) => inner.CreatingJwtAssertion(context);
   }
 }

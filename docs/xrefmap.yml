@@ -31,19 +31,6 @@ references:
   commentId: T:MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents
   fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents
   nameWithType: MonoCloudAuthenticationEvents
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.AuthenticationFailed(MonoCloud.Authentication.Api.Shared.Context.AuthenticationFailedContext)
-  name: AuthenticationFailed(AuthenticationFailedContext)
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_AuthenticationFailed_MonoCloud_Authentication_Api_Shared_Context_AuthenticationFailedContext_
-  commentId: M:MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.AuthenticationFailed(MonoCloud.Authentication.Api.Shared.Context.AuthenticationFailedContext)
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.AuthenticationFailed(MonoCloud.Authentication.Api.Shared.Context.AuthenticationFailedContext)
-  nameWithType: MonoCloudAuthenticationEvents.AuthenticationFailed(AuthenticationFailedContext)
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.AuthenticationFailed*
-  name: AuthenticationFailed
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_AuthenticationFailed_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.AuthenticationFailed
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.AuthenticationFailed
-  nameWithType: MonoCloudAuthenticationEvents.AuthenticationFailed
 - uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.CertificateBindingValidated(MonoCloud.Authentication.Api.Shared.Context.CertificateBindingValidatedContext)
   name: CertificateBindingValidated(CertificateBindingValidatedContext)
   href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_CertificateBindingValidated_MonoCloud_Authentication_Api_Shared_Context_CertificateBindingValidatedContext_
@@ -83,32 +70,6 @@ references:
   isSpec: "True"
   fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.Introspection
   nameWithType: MonoCloudAuthenticationEvents.Introspection
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.MessageReceived(MonoCloud.Authentication.Api.Shared.Context.MessageReceivedContext)
-  name: MessageReceived(MessageReceivedContext)
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_MessageReceived_MonoCloud_Authentication_Api_Shared_Context_MessageReceivedContext_
-  commentId: M:MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.MessageReceived(MonoCloud.Authentication.Api.Shared.Context.MessageReceivedContext)
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.MessageReceived(MonoCloud.Authentication.Api.Shared.Context.MessageReceivedContext)
-  nameWithType: MonoCloudAuthenticationEvents.MessageReceived(MessageReceivedContext)
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.MessageReceived*
-  name: MessageReceived
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_MessageReceived_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.MessageReceived
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.MessageReceived
-  nameWithType: MonoCloudAuthenticationEvents.MessageReceived
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnAuthenticationFailed
-  name: OnAuthenticationFailed
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnAuthenticationFailed
-  commentId: P:MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnAuthenticationFailed
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnAuthenticationFailed
-  nameWithType: MonoCloudAuthenticationEvents.OnAuthenticationFailed
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnAuthenticationFailed*
-  name: OnAuthenticationFailed
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnAuthenticationFailed_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnAuthenticationFailed
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnAuthenticationFailed
-  nameWithType: MonoCloudAuthenticationEvents.OnAuthenticationFailed
 - uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnCertificateBindingValidated
   name: OnCertificateBindingValidated
   href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnCertificateBindingValidated
@@ -148,45 +109,6 @@ references:
   isSpec: "True"
   fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnIntrospection
   nameWithType: MonoCloudAuthenticationEvents.OnIntrospection
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnMessageReceived
-  name: OnMessageReceived
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnMessageReceived
-  commentId: P:MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnMessageReceived
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnMessageReceived
-  nameWithType: MonoCloudAuthenticationEvents.OnMessageReceived
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnMessageReceived*
-  name: OnMessageReceived
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnMessageReceived_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnMessageReceived
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnMessageReceived
-  nameWithType: MonoCloudAuthenticationEvents.OnMessageReceived
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnTokenValidated
-  name: OnTokenValidated
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnTokenValidated
-  commentId: P:MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnTokenValidated
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnTokenValidated
-  nameWithType: MonoCloudAuthenticationEvents.OnTokenValidated
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnTokenValidated*
-  name: OnTokenValidated
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_OnTokenValidated_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnTokenValidated
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.OnTokenValidated
-  nameWithType: MonoCloudAuthenticationEvents.OnTokenValidated
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.TokenValidated(MonoCloud.Authentication.Api.Shared.Context.TokenValidatedContext)
-  name: TokenValidated(TokenValidatedContext)
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_TokenValidated_MonoCloud_Authentication_Api_Shared_Context_TokenValidatedContext_
-  commentId: M:MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.TokenValidated(MonoCloud.Authentication.Api.Shared.Context.TokenValidatedContext)
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.TokenValidated(MonoCloud.Authentication.Api.Shared.Context.TokenValidatedContext)
-  nameWithType: MonoCloudAuthenticationEvents.TokenValidated(TokenValidatedContext)
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.TokenValidated*
-  name: TokenValidated
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationEvents_TokenValidated_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.TokenValidated
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.TokenValidated
-  nameWithType: MonoCloudAuthenticationEvents.TokenValidated
 - uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationExtension
   name: MonoCloudAuthenticationExtension
   href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationExtension.html
@@ -239,15 +161,15 @@ references:
   commentId: T:MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler
   fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler
   nameWithType: MonoCloudAuthenticationHandler
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions},System.Text.Encodings.Web.UrlEncoder,Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.AspNetCore.Authentication.ISystemClock,MonoCloud.Authentication.Api.Shared.IIntrospectionCache)
-  name: MonoCloudAuthenticationHandler(IOptionsMonitor<MonoCloudAuthenticationOptions>, UrlEncoder, ILoggerFactory, ISystemClock, IIntrospectionCache?)
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationHandler__ctor_Microsoft_Extensions_Options_IOptionsMonitor_MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions__System_Text_Encodings_Web_UrlEncoder_Microsoft_Extensions_Logging_ILoggerFactory_Microsoft_AspNetCore_Authentication_ISystemClock_MonoCloud_Authentication_Api_Shared_IIntrospectionCache_
-  commentId: M:MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions},System.Text.Encodings.Web.UrlEncoder,Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.AspNetCore.Authentication.ISystemClock,MonoCloud.Authentication.Api.Shared.IIntrospectionCache)
-  name.vb: New(IOptionsMonitor(Of MonoCloudAuthenticationOptions), UrlEncoder, ILoggerFactory, ISystemClock, IIntrospectionCache)
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.MonoCloudAuthenticationHandler(Microsoft.Extensions.Options.IOptionsMonitor<MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions>, System.Text.Encodings.Web.UrlEncoder, Microsoft.Extensions.Logging.ILoggerFactory, Microsoft.AspNetCore.Authentication.ISystemClock, MonoCloud.Authentication.Api.Shared.IIntrospectionCache?)
-  fullName.vb: MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.New(Microsoft.Extensions.Options.IOptionsMonitor(Of MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions), System.Text.Encodings.Web.UrlEncoder, Microsoft.Extensions.Logging.ILoggerFactory, Microsoft.AspNetCore.Authentication.ISystemClock, MonoCloud.Authentication.Api.Shared.IIntrospectionCache)
-  nameWithType: MonoCloudAuthenticationHandler.MonoCloudAuthenticationHandler(IOptionsMonitor<MonoCloudAuthenticationOptions>, UrlEncoder, ILoggerFactory, ISystemClock, IIntrospectionCache?)
-  nameWithType.vb: MonoCloudAuthenticationHandler.New(IOptionsMonitor(Of MonoCloudAuthenticationOptions), UrlEncoder, ILoggerFactory, ISystemClock, IIntrospectionCache)
+- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,MonoCloud.Authentication.Api.Shared.IIntrospectionCache)
+  name: MonoCloudAuthenticationHandler(IOptionsMonitor<MonoCloudAuthenticationOptions>, ILoggerFactory, UrlEncoder, IIntrospectionCache?)
+  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationHandler__ctor_Microsoft_Extensions_Options_IOptionsMonitor_MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions__Microsoft_Extensions_Logging_ILoggerFactory_System_Text_Encodings_Web_UrlEncoder_MonoCloud_Authentication_Api_Shared_IIntrospectionCache_
+  commentId: M:MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,MonoCloud.Authentication.Api.Shared.IIntrospectionCache)
+  name.vb: New(IOptionsMonitor(Of MonoCloudAuthenticationOptions), ILoggerFactory, UrlEncoder, IIntrospectionCache)
+  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.MonoCloudAuthenticationHandler(Microsoft.Extensions.Options.IOptionsMonitor<MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions>, Microsoft.Extensions.Logging.ILoggerFactory, System.Text.Encodings.Web.UrlEncoder, MonoCloud.Authentication.Api.Shared.IIntrospectionCache?)
+  fullName.vb: MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.New(Microsoft.Extensions.Options.IOptionsMonitor(Of MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions), Microsoft.Extensions.Logging.ILoggerFactory, System.Text.Encodings.Web.UrlEncoder, MonoCloud.Authentication.Api.Shared.IIntrospectionCache)
+  nameWithType: MonoCloudAuthenticationHandler.MonoCloudAuthenticationHandler(IOptionsMonitor<MonoCloudAuthenticationOptions>, ILoggerFactory, UrlEncoder, IIntrospectionCache?)
+  nameWithType.vb: MonoCloudAuthenticationHandler.New(IOptionsMonitor(Of MonoCloudAuthenticationOptions), ILoggerFactory, UrlEncoder, IIntrospectionCache)
 - uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.#ctor*
   name: MonoCloudAuthenticationHandler
   href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationHandler__ctor_
@@ -297,6 +219,19 @@ references:
   isSpec: "True"
   fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.HandleAuthenticateAsync
   nameWithType: MonoCloudAuthenticationHandler.HandleAuthenticateAsync
+- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.Options
+  name: Options
+  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationHandler_Options
+  commentId: P:MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.Options
+  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.Options
+  nameWithType: MonoCloudAuthenticationHandler.Options
+- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.Options*
+  name: Options
+  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationHandler_Options_
+  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.Options
+  isSpec: "True"
+  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.Options
+  nameWithType: MonoCloudAuthenticationHandler.Options
 - uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions
   name: MonoCloudAuthenticationOptions
   href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html
@@ -322,19 +257,6 @@ references:
   fullName.vb: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.New
   nameWithType: MonoCloudAuthenticationOptions.MonoCloudAuthenticationOptions
   nameWithType.vb: MonoCloudAuthenticationOptions.New
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Audience
-  name: Audience
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_Audience
-  commentId: P:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Audience
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Audience
-  nameWithType: MonoCloudAuthenticationOptions.Audience
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Audience*
-  name: Audience
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_Audience_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Audience
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Audience
-  nameWithType: MonoCloudAuthenticationOptions.Audience
 - uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.AuthenticationType
   name: AuthenticationType
   href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_AuthenticationType
@@ -348,19 +270,6 @@ references:
   isSpec: "True"
   fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.AuthenticationType
   nameWithType: MonoCloudAuthenticationOptions.AuthenticationType
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.AutomaticRefreshInterval
-  name: AutomaticRefreshInterval
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_AutomaticRefreshInterval
-  commentId: P:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.AutomaticRefreshInterval
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.AutomaticRefreshInterval
-  nameWithType: MonoCloudAuthenticationOptions.AutomaticRefreshInterval
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.AutomaticRefreshInterval*
-  name: AutomaticRefreshInterval
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_AutomaticRefreshInterval_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.AutomaticRefreshInterval
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.AutomaticRefreshInterval
-  nameWithType: MonoCloudAuthenticationOptions.AutomaticRefreshInterval
 - uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.CacheDuration
   name: CacheDuration
   href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_CacheDuration
@@ -452,32 +361,6 @@ references:
   isSpec: "True"
   fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.ClockSkew
   nameWithType: MonoCloudAuthenticationOptions.ClockSkew
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Configuration
-  name: Configuration
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_Configuration
-  commentId: P:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Configuration
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Configuration
-  nameWithType: MonoCloudAuthenticationOptions.Configuration
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Configuration*
-  name: Configuration
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_Configuration_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Configuration
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.Configuration
-  nameWithType: MonoCloudAuthenticationOptions.Configuration
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.ConfigurationManager
-  name: ConfigurationManager
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_ConfigurationManager
-  commentId: P:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.ConfigurationManager
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.ConfigurationManager
-  nameWithType: MonoCloudAuthenticationOptions.ConfigurationManager
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.ConfigurationManager*
-  name: ConfigurationManager
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_ConfigurationManager_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.ConfigurationManager
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.ConfigurationManager
-  nameWithType: MonoCloudAuthenticationOptions.ConfigurationManager
 - uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.EnableCaching
   name: EnableCaching
   href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_EnableCaching
@@ -556,32 +439,6 @@ references:
   isSpec: "True"
   fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.JwtAssertionSigningAlgorithm
   nameWithType: MonoCloudAuthenticationOptions.JwtAssertionSigningAlgorithm
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.JwtTokenValidationParameters
-  name: JwtTokenValidationParameters
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_JwtTokenValidationParameters
-  commentId: P:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.JwtTokenValidationParameters
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.JwtTokenValidationParameters
-  nameWithType: MonoCloudAuthenticationOptions.JwtTokenValidationParameters
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.JwtTokenValidationParameters*
-  name: JwtTokenValidationParameters
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_JwtTokenValidationParameters_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.JwtTokenValidationParameters
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.JwtTokenValidationParameters
-  nameWithType: MonoCloudAuthenticationOptions.JwtTokenValidationParameters
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.MapInboundClaims
-  name: MapInboundClaims
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_MapInboundClaims
-  commentId: P:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.MapInboundClaims
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.MapInboundClaims
-  nameWithType: MonoCloudAuthenticationOptions.MapInboundClaims
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.MapInboundClaims*
-  name: MapInboundClaims
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_MapInboundClaims_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.MapInboundClaims
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.MapInboundClaims
-  nameWithType: MonoCloudAuthenticationOptions.MapInboundClaims
 - uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.NameClaimType
   name: NameClaimType
   href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_NameClaimType
@@ -595,32 +452,6 @@ references:
   isSpec: "True"
   fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.NameClaimType
   nameWithType: MonoCloudAuthenticationOptions.NameClaimType
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshInterval
-  name: RefreshInterval
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_RefreshInterval
-  commentId: P:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshInterval
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshInterval
-  nameWithType: MonoCloudAuthenticationOptions.RefreshInterval
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshInterval*
-  name: RefreshInterval
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_RefreshInterval_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshInterval
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshInterval
-  nameWithType: MonoCloudAuthenticationOptions.RefreshInterval
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshOnIssuerKeyNotFound
-  name: RefreshOnIssuerKeyNotFound
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_RefreshOnIssuerKeyNotFound
-  commentId: P:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshOnIssuerKeyNotFound
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshOnIssuerKeyNotFound
-  nameWithType: MonoCloudAuthenticationOptions.RefreshOnIssuerKeyNotFound
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshOnIssuerKeyNotFound*
-  name: RefreshOnIssuerKeyNotFound
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_RefreshOnIssuerKeyNotFound_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshOnIssuerKeyNotFound
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RefreshOnIssuerKeyNotFound
-  nameWithType: MonoCloudAuthenticationOptions.RefreshOnIssuerKeyNotFound
 - uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RoleClaimType
   name: RoleClaimType
   href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_RoleClaimType
@@ -634,32 +465,6 @@ references:
   isSpec: "True"
   fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RoleClaimType
   nameWithType: MonoCloudAuthenticationOptions.RoleClaimType
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.SaveToken
-  name: SaveToken
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_SaveToken
-  commentId: P:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.SaveToken
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.SaveToken
-  nameWithType: MonoCloudAuthenticationOptions.SaveToken
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.SaveToken*
-  name: SaveToken
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_SaveToken_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.SaveToken
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.SaveToken
-  nameWithType: MonoCloudAuthenticationOptions.SaveToken
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.TenantDomain
-  name: TenantDomain
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_TenantDomain
-  commentId: P:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.TenantDomain
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.TenantDomain
-  nameWithType: MonoCloudAuthenticationOptions.TenantDomain
-- uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.TenantDomain*
-  name: TenantDomain
-  href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_TenantDomain_
-  commentId: Overload:MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.TenantDomain
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.TenantDomain
-  nameWithType: MonoCloudAuthenticationOptions.TenantDomain
 - uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.ValidateCertificateBinding
   name: ValidateCertificateBinding
   href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html#MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_ValidateCertificateBinding
@@ -1231,6 +1036,22 @@ references:
   commentId: T:MonoCloud.Authentication.Api.Shared.IIntrospectionCache
   fullName: MonoCloud.Authentication.Api.Shared.IIntrospectionCache
   nameWithType: IIntrospectionCache
+- uid: MonoCloud.Authentication.Api.Shared.IIntrospectionCache.DeleteAsync(System.String,System.Threading.CancellationToken)
+  name: DeleteAsync(string, CancellationToken)
+  href: api/MonoCloud.Authentication.Api.Shared.IIntrospectionCache.html#MonoCloud_Authentication_Api_Shared_IIntrospectionCache_DeleteAsync_System_String_System_Threading_CancellationToken_
+  commentId: M:MonoCloud.Authentication.Api.Shared.IIntrospectionCache.DeleteAsync(System.String,System.Threading.CancellationToken)
+  name.vb: DeleteAsync(String, CancellationToken)
+  fullName: MonoCloud.Authentication.Api.Shared.IIntrospectionCache.DeleteAsync(string, System.Threading.CancellationToken)
+  fullName.vb: MonoCloud.Authentication.Api.Shared.IIntrospectionCache.DeleteAsync(String, System.Threading.CancellationToken)
+  nameWithType: IIntrospectionCache.DeleteAsync(string, CancellationToken)
+  nameWithType.vb: IIntrospectionCache.DeleteAsync(String, CancellationToken)
+- uid: MonoCloud.Authentication.Api.Shared.IIntrospectionCache.DeleteAsync*
+  name: DeleteAsync
+  href: api/MonoCloud.Authentication.Api.Shared.IIntrospectionCache.html#MonoCloud_Authentication_Api_Shared_IIntrospectionCache_DeleteAsync_
+  commentId: Overload:MonoCloud.Authentication.Api.Shared.IIntrospectionCache.DeleteAsync
+  isSpec: "True"
+  fullName: MonoCloud.Authentication.Api.Shared.IIntrospectionCache.DeleteAsync
+  nameWithType: IIntrospectionCache.DeleteAsync
 - uid: MonoCloud.Authentication.Api.Shared.IIntrospectionCache.GetAsync(System.String,System.Threading.CancellationToken)
   name: GetAsync(string, CancellationToken)
   href: api/MonoCloud.Authentication.Api.Shared.IIntrospectionCache.html#MonoCloud_Authentication_Api_Shared_IIntrospectionCache_GetAsync_System_String_System_Threading_CancellationToken_

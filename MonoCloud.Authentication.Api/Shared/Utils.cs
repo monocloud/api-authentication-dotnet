@@ -69,6 +69,8 @@ internal static class Utils
 
   internal static long ToUnixTimeStamp(this DateTime dateTime) => new DateTimeOffset(dateTime.ToUniversalTime()).ToUnixTimeSeconds();
 
+  internal static bool HasNormalizableGroupClaims(this IEnumerable<Claim> claims, string claimType) => claims.Any(c => c.Type == claimType && (c.ValueType == JsonClaimValueTypes.JsonArray || (c.Value.Length > 0 && c.Value[0] == '{')));
+
   internal static void NormalizeGroupClaims(this IList<Claim> claims, string claimType)
   {
     var groups = claims.FirstOrDefault(c => c.Type == claimType && c.ValueType == JsonClaimValueTypes.JsonArray);

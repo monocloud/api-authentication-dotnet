@@ -279,7 +279,7 @@ using a custom authentication scheme.</p>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationExtension_AddMonoCloudAuthentication_Microsoft_AspNetCore_Authentication_AuthenticationBuilder_System_String_System_Action_MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions__" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationExtension.AddMonoCloudAuthentication(Microsoft.AspNetCore.Authentication.AuthenticationBuilder,System.String,System.Action{MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions})">
   AddMonoCloudAuthentication(AuthenticationBuilder, string, Action&lt;MonoCloudAuthenticationOptions&gt;?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationExtension.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationExtension.cs/#L45"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Adds the MonoCloud authentication handler to the specified <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationbuilder">AuthenticationBuilder</a>
@@ -317,6 +317,12 @@ using a custom authentication scheme and an action to configure the options.</p>
 
 
 
+  <h4 class="section" id="MonoCloud_Authentication_Api_MonoCloudAuthenticationExtension_AddMonoCloudAuthentication_Microsoft_AspNetCore_Authentication_AuthenticationBuilder_System_String_System_Action_MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The scheme is registered manually rather than through <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationbuilder.addscheme#microsoft-aspnetcore-authentication-authenticationbuilder-addscheme-2(system-string-system-action((-0)))">AddScheme&lt;TOptions, THandler&gt;(string, Action&lt;TOptions&gt;)</a>:
+that overload requires the handler to derive from <code>AuthenticationHandler&lt;MonoCloudAuthenticationOptions&gt;</code>,
+which a <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbearerhandler">JwtBearerHandler</a> subclass cannot satisfy. The registrations below mirror what the
+framework does internally for any authentication scheme.</p>
+</div>
 
 
 

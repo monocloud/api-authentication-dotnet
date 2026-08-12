@@ -6,6 +6,8 @@ public class IntrospectionCacheMock : IIntrospectionCache
 
   public int SetCount { get; private set; }
 
+  public int DeleteCount { get; private set; }
+
   public TimeSpan? LastExpiresIn { get; private set; }
 
   public bool ThrowOnGet { get; set; }
@@ -26,6 +28,13 @@ public class IntrospectionCacheMock : IIntrospectionCache
     SetCount++;
     LastExpiresIn = expiresIn;
     _cache[key] = value;
+    return Task.CompletedTask;
+  }
+
+  public Task DeleteAsync(string key, CancellationToken cancellationToken = default)
+  {
+    DeleteCount++;
+    _cache.TryRemove(key, out _);
     return Task.CompletedTask;
   }
 }

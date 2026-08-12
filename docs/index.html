@@ -108,7 +108,7 @@
 <li><strong>API Reference:</strong> <a href="https://monocloud.github.io/api-authentication-dotnet?utm_source=github&amp;utm_medium=api_authentication_dotnet">https://monocloud.github.io/api-authentication-dotnet</a></li>
 </ul>
 <h2 id="supported-platforms">Supported Platforms</h2>
-<p>This SDK supports applications targeting <strong>&gt;= .NET 6.0</strong></p>
+<p>This SDK supports applications targeting <strong>&gt;= .NET 8.0</strong></p>
 <h2 id="-getting-started">🚀 Getting Started</h2>
 <h3 id="requirements">Requirements</h3>
 <ul>
@@ -134,7 +134,7 @@ builder.Services
     .AddAuthentication(MonoCloudAuthenticationDefaults.AuthenticationScheme)
     .AddMonoCloudAuthentication(options =&gt;
     {
-        options.TenantDomain = &quot;https://&lt;your-tenant-domain&gt;&quot;;
+        options.Authority = &quot;https://&lt;your-tenant-domain&gt;&quot;;
         options.Audience = &quot;&lt;your-api-identifier&gt;&quot;;
     });
 
@@ -160,7 +160,7 @@ app.Run();
     .AddAuthentication(MonoCloudAuthenticationDefaults.AuthenticationScheme)
     .AddMonoCloudAuthentication(options =&gt;
     {
-        options.TenantDomain = &quot;https://&lt;your-tenant-domain&gt;&quot;;
+        options.Authority = &quot;https://&lt;your-tenant-domain&gt;&quot;;
         options.Audience = &quot;&lt;your-api-identifier&gt;&quot;;
         options.ClientId = &quot;&lt;your-client-id&gt;&quot;;
         options.ClientAuth = new ClientSecretAuth(&quot;&lt;your-client-secret&gt;&quot;);

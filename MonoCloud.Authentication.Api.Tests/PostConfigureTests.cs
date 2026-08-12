@@ -23,31 +23,46 @@ public class PostConfigureTests
   }
 
   [Test]
-  public void Should_PrependHttps_When_DomainHasNoProtocol()
+  public void Should_PrependHttps_When_AuthorityHasNoScheme()
   {
     var options = new MonoCloudAuthenticationOptions
     {
-      TenantDomain = "example.com"
+      Authority = "example.com"
     };
 
     var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
     postConfigureOptions.PostConfigure(null, options);
 
-    options.TenantDomain.ShouldBe("https://example.com");
+    options.Authority.ShouldBe("https://example.com");
   }
 
   [Test]
-  public void Should_NotPrependHttps_When_DomainAlreadyHasHttps()
+  public void Should_NotPrependHttps_When_AuthorityAlreadyHasHttps()
   {
     var options = new MonoCloudAuthenticationOptions
     {
-      TenantDomain = "https://example.com",
+      Authority = "https://example.com",
     };
 
     var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
     postConfigureOptions.PostConfigure(null, options);
 
-    options.TenantDomain.ShouldBe("https://example.com");
+    options.Authority.ShouldBe("https://example.com");
+  }
+
+  [Test]
+  public void Should_LeaveAuthorityUntouched_When_ItHasAnExplicitScheme()
+  {
+    var options = new MonoCloudAuthenticationOptions
+    {
+      Authority = "http://localhost:5000",
+      RequireHttpsMetadata = false
+    };
+
+    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
+    postConfigureOptions.PostConfigure(null, options);
+
+    options.Authority.ShouldBe("http://localhost:5000");
   }
 
   [Test]
@@ -72,11 +87,11 @@ public class PostConfigureTests
   }
 
   [Test]
-  public void Should_UseConfigurationManager_When_TenantDomainIsProvided()
+  public void Should_UseConfigurationManager_When_AuthorityIsProvided()
   {
     var options = new MonoCloudAuthenticationOptions
     {
-      TenantDomain = "example.com",
+      Authority = "example.com",
       ConfigurationManager = null,
       Configuration = null
     };
@@ -98,7 +113,7 @@ public class PostConfigureTests
     var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
     postConfigureOptions.PostConfigure(null, options);
 
-    options.JwtTokenValidationParameters.ValidAudience.ShouldBe(options.Audience);
+    options.TokenValidationParameters.ValidAudience.ShouldBe(options.Audience);
   }
 
   [Test]
@@ -107,7 +122,7 @@ public class PostConfigureTests
     var options = new MonoCloudAuthenticationOptions
     {
       Audience = "new-audience",
-      JwtTokenValidationParameters = new TokenValidationParameters
+      TokenValidationParameters = new TokenValidationParameters
       {
         ValidAudience = "existing-audience"
       }
@@ -116,7 +131,65 @@ public class PostConfigureTests
     var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
     postConfigureOptions.PostConfigure(null, options);
 
-    options.JwtTokenValidationParameters.ValidAudience.ShouldBe("existing-audience");
+    options.TokenValidationParameters.ValidAudience.ShouldBe("existing-audience");
+  }
+
+  [Test]
+  public void Should_ShareTheSdkHttpClientWithDiscovery()
+  {
+    var options = new MonoCloudAuthenticationOptions
+    {
+      Authority = "example.com"
+    };
+
+    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
+    postConfigureOptions.PostConfigure(null, options);
+
+    options.Authority.ShouldBe("https://example.com");
+    options.Backchannel.ShouldBeSameAs(options.HttpClient);
+  }
+
+  [Test]
+  public void Should_ProjectMonoCloudOptionsOntoTheValidationParameters()
+  {
+    var options = new MonoCloudAuthenticationOptions
+    {
+      AuthenticationType = "custom-auth-type",
+      NameClaimType = "custom-name",
+      RoleClaimType = "custom-role",
+      ClockSkew = TimeSpan.FromMinutes(9)
+    };
+
+    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
+    postConfigureOptions.PostConfigure("SomeScheme", options);
+
+    options.TokenValidationParameters.AuthenticationType.ShouldBe("custom-auth-type");
+    options.TokenValidationParameters.NameClaimType.ShouldBe("custom-name");
+    options.TokenValidationParameters.RoleClaimType.ShouldBe("custom-role");
+    options.TokenValidationParameters.ClockSkew.ShouldBe(TimeSpan.FromMinutes(9));
+  }
+
+  [Test]
+  public void Should_NotSetAuthenticationType_When_TheOptionsNameIsEmpty()
+  {
+    var options = new MonoCloudAuthenticationOptions();
+
+    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
+
+    Should.NotThrow(() => postConfigureOptions.PostConfigure(string.Empty, options));
+
+    options.TokenValidationParameters.AuthenticationType.ShouldBeNull();
+  }
+
+  [Test]
+  public void Should_DefaultAuthenticationTypeToTheSchemeName()
+  {
+    var options = new MonoCloudAuthenticationOptions();
+
+    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
+    postConfigureOptions.PostConfigure("SomeScheme", options);
+
+    options.TokenValidationParameters.AuthenticationType.ShouldBe("SomeScheme");
   }
 
   [Test]

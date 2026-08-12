@@ -44,7 +44,7 @@ The SDK handles:
 
 ## Supported Platforms
 
-This SDK supports applications targeting **>= .NET 6.0**
+This SDK supports applications targeting **>= .NET 8.0**
 
 ## 🚀 Getting Started
 
@@ -78,7 +78,7 @@ builder.Services
     .AddAuthentication(MonoCloudAuthenticationDefaults.AuthenticationScheme)
     .AddMonoCloudAuthentication(options =>
     {
-        options.TenantDomain = "https://<your-tenant-domain>";
+        options.Authority = "https://<your-tenant-domain>";
         options.Audience = "<your-api-identifier>";
     });
 
@@ -107,7 +107,7 @@ builder.Services
     .AddAuthentication(MonoCloudAuthenticationDefaults.AuthenticationScheme)
     .AddMonoCloudAuthentication(options =>
     {
-        options.TenantDomain = "https://<your-tenant-domain>";
+        options.Authority = "https://<your-tenant-domain>";
         options.Audience = "<your-api-identifier>";
         options.ClientId = "<your-client-id>";
         options.ClientAuth = new ClientSecretAuth("<your-client-secret>");

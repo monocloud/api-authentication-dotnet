@@ -30,4 +30,17 @@ public interface IIntrospectionCache
   /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
   /// <returns>A task that represents the asynchronous set operation.</returns>
   Task SetAsync(string key, string value, TimeSpan expiresIn, CancellationToken cancellationToken);
+
+  /// <summary>
+  /// Asynchronously removes an entry from the cache.
+  /// </summary>
+  /// <remarks>
+  /// The SDK never invokes this method itself; it exists so consumers can evict a cached entry before it
+  /// expires — for example when a token is revoked. Cache keys are produced by
+  /// <see cref="MonoCloudAuthenticationOptions.CacheKeyGenerator"/>.
+  /// </remarks>
+  /// <param name="key">The unique key of the cached item to remove.</param>
+  /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+  /// <returns>A task that represents the asynchronous delete operation.</returns>
+  Task DeleteAsync(string key, CancellationToken cancellationToken);
 }

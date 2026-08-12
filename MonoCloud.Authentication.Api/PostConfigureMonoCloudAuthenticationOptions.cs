@@ -27,14 +27,9 @@ public class PostConfigureMonoCloudAuthenticationOptions : IPostConfigureOptions
       throw new ArgumentException("IIntrospectionCache not found in the services collection", nameof(_cache));
     }
 
-    if (options.TenantDomain is not null && !options.TenantDomain.StartsWith("https://"))
+    if (options.Authority is not null && !options.Authority.Contains("://"))
     {
-      options.TenantDomain = $"https://{options.TenantDomain}";
-    }
-
-    if (string.IsNullOrEmpty(options.JwtTokenValidationParameters.ValidAudience) && !string.IsNullOrEmpty(options.Audience))
-    {
-      options.JwtTokenValidationParameters.ValidAudience = options.Audience;
+      options.Authority = $"https://{options.Authority}";
     }
 
     // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
@@ -54,29 +49,30 @@ public class PostConfigureMonoCloudAuthenticationOptions : IPostConfigureOptions
       }
     }
 
-    if (options.ConfigurationManager is null)
+    options.Backchannel ??= options.HttpClient;
+
+    var authenticationType = options.AuthenticationType ?? name;
+
+    if (options.TokenValidationParameters.AuthenticationType is null && !string.IsNullOrWhiteSpace(authenticationType))
     {
-      if (options.Configuration != null)
-      {
-        options.ConfigurationManager = new StaticConfigurationManager<OpenIdConnectConfiguration>(options.Configuration);
-      }
-      else if (options.TenantDomain is not null)
-      {
-        var discoveryUrl = options.TenantDomain;
-
-        if (!discoveryUrl.EndsWith("/", StringComparison.Ordinal))
-        {
-          discoveryUrl += "/";
-        }
-
-        discoveryUrl += ".well-known/openid-configuration";
-
-        options.ConfigurationManager = new ConfigurationManager<OpenIdConnectConfiguration>(discoveryUrl, new OpenIdConnectConfigurationRetriever(), new HttpDocumentRetriever(options.HttpClient))
-        {
-          RefreshInterval = options.RefreshInterval,
-          AutomaticRefreshInterval = options.AutomaticRefreshInterval,
-        };
-      }
+      options.TokenValidationParameters.AuthenticationType = authenticationType;
     }
+
+    if (options.NameClaimType is not null)
+    {
+      options.TokenValidationParameters.NameClaimType = options.NameClaimType;
+    }
+
+    if (options.RoleClaimType is not null)
+    {
+      options.TokenValidationParameters.RoleClaimType = options.RoleClaimType;
+    }
+
+    if (options.ClockSkew.HasValue)
+    {
+      options.TokenValidationParameters.ClockSkew = options.ClockSkew.Value;
+    }
+
+    new JwtBearerPostConfigureOptions().PostConfigure(name, options);
   }
 }

@@ -4,27 +4,19 @@ namespace MonoCloud.Authentication.Api;
 /// Provides events that allow customization of the authentication process in the MonoCloud framework.
 /// Contains virtual methods that can be overridden to handle specific authentication-related events.
 /// </summary>
-public class MonoCloudAuthenticationEvents
+/// <remarks>
+/// This type derives from <see cref="JwtBearerEvents"/>, so the standard bearer events
+/// (<see cref="JwtBearerEvents.OnMessageReceived"/>, <see cref="JwtBearerEvents.OnTokenValidated"/>,
+/// <see cref="JwtBearerEvents.OnAuthenticationFailed"/>, <see cref="JwtBearerEvents.OnChallenge"/> and
+/// <see cref="JwtBearerEvents.OnForbidden"/>) are available here and are raised for both JWT and
+/// opaque (introspected) tokens. The events declared below are the MonoCloud specific additions.
+/// </remarks>
+public class MonoCloudAuthenticationEvents : JwtBearerEvents
 {
-  /// <summary>
-  /// Invoked if exceptions are thrown during request processing. The exceptions will be re-thrown after this event unless suppressed.
-  /// </summary>
-  public Func<AuthenticationFailedContext, Task> OnAuthenticationFailed { get; set; } = _ => Task.CompletedTask;
-
-  /// <summary>
-  /// Invoked after the security token has passed validation and a ClaimsIdentity has been generated.
-  /// </summary>
-  public Func<TokenValidatedContext, Task> OnTokenValidated { get; set; } = _ => Task.CompletedTask;
-
   /// <summary>
   /// Invoked after the security token has passed certificate binding validation
   /// </summary>
   public Func<CertificateBindingValidatedContext, Task> OnCertificateBindingValidated { get; set; } = _ => Task.CompletedTask;
-
-  /// <summary>
-  /// Invoked when a protocol message is first received.
-  /// </summary>
-  public Func<MessageReceivedContext, Task> OnMessageReceived { get; set; } = _ => Task.CompletedTask;
 
   /// <summary>
   /// Invoked before an introspection request is sent.
@@ -37,24 +29,9 @@ public class MonoCloudAuthenticationEvents
   public Func<JwtAssertionContext, Task> OnCreatingJwtAssertion { get; set; } = _ => Task.CompletedTask;
 
   /// <summary>
-  /// Invoked if exceptions are thrown during request processing. The exceptions will be re-thrown after this event unless suppressed.
-  /// </summary>
-  public virtual Task AuthenticationFailed(AuthenticationFailedContext context) => OnAuthenticationFailed(context);
-
-  /// <summary>
-  /// Invoked after the security token has passed validation and a ClaimsIdentity has been generated.
-  /// </summary>
-  public virtual Task TokenValidated(TokenValidatedContext context) => OnTokenValidated(context);
-
-  /// <summary>
   /// Invoked after the security token has passed certificate binding validation
   /// </summary>
   public virtual Task CertificateBindingValidated(CertificateBindingValidatedContext context) => OnCertificateBindingValidated(context);
-
-  /// <summary>
-  /// Invoked when a protocol message is first received.
-  /// </summary>
-  public virtual Task MessageReceived(MessageReceivedContext context) => OnMessageReceived(context);
 
   /// <summary>
   /// Invoked before an introspection request is sent.
