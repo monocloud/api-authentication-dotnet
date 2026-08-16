@@ -69,6 +69,21 @@ internal static class Utils
 
   internal static long ToUnixTimeStamp(this DateTime dateTime) => new DateTimeOffset(dateTime.ToUniversalTime()).ToUnixTimeSeconds();
 
+  internal static bool HasNormalizableScopeClaims(this IEnumerable<Claim> claims) => claims.Any(c => c.Type == "scope" && c.Value.Contains(' '));
+
+  internal static void NormalizeScopeClaims(this IList<Claim> claims)
+  {
+    foreach (var scopeClaim in claims.Where(c => c.Type == "scope" && c.Value.Contains(' ')).ToList())
+    {
+      claims.Remove(scopeClaim);
+
+      foreach (var scope in scopeClaim.Value.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+      {
+        claims.Add(new Claim("scope", scope, ClaimValueTypes.String, scopeClaim.Issuer));
+      }
+    }
+  }
+
   internal static bool HasNormalizableGroupClaims(this IEnumerable<Claim> claims, string claimType) => claims.Any(c => c.Type == claimType && (c.ValueType == JsonClaimValueTypes.JsonArray || (c.Value.Length > 0 && c.Value[0] == '{')));
 
   internal static void NormalizeGroupClaims(this IList<Claim> claims, string claimType)

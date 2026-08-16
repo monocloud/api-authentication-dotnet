@@ -322,7 +322,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "MonoCloud.Authentication.Api.Shared.JwtAssertion",
-      "Summary": "<p sourcefile=\"api/MonoCloud.Authentication.Api.Shared.JwtAssertion.yml\" sourcestartlinenumber=\"1\">Represents a JWT (JSON Web Token) assertion used for client authentication.\nThis class encapsulates the token (Assertion), its type, and an optional cache expiration time.</p>\n"
+      "Summary": "<p sourcefile=\"api/MonoCloud.Authentication.Api.Shared.JwtAssertion.yml\" sourcestartlinenumber=\"1\">Represents a JWT (JSON Web Token) assertion used for client authentication.\nThis class encapsulates the token (Assertion) and its type.</p>\n"
     },
     {
       "type": "ManagedReference",

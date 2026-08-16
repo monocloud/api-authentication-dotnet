@@ -1103,19 +1103,6 @@ references:
   isSpec: "True"
   fullName: MonoCloud.Authentication.Api.Shared.JwtAssertion.Assertion
   nameWithType: JwtAssertion.Assertion
-- uid: MonoCloud.Authentication.Api.Shared.JwtAssertion.AssertionCacheExpiry
-  name: AssertionCacheExpiry
-  href: api/MonoCloud.Authentication.Api.Shared.JwtAssertion.html#MonoCloud_Authentication_Api_Shared_JwtAssertion_AssertionCacheExpiry
-  commentId: P:MonoCloud.Authentication.Api.Shared.JwtAssertion.AssertionCacheExpiry
-  fullName: MonoCloud.Authentication.Api.Shared.JwtAssertion.AssertionCacheExpiry
-  nameWithType: JwtAssertion.AssertionCacheExpiry
-- uid: MonoCloud.Authentication.Api.Shared.JwtAssertion.AssertionCacheExpiry*
-  name: AssertionCacheExpiry
-  href: api/MonoCloud.Authentication.Api.Shared.JwtAssertion.html#MonoCloud_Authentication_Api_Shared_JwtAssertion_AssertionCacheExpiry_
-  commentId: Overload:MonoCloud.Authentication.Api.Shared.JwtAssertion.AssertionCacheExpiry
-  isSpec: "True"
-  fullName: MonoCloud.Authentication.Api.Shared.JwtAssertion.AssertionCacheExpiry
-  nameWithType: JwtAssertion.AssertionCacheExpiry
 - uid: MonoCloud.Authentication.Api.Shared.JwtAssertion.AssertionType
   name: AssertionType
   href: api/MonoCloud.Authentication.Api.Shared.JwtAssertion.html#MonoCloud_Authentication_Api_Shared_JwtAssertion_AssertionType

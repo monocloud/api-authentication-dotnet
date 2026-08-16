@@ -73,7 +73,7 @@ public class OpenIdServerMock
         req.Content.Headers.ContentType.MediaType == "application/x-www-form-urlencoded" &&
         CheckAuth(req, authType));
 
-    var json = JsonSerializer.Serialize(body);
+    var json = body as string ?? JsonSerializer.Serialize(body);
 
     _handlerMock.Protected()
         .Setup<Task<HttpResponseMessage>>("SendAsync", matcher, ItExpr.IsAny<CancellationToken>())

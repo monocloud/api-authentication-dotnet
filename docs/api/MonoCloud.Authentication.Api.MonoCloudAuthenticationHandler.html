@@ -230,8 +230,8 @@ Class MonoCloudAuthenticationHandler  <a class="header-action link-secondary" ti
   <div class="markdown level0 remarks"><p>
 This handler extends <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbearerhandler">JwtBearerHandler</a>. JWT access tokens are validated by the base handler
 (signing keys, issuer, audience, lifetime) while opaque access tokens are validated through RFC 7662
-introspection by this handler. Certificate binding (RFC 8705) and group claim normalization are applied on
-both paths.
+introspection by this handler. Certificate binding (RFC 8705) and group and scope claim normalization are
+applied on both paths.
 </p>
 <p>
 Because <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.options.ioptionsmonitor-1">IOptionsMonitor&lt;TOptions&gt;</a> is covariant, the base handler's <code>Options</code> holds the

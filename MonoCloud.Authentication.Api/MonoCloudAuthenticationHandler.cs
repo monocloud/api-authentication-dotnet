@@ -9,8 +9,8 @@ namespace MonoCloud.Authentication.Api;
 /// <para>
 /// This handler extends <see cref="JwtBearerHandler"/>. JWT access tokens are validated by the base handler
 /// (signing keys, issuer, audience, lifetime) while opaque access tokens are validated through RFC 7662
-/// introspection by this handler. Certificate binding (RFC 8705) and group claim normalization are applied on
-/// both paths.
+/// introspection by this handler. Certificate binding (RFC 8705) and group and scope claim normalization are
+/// applied on both paths.
 /// </para>
 /// <para>
 /// Because <see cref="IOptionsMonitor{TOptions}"/> is covariant, the base handler's <c>Options</c> holds the
@@ -99,8 +99,8 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
   {
     // The base handler always raises MessageReceived and re-reads the Authorization header itself. Swapping
     // in an interceptor for the duration of the call keeps the consumer's MessageReceived to a single
-    // invocation, guarantees the base handler validates exactly the token routed here, and lets group
-    // normalization and certificate binding run before the consumer's TokenValidated hook.
+    // invocation, guarantees the base handler validates exactly the token routed here, and lets group and
+    // scope normalization and certificate binding run before the consumer's TokenValidated hook.
     var events = Events;
 
     Events = new InterceptingEvents(events, token, this);
@@ -126,6 +126,8 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
     {
       throw new ArgumentNullException(nameof(Options.Authority), "Authority must be set");
     }
+
+    var cacheKey = $"{Scheme.Name}|{token}";
 
     try
     {
@@ -175,7 +177,7 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
 
       Logger.LogDebug("Starting token introspection process");
 
-      var introspectionResult = await IntrospectionCache.GetOrAdd(token, _ => new Lazy<Task<IntrospectionResult>>(async () => await IntrospectTokenAsync(token))).Value;
+      var introspectionResult = await IntrospectionCache.GetOrAdd(cacheKey, _ => new Lazy<Task<IntrospectionResult>>(async () => await IntrospectTokenAsync(token))).Value;
 
       var introspectionClaims = introspectionResult.Claims.ToList();
 
@@ -187,7 +189,7 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
         {
           Logger.LogDebug("Caching new claims for active token");
 
-          await _cache.SetClaimsAsync(Options, token, introspectionClaims, Options.CacheDuration, Logger, Context.RequestAborted).ConfigureAwait(false);
+          await TrySetClaimsCacheAsync(token, introspectionClaims);
         }
 
         if (Options.ValidateCertificateBinding(Context))
@@ -213,7 +215,7 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
       {
         Logger.LogDebug("Caching inactive token claims");
 
-        await _cache.SetClaimsAsync(Options, token, introspectionClaims, Options.CacheDuration, Logger, Context.RequestAborted).ConfigureAwait(false);
+        await TrySetClaimsCacheAsync(token, introspectionClaims);
       }
 
       return await AuthenticationFailed("Token inactive", Context, Scheme, Events, Options);
@@ -221,11 +223,36 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
     catch (Exception e)
     {
       Logger.LogError(e, "An unhandled exception occurred during opaque token introspection for scheme {SchemeName}", Scheme.Name);
-      return await AuthenticationFailed("Introspection failed", Context, Scheme, Events, Options);
+
+      var authenticationFailedContext = new AuthenticationFailedContext(Context, Scheme, Options)
+      {
+        Exception = e
+      };
+
+      await Events.AuthenticationFailed(authenticationFailedContext);
+
+      if (authenticationFailedContext.Result != null)
+      {
+        return authenticationFailedContext.Result;
+      }
+
+      throw;
     }
     finally
     {
-      IntrospectionCache.TryRemove(token, out _);
+      IntrospectionCache.TryRemove(cacheKey, out _);
+    }
+  }
+
+  private async Task TrySetClaimsCacheAsync(string token, IList<Claim> claims)
+  {
+    try
+    {
+      await _cache.SetClaimsAsync(Options, token, claims, Options.CacheDuration, Logger, Context.RequestAborted).ConfigureAwait(false);
+    }
+    catch (Exception ex)
+    {
+      Logger.LogError(ex, "An error occurred while writing to the distributed cache");
     }
   }
 
@@ -434,7 +461,34 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
 
     claims.NormalizeGroupClaims(roleClaimType);
 
-    context.Principal = new ClaimsPrincipal(new ClaimsIdentity(claims, identity.AuthenticationType, identity.NameClaimType, identity.RoleClaimType));
+    ReplaceClaims(identity, claims);
+  }
+
+  private static void NormalizeScopes(TokenValidatedContext context)
+  {
+    if (context.Principal?.Identity is not ClaimsIdentity identity || !identity.Claims.HasNormalizableScopeClaims())
+    {
+      return;
+    }
+
+    var claims = identity.Claims.ToList();
+
+    claims.NormalizeScopeClaims();
+
+    ReplaceClaims(identity, claims);
+  }
+
+  private static void ReplaceClaims(ClaimsIdentity identity, IEnumerable<Claim> claims)
+  {
+    // Swap the claim set in place on the validated identity. Constructing a replacement ClaimsIdentity
+    // here would silently downgrade Wilson 8's CaseSensitiveClaimsIdentity (ordinal claim-type matching)
+    // to the case-insensitive base type and drop identity state such as Actor and Label.
+    foreach (var claim in identity.Claims.ToList())
+    {
+      identity.RemoveClaim(claim);
+    }
+
+    identity.AddClaims(claims);
   }
 
   private static void Apply(AuthenticateResult result, TokenValidatedContext context)
@@ -466,6 +520,8 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
     public override async Task TokenValidated(TokenValidatedContext context)
     {
       handler.NormalizeGroups(context);
+
+      NormalizeScopes(context);
 
       if (handler.Options.ValidateCertificateBinding(context.HttpContext))
       {

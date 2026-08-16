@@ -178,6 +178,23 @@ public class ClientAuthTests
   }
 
   [Test]
+  public async Task JwtAssertionAuth_CreatesAFreshAssertion_ForEachRequest()
+  {
+    var auth = new JwtAssertionAuth(OpenIdServerMock.SymmetricSecret);
+
+    var (context1, payload1, _) = Build();
+    await auth.AuthenticateAsync(context1, default);
+
+    var (context2, payload2, _) = Build();
+    await auth.AuthenticateAsync(context2, default);
+
+    var jti1 = new JsonWebToken(payload1["client_assertion"]).GetClaim("jti").Value;
+    var jti2 = new JsonWebToken(payload2["client_assertion"]).GetClaim("jti").Value;
+
+    jti1.ShouldNotBe(jti2);
+  }
+
+  [Test]
   public async Task SpiffeJwtAuth_ForwardsJwtSvidAsClientAssertion()
   {
     var (context, payload, request) = Build();
