@@ -73,7 +73,7 @@ public class MonoCloudAuthenticationOptions : JwtBearerOptions
   /// <summary>
   /// Specifies the duration for which the generated JWT assertion is valid before expiration.
   /// This property is used to calculate the expiration (`exp`) claim for the JWT assertion.
-  /// The assertion will be cached for this duration to improve performance.
+  /// A fresh assertion is generated for every introspection request.
   /// </summary>
   public TimeSpan JwtAssertionDuration { get; set; } = TimeSpan.FromMinutes(5);
 

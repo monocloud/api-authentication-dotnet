@@ -214,6 +214,66 @@ public class MonoCloudAuthenticationHandlerJwtTests
   }
 
   [Test]
+  public async Task Should_SplitSpaceDelimitedScopeClaim_OnTheJwtPath()
+  {
+    var options = JwtOptions(new OpenIdServerMock());
+    var token = OpenIdServerMock.CreateAccessToken();
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, token);
+    var result = await handler.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
+    result.Principal!.FindAll("scope").Select(c => c.Value).ShouldBe(["openid", "resource"], ignoreOrder: true);
+    result.Principal!.HasClaim("scope", "openid resource").ShouldBeFalse();
+  }
+
+  [Test]
+  public async Task Should_SplitScopeClaim_When_MapInboundClaimsIsEnabled()
+  {
+    var options = JwtOptions(new OpenIdServerMock(), o => o.MapInboundClaims = true);
+    var token = OpenIdServerMock.CreateAccessToken();
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, token);
+    var result = await handler.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
+    result.Principal!.FindAll("scope").Select(c => c.Value).ShouldBe(["openid", "resource"], ignoreOrder: true);
+  }
+
+  [Test]
+  public async Task Should_PreserveIdentityType_When_NormalizingClaims()
+  {
+    var options = JwtOptions(new OpenIdServerMock(), o => o.RoleClaimType = "groups");
+    var token = OpenIdServerMock.CreateAccessToken();
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, token);
+    var result = await handler.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
+
+    result.Principal!.Identity.ShouldBeOfType<CaseSensitiveClaimsIdentity>();
+    result.Principal!.FindFirst("SCOPE").ShouldBeNull();
+    result.Principal!.FindAll("scope").Select(c => c.Value).ShouldBe(["openid", "resource"], ignoreOrder: true);
+    result.Principal!.IsInRole("admin").ShouldBeTrue();
+  }
+
+  [Test]
+  public async Task Should_YieldOneScopeClaimPerElement_When_JwtScopeIsArray()
+  {
+    var options = JwtOptions(new OpenIdServerMock());
+    var token = OpenIdServerMock.CreateAccessToken(new List<Claim>
+        {
+            new("scope", "[\"openid\",\"resource\"]", JsonClaimValueTypes.JsonArray)
+        });
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, token);
+    var result = await handler.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
+    result.Principal!.FindAll("scope").Select(c => c.Value).ShouldBe(["openid", "resource"], ignoreOrder: true);
+  }
+
+  [Test]
   public async Task Should_InvokeTokenValidatedEvent_AndAllowResultOverride()
   {
     var invoked = false;

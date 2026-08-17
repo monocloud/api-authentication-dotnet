@@ -155,6 +155,83 @@ public class UtilsTests
   }
 
   [Test]
+  public void NormalizeScopeClaims_SplitsSpaceDelimitedValue()
+  {
+    var claims = new List<Claim> { new("scope", "openid profile resource") };
+
+    claims.NormalizeScopeClaims();
+
+    claims.Select(c => c.Value).ShouldBe(new[] { "openid", "profile", "resource" }, ignoreOrder: true);
+    claims.ShouldAllBe(c => c.Type == "scope");
+  }
+
+  [Test]
+  public void NormalizeScopeClaims_PreservesIssuerAndOtherClaims()
+  {
+    var claims = new List<Claim>
+        {
+            new("sub", "123"),
+            new("scope", "openid resource", ClaimValueTypes.String, "https://issuer"),
+            new("aud", "api")
+        };
+
+    claims.NormalizeScopeClaims();
+
+    claims.Select(c => c.Type).ShouldBe(new[] { "sub", "scope", "scope", "aud" }, ignoreOrder: true);
+    claims.Single(c => c.Type == "sub").Value.ShouldBe("123");
+    claims.Single(c => c.Type == "aud").Value.ShouldBe("api");
+    claims.Where(c => c.Type == "scope").Select(c => c.Value).ShouldBe(new[] { "openid", "resource" }, ignoreOrder: true);
+    claims.Where(c => c.Type == "scope").ShouldAllBe(c => c.Issuer == "https://issuer");
+  }
+
+  [Test]
+  public void NormalizeScopeClaims_LeavesSingleValueAndOtherTypesUntouched()
+  {
+    var claims = new List<Claim>
+        {
+            new("scope", "openid"),
+            new("permissions", "read write")
+        };
+
+    claims.NormalizeScopeClaims();
+
+    claims.Count.ShouldBe(2);
+    claims.Single(c => c.Type == "scope").Value.ShouldBe("openid");
+    claims.Single(c => c.Type == "permissions").Value.ShouldBe("read write");
+  }
+
+  [Test]
+  public void NormalizeScopeClaims_DropsEmptySegments()
+  {
+    var claims = new List<Claim> { new("scope", " openid  resource ") };
+
+    claims.NormalizeScopeClaims();
+
+    claims.Select(c => c.Value).ShouldBe(new[] { "openid", "resource" }, ignoreOrder: true);
+  }
+
+  [Test]
+  public void HasNormalizableScopeClaims_IsTrue_ForSpaceDelimitedScope()
+  {
+    var claims = new List<Claim> { new("scope", "openid resource") };
+
+    claims.HasNormalizableScopeClaims().ShouldBeTrue();
+  }
+
+  [Test]
+  public void HasNormalizableScopeClaims_IsFalse_ForSingleTokenScopes()
+  {
+    var claims = new List<Claim>
+        {
+            new("scope", "openid"),
+            new("scope", "resource"),
+            new("permissions", "read write")
+        };
+
+    claims.HasNormalizableScopeClaims().ShouldBeFalse();
+  }
+
+  [Test]
   public async Task SetClaims_Then_GetClaims_RoundTrips()
   {
     var cache = new IntrospectionCacheMock();

@@ -114,7 +114,6 @@ public class JwtAssertionAuth : IMonoCloudClientAuth
       {
         Assertion = tokenHandler.CreateToken(tokenDescriptor),
         AssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-        AssertionCacheExpiry = DateTime.MaxValue,
       };
     }
 

@@ -708,7 +708,7 @@ typically for scenarios where token validation is delegated to a remote authorit
 
   <div class="markdown level1 summary"><p>Specifies the duration for which the generated JWT assertion is valid before expiration.
 This property is used to calculate the expiration (<code>exp</code>) claim for the JWT assertion.
-The assertion will be cached for this duration to improve performance.</p>
+A fresh assertion is generated for every introspection request.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 

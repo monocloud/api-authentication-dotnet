@@ -206,6 +206,43 @@ public class JwtBearerDelegationTests
   }
 
   [Test]
+  public async Task Challenge_EmitsInvalidTokenError_OnTheOpaquePath()
+  {
+    var server = new OpenIdServerMock();
+    var options = OpaqueOptions(server);
+
+    server.SetupIntrospection(failure: true, authType: "client_secret_post");
+
+    var (handler, context) = await HandlerTestHarness.CreateAsync(options, OpaqueToken);
+
+    await handler.ChallengeAsync(null);
+
+    context.Response.StatusCode.ShouldBe(401);
+
+    var challenge = context.Response.Headers.WWWAuthenticate.ToString();
+    challenge.ShouldStartWith("Bearer");
+    challenge.ShouldContain("error=\"invalid_token\"");
+  }
+
+  [Test]
+  public async Task ScopeClaims_HaveTheSameShape_OnJwtAndOpaquePaths()
+  {
+    var jwtOptions = JwtOptions(new OpenIdServerMock());
+    var (jwtHandler, _) = await HandlerTestHarness.CreateAsync(jwtOptions, OpenIdServerMock.CreateAccessToken());
+    var jwtResult = await jwtHandler.AuthenticateAsync();
+
+    var opaqueOptions = OpaqueOptions(new OpenIdServerMock());
+    var (opaqueHandler, _) = await HandlerTestHarness.CreateAsync(opaqueOptions, OpaqueToken);
+    var opaqueResult = await opaqueHandler.AuthenticateAsync();
+
+    jwtResult.Succeeded.ShouldBeTrue(jwtResult.Failure?.ToString() ?? "no failure");
+    opaqueResult.Succeeded.ShouldBeTrue(opaqueResult.Failure?.ToString() ?? "no failure");
+
+    jwtResult.Principal!.FindAll("scope").Select(c => c.Value).ShouldBe(["openid", "resource"], ignoreOrder: true);
+    opaqueResult.Principal!.FindAll("scope").Select(c => c.Value).ShouldBe(["openid", "resource"], ignoreOrder: true);
+  }
+
+  [Test]
   public async Task Forbid_RaisesTheForbiddenEvent()
   {
     var forbidden = false;

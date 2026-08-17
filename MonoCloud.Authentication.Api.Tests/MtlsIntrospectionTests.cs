@@ -88,7 +88,7 @@ public class MtlsIntrospectionTests
   }
 
   [Test]
-  public async Task Should_Fail_When_MtlsEndpointAliasIsMissing()
+  public async Task Should_Throw_When_MtlsEndpointAliasIsMissing()
   {
     var server = new OpenIdServerMock();
     server.SetupDiscovery(includeMtls: false);
@@ -98,10 +98,9 @@ public class MtlsIntrospectionTests
     var options = TlsOptions(server, new TlsAuth());
 
     var (handler, _) = await HandlerTestHarness.CreateAsync(options, OpaqueToken);
-    var result = await handler.AuthenticateAsync();
 
-    result.Succeeded.ShouldBeFalse();
-    result.Failure!.Message.ShouldBe("Introspection failed");
+    var exception = await Should.ThrowAsync<InvalidOperationException>(() => handler.AuthenticateAsync());
+    exception.Message.ShouldContain("mTLS introspection endpoint alias");
 
     server.VerifyIntrospectionCalled(Times.Never(), OpenIdServerMock.MtlsIntrospectionEndpoint);
     server.VerifyIntrospectionCalled(Times.Never());

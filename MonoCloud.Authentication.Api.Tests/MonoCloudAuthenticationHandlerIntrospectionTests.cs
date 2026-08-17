@@ -130,7 +130,7 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
   }
 
   [Test]
-  public async Task Should_Fail_When_IntrospectionReturnsError()
+  public async Task Should_Throw_When_IntrospectionReturnsError()
   {
     var server = new OpenIdServerMock();
     server.SetupDiscovery();
@@ -140,10 +140,84 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
     var options = OpaqueOptions(server);
 
     var (handler, _) = await HandlerTestHarness.CreateAsync(options, OpaqueToken);
+
+    await Should.ThrowAsync<HttpRequestException>(() => handler.AuthenticateAsync());
+  }
+
+  [Test]
+  public async Task Should_Throw_When_IntrospectionTransportFails()
+  {
+    var server = new OpenIdServerMock();
+    server.SetupDiscovery();
+    server.SetupJwks();
+    server.SetupIntrospection(authType: "client_secret_post", beforeRespond: () => throw new HttpRequestException("[Test] connection refused"));
+
+    var options = OpaqueOptions(server);
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, OpaqueToken);
+
+    var exception = await Should.ThrowAsync<HttpRequestException>(() => handler.AuthenticateAsync());
+    exception.Message.ShouldBe("[Test] connection refused");
+  }
+
+  [Test]
+  public async Task Should_Throw_When_IntrospectionResponseIsNotJson()
+  {
+    var server = new OpenIdServerMock();
+    server.SetupDiscovery();
+    server.SetupJwks();
+    server.SetupIntrospection(authType: "client_secret_post", body: "not-json");
+
+    var options = OpaqueOptions(server);
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, OpaqueToken);
+
+    await Should.ThrowAsync<JsonException>(() => handler.AuthenticateAsync());
+  }
+
+  [Test]
+  public async Task AuthenticationFailed_ReceivesTheRealException_OnTheOpaquePath()
+  {
+    Exception? captured = null;
+
+    var server = new OpenIdServerMock();
+    server.SetupDiscovery();
+    server.SetupJwks();
+    server.SetupIntrospection(status: HttpStatusCode.InternalServerError, authType: "client_secret_post");
+
+    var options = OpaqueOptions(server, configure: o => o.Events.OnAuthenticationFailed = ctx =>
+    {
+      captured = ctx.Exception;
+      return Task.CompletedTask;
+    });
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, OpaqueToken);
+
+    var thrown = await Should.ThrowAsync<HttpRequestException>(() => handler.AuthenticateAsync());
+    captured.ShouldBeSameAs(thrown);
+  }
+
+  [Test]
+  public async Task Should_InvokeAuthenticationFailedEvent_AndAllowSuppression_OnTheOpaquePath()
+  {
+    var server = new OpenIdServerMock();
+    server.SetupDiscovery();
+    server.SetupJwks();
+    server.SetupIntrospection(status: HttpStatusCode.InternalServerError, authType: "client_secret_post");
+
+    var options = OpaqueOptions(server, configure: o => o.Events.OnAuthenticationFailed = ctx =>
+    {
+      var identity = new ClaimsIdentity("override");
+      ctx.Principal = new ClaimsPrincipal(identity);
+      ctx.Success();
+      return Task.CompletedTask;
+    });
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, OpaqueToken);
     var result = await handler.AuthenticateAsync();
 
-    result.Succeeded.ShouldBeFalse();
-    result.Failure!.Message.ShouldBe("Introspection failed");
+    result.Succeeded.ShouldBeTrue();
+    result.Principal!.Identity!.AuthenticationType.ShouldBe("override");
   }
 
   [Test]
@@ -513,6 +587,45 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
   }
 
   [Test]
+  public async Task Should_Authenticate_When_CacheWriteThrows()
+  {
+    var cache = new IntrospectionCacheMock { ThrowOnSet = true };
+
+    var server = new OpenIdServerMock();
+    server.SetupDiscovery();
+    server.SetupJwks();
+    server.SetupIntrospection(authType: "client_secret_post");
+
+    var options = OpaqueOptions(server, configure: o => o.EnableCaching = true);
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, "opaque-cache-write-error-active", cache);
+    var result = await handler.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeTrue(result.Failure?.ToString() ?? "no failure");
+    server.VerifyIntrospectionCalled();
+    cache.SetCount.ShouldBe(0);
+  }
+
+  [Test]
+  public async Task Should_FailWithTokenInactive_When_CacheWriteThrows()
+  {
+    var cache = new IntrospectionCacheMock { ThrowOnSet = true };
+
+    var server = new OpenIdServerMock();
+    server.SetupDiscovery();
+    server.SetupJwks();
+    server.SetupIntrospection(failure: true, authType: "client_secret_post");
+
+    var options = OpaqueOptions(server, configure: o => o.EnableCaching = true);
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, "opaque-cache-write-error-inactive", cache);
+    var result = await handler.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeFalse();
+    result.Failure!.Message.ShouldBe("Token inactive");
+  }
+
+  [Test]
   public async Task Should_CollapseConcurrentIntrospections_ForTheSameToken()
   {
     const string token = "opaque-concurrent-token";
@@ -543,5 +656,43 @@ public class MonoCloudAuthenticationHandlerIntrospectionTests
     results[0].Succeeded.ShouldBeTrue(results[0].Failure?.ToString() ?? "no failure");
     results[1].Succeeded.ShouldBeTrue(results[1].Failure?.ToString() ?? "no failure");
     server.VerifyIntrospectionCalled();
+  }
+
+  [Test]
+  public async Task Should_NotCollapseConcurrentIntrospections_AcrossSchemes()
+  {
+    const string token = "opaque-cross-scheme-token";
+
+    var started = 0;
+    var bothCallsStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+    var releaseIntrospection = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+
+    var server = new OpenIdServerMock();
+    server.SetupDiscovery();
+    server.SetupJwks();
+    server.SetupIntrospection(authType: "client_secret_post", beforeRespond: async () =>
+    {
+      if (Interlocked.Increment(ref started) == 2)
+      {
+        bothCallsStarted.TrySetResult();
+      }
+
+      await releaseIntrospection.Task;
+    });
+
+    var (handler1, _) = await HandlerTestHarness.CreateAsync(OpaqueOptions(server), token, scheme: "SchemeA");
+    var (handler2, _) = await HandlerTestHarness.CreateAsync(OpaqueOptions(server), token, scheme: "SchemeB");
+
+    var first = handler1.AuthenticateAsync();
+    var second = handler2.AuthenticateAsync();
+
+    await bothCallsStarted.Task.WaitAsync(TimeSpan.FromSeconds(10));
+    releaseIntrospection.SetResult();
+
+    var results = await Task.WhenAll(first, second);
+
+    results[0].Succeeded.ShouldBeTrue(results[0].Failure?.ToString() ?? "no failure");
+    results[1].Succeeded.ShouldBeTrue(results[1].Failure?.ToString() ?? "no failure");
+    server.VerifyIntrospectionCalled(Times.Exactly(2));
   }
 }

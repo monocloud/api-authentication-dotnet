@@ -144,21 +144,36 @@ pnpm changeset     # record a version bump (Changesets; .changeset/, baseBranch 
 3. JWT path: the handler swaps its per-request `Events` for a private `InterceptingEvents` wrapper around
    the call to `base`. The wrapper (a) answers the base handler's own `MessageReceived` with the already
    resolved token — so the consumer's hook fires once and the base validates exactly the routed token —
-   and (b) on `TokenValidated` runs group-claim normalization and certificate binding **before** forwarding
-   to the consumer's hook. Everything else forwards straight through. This keeps enforcement in the handler
+   and (b) on `TokenValidated` runs group-claim normalization, scope-claim normalization (a single
+   space-delimited `scope` claim is split into one claim per scope — claim order is not guaranteed —
+   matching the introspection path's shape) and certificate binding **before** forwarding to the
+   consumer's hook. Both normalizers replace the claim set on the validated identity **in place**
+   rather than rebuilding a `ClaimsIdentity`: a rebuild would silently downgrade Wilson 8's
+   `CaseSensitiveClaimsIdentity` (ordinal claim-type matching, the net9+ default; its pinned versions
+   do not override `Clone()`) to the case-insensitive base type and drop Actor/Label. Everything else forwards straight through. This keeps enforcement in the handler
    rather than in consumer-replaceable events. When adding an event to `MonoCloudAuthenticationEvents`, or
    when a JwtBearer upgrade adds one, add a forwarding override to the wrapper.
 4. Opaque path: optional read-through of `IIntrospectionCache` (gated by `EnableCaching`; key = `CacheKeyPrefix` + SHA-256 of
    `schemeName|token`, so the same token doesn't collide across schemes); otherwise
    introspect (client auth applied per `Options.ClientAuth`), cache the result, build the principal.
-   In-flight introspections for the same token string are de-duplicated via a static `IntrospectionCache`
-   (`ConcurrentDictionary` of `Lazy<Task<IntrospectionResult>>`) removed in a `finally` — this only
-   collapses concurrent duplicate calls, it is not a result cache.
+   In-flight introspections for the same scheme + token are de-duplicated via a static `IntrospectionCache`
+   (`ConcurrentDictionary` of `Lazy<Task<IntrospectionResult>>` keyed `{Scheme.Name}|{token}`) removed in a
+   `finally` — this only collapses concurrent duplicate calls, it is not a result cache.
 5. If `ValidateCertificateBinding(context)` returns true, the presented client certificate's
    base64url SHA-256 is compared against the token's `cnf.x5t#S256` claim — enforced on the JWT path,
    the live opaque path, and the cached opaque path, all through the single
    `ValidateCertificateBinding(claims)` method.
-6. `PostConfigure` runs once per options instance: https-prefixes a scheme-less `Authority` (the tenant
+6. Opaque-path error semantics mirror the base `JwtBearerHandler`: genuine token verdicts
+   (introspection `active:false`, live or cached, and certificate-binding failures) return
+   `AuthenticateResult.Fail` → 401 `invalid_token` challenge, while infrastructure and consumer-event
+   exceptions (discovery fetch, transport errors, non-2xx introspection responses, malformed
+   introspection JSON, client-auth failures, exceptions thrown by consumer event hooks) raise the
+   `AuthenticationFailed` event with the **real** exception — an event-set `Result` is honored,
+   otherwise the exception **rethrows** (→ a 500 through the middleware, not a misleading 401).
+   Cache read *and* write failures are logged and never affect the outcome. Known asymmetry: a
+   discovery outage on the JWT path still surfaces as `Fail` → 401 (the fetch happens inside Wilson's
+   `ValidateTokenAsync`), while on the opaque path it rethrows.
+7. `PostConfigure` runs once per options instance: https-prefixes a scheme-less `Authority` (the tenant
    domain; an explicit `http://` is left alone for dev setups), builds the `HttpClient` (special-cased for
    `TlsAuth` with a client cert), maps MonoCloud options onto the inherited ones (`Backchannel` ←
    `HttpClient`, and `AuthenticationType`/`NameClaimType`/`RoleClaimType`/`ClockSkew` onto
@@ -205,8 +220,6 @@ pnpm changeset     # record a version bump (Changesets; .changeset/, baseBranch 
 - **`cnf` is parsed as `Dictionary<string, JsonElement>`** and only `x5t#S256` is read, so a `cnf`
   carrying extra members (e.g. a `jwk`) still validates. The thumbprint comparison uses
   `CryptographicOperations.FixedTimeEquals` — keep it.
-- **Known limitation (intentional):** the in-flight `IntrospectionCache` is keyed by the raw token only
-  (no scheme discriminator), unlike the persisted introspection cache.
 
 ## Working norms
 

@@ -12,6 +12,8 @@ public class IntrospectionCacheMock : IIntrospectionCache
 
   public bool ThrowOnGet { get; set; }
 
+  public bool ThrowOnSet { get; set; }
+
   public Task<string?> GetAsync(string key, CancellationToken cancellationToken = default)
   {
     if (ThrowOnGet)
@@ -25,6 +27,11 @@ public class IntrospectionCacheMock : IIntrospectionCache
 
   public Task SetAsync(string key, string value, TimeSpan expiresIn, CancellationToken cancellationToken = default)
   {
+    if (ThrowOnSet)
+    {
+      throw new InvalidOperationException("[Test] Cache is unavailable");
+    }
+
     SetCount++;
     LastExpiresIn = expiresIn;
     _cache[key] = value;
