@@ -84,9 +84,12 @@ public class MonoCloudAuthenticationOptions : JwtBearerOptions
   public string? JwtAssertionSigningAlgorithm { get; set; }
 
   /// <summary>
-  /// Delegate used to determine whether certificate binding validation should be performed for the current request.
+  /// Controls whether the access token's certificate binding is validated against the client
+  /// certificate presented with the request. Defaults to
+  /// <see cref="CertificateBindingValidation.WhenPresent"/>, which validates whenever the token's
+  /// <c>cnf</c> (confirmation) claim carries an <c>x5t#S256</c> thumbprint member.
   /// </summary>
-  public Func<HttpContext, bool> ValidateCertificateBinding { get; set; } = _ => false;
+  public CertificateBindingValidation ValidateCertificateBinding { get; set; } = CertificateBindingValidation.WhenPresent;
 
   /// <summary>
   /// A delegate function used to retrieve an X.509 certificate from the current HTTP context.

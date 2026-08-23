@@ -4,6 +4,20 @@
   "files": [
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/MonoCloud.Authentication.Api.CertificateBindingValidation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MonoCloud.Authentication.Api.CertificateBindingValidation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MonoCloud.Authentication.Api.CertificateBindingValidation",
+      "Summary": "<p sourcefile=\"api/MonoCloud.Authentication.Api.CertificateBindingValidation.yml\" sourcestartlinenumber=\"1\">Controls how certificate binding is validated for certificate-bound access tokens.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/MonoCloud.Authentication.Api.MonoCloudAuthenticationDefaults.yml",
       "output": {
         ".html": {
