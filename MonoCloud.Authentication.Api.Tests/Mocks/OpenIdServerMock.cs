@@ -27,34 +27,42 @@ public class OpenIdServerMock
   private readonly DateTime? _now = DateTime.UtcNow;
   private const string JwksResponse = """{"keys": [{"kty": "RSA","e": "AQAB", "use": "sig", "kid": "test", "alg": "RS256", "n": "xkgdRhX4BK3laqvI6Do0uzD6brOPh79eNs9qAEXZp93QeWhyVKpwtcPonVCiIYP2pjpso0jxuEKOSAhUPdcKBbKqFHr0tYLG_DFo_9Z42Q7jMWtUVwpDcphzsZj1v7JP1JTOPD0ub-dqZuOXDkxSYLPGq1PBuVC4ETHftTU2NORidjOfaOBKjk1zBUmYwimaGgMh6veRn_9frQE90kDoizKG4_HTo5UdwJF34RekB1BoZl-BVxl22OOCyqyI4YOxxInzC76MXW8P3JS2CeOEmMz2ZM5CgX23MdiWC2j_7IMuEzmgNMmU7KlUhO6RKgnS6HYIHp4B8VWkAA_wU3oylQ" }]}""";
   private readonly Mock<HttpMessageHandler> _handlerMock = new();
-  private object IntrospectionSuccessResponse => new
+  private Dictionary<string, object> IntrospectionSuccessResponse(bool includeCnf)
   {
-    active = true,
-    iss = Issuer,
-    scope = "openid resource",
-    aud = new[] { Issuer, TokenEndpoint },
-    sub = "1234567890",
-    client_id = ClientId,
-    groups = new List<object>
-        {
-            new { id = "adminId", name = "admin" },
-            new { id = "moderatorId", name = "moderator" }
-        },
-    groupsAlt = new List<object>
-        {
-            new { id = "editorId", name = "editor" },
-            new { id = "viewerId", name = "viewer" }
-        },
-    iat = ToUnixTimeStamp(_now!.Value),
-    exp = ToUnixTimeStamp(_now!.Value.AddMinutes(5)),
-    nbf = ToUnixTimeStamp(_now!.Value),
-    cnf = new Dictionary<string, object> { { "x5t#S256", MtlsThumbprint } }
+    var response = new Dictionary<string, object>
+    {
+      ["active"] = true,
+      ["iss"] = Issuer,
+      ["scope"] = "openid resource",
+      ["aud"] = new[] { Issuer, TokenEndpoint },
+      ["sub"] = "1234567890",
+      ["client_id"] = ClientId,
+      ["groups"] = new List<object>
+          {
+              new { id = "adminId", name = "admin" },
+              new { id = "moderatorId", name = "moderator" }
+          },
+      ["groupsAlt"] = new List<object>
+          {
+              new { id = "editorId", name = "editor" },
+              new { id = "viewerId", name = "viewer" }
+          },
+      ["iat"] = ToUnixTimeStamp(_now!.Value),
+      ["exp"] = ToUnixTimeStamp(_now!.Value.AddMinutes(5)),
+      ["nbf"] = ToUnixTimeStamp(_now!.Value)
+    };
 
-  };
+    if (includeCnf)
+    {
+      response["cnf"] = new Dictionary<string, object> { { "x5t#S256", MtlsThumbprint } };
+    }
 
-  public void SetupIntrospection(bool? failure = null, HttpStatusCode? status = null, string? authType = null, string? endpoint = null, object? body = null, Func<Task>? beforeRespond = null)
+    return response;
+  }
+
+  public void SetupIntrospection(bool? failure = null, HttpStatusCode? status = null, string? authType = null, string? endpoint = null, object? body = null, Func<Task>? beforeRespond = null, bool includeCnf = false)
   {
-    body ??= failure.HasValue && failure.Value ? new { active = false } : IntrospectionSuccessResponse;
+    body ??= failure.HasValue && failure.Value ? new { active = false } : IntrospectionSuccessResponse(includeCnf);
 
     status ??= HttpStatusCode.OK;
 
@@ -147,7 +155,7 @@ public class OpenIdServerMock
     return new HttpClient(_handlerMock.Object);
   }
 
-  public static string CreateAccessToken(IList<Claim>? payload = null, IEnumerable<string>? excludeClaims = null, SigningCredentials? signingCredentials = null)
+  public static string CreateAccessToken(IList<Claim>? payload = null, IEnumerable<string>? excludeClaims = null, SigningCredentials? signingCredentials = null, bool includeCnf = false)
   {
     var now = DateTime.UtcNow;
 
@@ -162,9 +170,13 @@ public class OpenIdServerMock
             new("client_id", ClientId),
             new("scope", "openid resource"),
             new("groups", "[{\"id\":\"adminId\",\"name\":\"admin\"},{\"id\":\"moderatorId\",\"name\":\"moderator\"}]", JsonClaimValueTypes.JsonArray),
-            new("groupsAlt", "[{\"id\":\"editorId\",\"name\":\"editor\"},{\"id\":\"viewerId\",\"name\":\"viewer\"}]", JsonClaimValueTypes.JsonArray),
-            new("cnf", $"{{\"x5t#S256\":\"{MtlsThumbprint}\"}}", JsonClaimValueTypes.Json)
+            new("groupsAlt", "[{\"id\":\"editorId\",\"name\":\"editor\"},{\"id\":\"viewerId\",\"name\":\"viewer\"}]", JsonClaimValueTypes.JsonArray)
         };
+
+    if (includeCnf)
+    {
+      standardClaims.Add(new("cnf", $"{{\"x5t#S256\":\"{MtlsThumbprint}\"}}", JsonClaimValueTypes.Json));
+    }
 
     if (payload is not null)
     {

@@ -20,7 +20,8 @@ Capabilities:
 - Opaque/reference token introspection (RFC 7662), with automatic JWT-vs-opaque detection.
 - Scope and group based authorization via the standard policy system.
 - Optional caching of introspection results via `IIntrospectionCache`.
-- mTLS certificate-bound access tokens (RFC 8705) — `cnf`/`x5t#S256` validation.
+- mTLS certificate-bound access tokens (RFC 8705) — `cnf`/`x5t#S256` validation, controlled by the
+  `CertificateBindingValidation` mode (`cnf`-bearing tokens are validated by default).
 - Client authentication for introspection: `client_secret_basic`, `client_secret_post`,
   `client_secret_jwt`, `private_key_jwt`, `tls_client_auth`, `spiffe_jwt` (JWT-SVID forwarded as a
   client assertion), and `spiffe_x509` (X.509-SVID over mTLS; behaves like `tls_client_auth`).
@@ -159,10 +160,17 @@ pnpm changeset     # record a version bump (Changesets; .changeset/, baseBranch 
    In-flight introspections for the same scheme + token are de-duplicated via a static `IntrospectionCache`
    (`ConcurrentDictionary` of `Lazy<Task<IntrospectionResult>>` keyed `{Scheme.Name}|{token}`) removed in a
    `finally` — this only collapses concurrent duplicate calls, it is not a result cache.
-5. If `ValidateCertificateBinding(context)` returns true, the presented client certificate's
-   base64url SHA-256 is compared against the token's `cnf.x5t#S256` claim — enforced on the JWT path,
-   the live opaque path, and the cached opaque path, all through the single
-   `ValidateCertificateBinding(claims)` method.
+5. Certificate binding runs per `Options.ValidateCertificateBinding` (a `CertificateBindingValidation`):
+   `WhenPresent` (default) validates only when the token's `cnf` claim carries an `x5t#S256` member —
+   a `cnf` confirming by another method (e.g. DPoP's `jkt`) is skipped, while an unparseable `cnf` or a
+   non-string thumbprint still validates and fails; `Required` always validates, rejecting tokens
+   without one; `DangerouslyIgnore` never validates. The presented client certificate's base64url
+   SHA-256 is compared against the token's `cnf.x5t#S256` claim — enforced on the JWT path, the live
+   opaque path, and the cached opaque path, all through the single `ValidateCertificateBinding(claims)`
+   method, which evaluates the mode gate up front and only invokes `CertificateRetriever` (and only
+   raises `CertificateBindingValidated`) when validation actually runs. A `CertificateRetriever` that
+   throws is treated as a certificate-binding verdict (`Fail` → 401, `Client certificate is
+   malformed`), not an infrastructure error — unlike consumer event hooks, it never rethrows to a 500.
 6. Opaque-path error semantics mirror the base `JwtBearerHandler`: genuine token verdicts
    (introspection `active:false`, live or cached, and certificate-binding failures) return
    `AuthenticateResult.Fail` → 401 `invalid_token` challenge, while infrastructure and consumer-event
@@ -173,7 +181,8 @@ pnpm changeset     # record a version bump (Changesets; .changeset/, baseBranch 
    Cache read *and* write failures are logged and never affect the outcome. Known asymmetry: a
    discovery outage on the JWT path still surfaces as `Fail` → 401 (the fetch happens inside Wilson's
    `ValidateTokenAsync`), while on the opaque path it rethrows.
-7. `PostConfigure` runs once per options instance: https-prefixes a scheme-less `Authority` (the tenant
+7. `PostConfigure` runs once per options instance: rejects an undefined `ValidateCertificateBinding`
+   value (an out-of-range enum would otherwise silently skip binding at request time), https-prefixes a scheme-less `Authority` (the tenant
    domain; an explicit `http://` is left alone for dev setups), builds the `HttpClient` (special-cased for
    `TlsAuth` with a client cert), maps MonoCloud options onto the inherited ones (`Backchannel` ←
    `HttpClient`, and `AuthenticationType`/`NameClaimType`/`RoleClaimType`/`ClockSkew` onto

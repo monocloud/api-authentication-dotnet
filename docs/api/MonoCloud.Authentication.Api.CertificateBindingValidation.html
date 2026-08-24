@@ -2,11 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Namespace MonoCloud.Authentication.Api </title>
+      <title>Enum CertificateBindingValidation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Namespace MonoCloud.Authentication.Api ">
+      <meta name="title" content="Enum CertificateBindingValidation ">
       
-      
+      <meta name="description" content="Controls how certificate binding is validated for certificate-bound access tokens.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
@@ -16,7 +16,7 @@
       
       
       
-      
+      <meta name="docfx:docurl" content="https://github.com/monocloud/api-authentication-dotnet/new/main/apiSpec/new?filename=MonoCloud_Authentication_Api_CertificateBindingValidation.md&amp;value=---%0Auid%3A%20MonoCloud.Authentication.Api.CertificateBindingValidation%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -80,55 +80,54 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="MonoCloud.Authentication.Api">
+        <article data-uid="MonoCloud.Authentication.Api.CertificateBindingValidation">
 
-  <h1 id="MonoCloud_Authentication_Api" data-uid="MonoCloud.Authentication.Api" class="text-break">Namespace MonoCloud.Authentication.Api</h1>
-  <div class="markdown level0 summary"></div>
-  <div class="markdown level0 conceptual"></div>
-  <div class="markdown level0 remarks"></div>
 
-    <h3 id="classes">
-Classes
-</h3>
-    <dl class="jumplist">
-      <dt><a class="xref" href="MonoCloud.Authentication.Api.MonoCloudAuthenticationDefaults.html">MonoCloudAuthenticationDefaults</a></dt>
-      <dd><p>Default values used by the SDK</p>
+
+
+  <h1 id="MonoCloud_Authentication_Api_CertificateBindingValidation" data-uid="MonoCloud.Authentication.Api.CertificateBindingValidation" class="text-break">
+Enum CertificateBindingValidation  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/CertificateBindingValidation.cs/#L6"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="MonoCloud.html">MonoCloud</a>.<a class="xref" href="MonoCloud.Authentication.html">Authentication</a>.<a class="xref" href="MonoCloud.Authentication.Api.html">Api</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MonoCloud.Authentication.Api.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Controls how certificate binding is validated for certificate-bound access tokens.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public enum CertificateBindingValidation</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+  <h2 id="fields">Fields
+</h2>
+  <dl class="parameters">
+    <dt id="MonoCloud_Authentication_Api_CertificateBindingValidation_DangerouslyIgnore"><code>DangerouslyIgnore = 2</code></dt>
+  
+  <dd><p>Never validates certificate binding, even when the token carries a <code>cnf</code> claim.</p>
 </dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="MonoCloud.Authentication.Api.MonoCloudAuthenticationEvents.html">MonoCloudAuthenticationEvents</a></dt>
-      <dd><p>Provides events that allow customization of the authentication process in the MonoCloud framework.
-Contains virtual methods that can be overridden to handle specific authentication-related events.</p>
+    <dt id="MonoCloud_Authentication_Api_CertificateBindingValidation_Required"><code>Required = 1</code></dt>
+  
+  <dd><p>Always validates certificate binding, rejecting tokens without a <code>cnf</code> claim.</p>
 </dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="MonoCloud.Authentication.Api.MonoCloudAuthenticationExtension.html">MonoCloudAuthenticationExtension</a></dt>
-      <dd><p>Extension methods for registering the MonoCloud authentication handler with an <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.authentication.authenticationbuilder">AuthenticationBuilder</a>.</p>
+    <dt id="MonoCloud_Authentication_Api_CertificateBindingValidation_WhenPresent"><code>WhenPresent = 0</code></dt>
+  
+  <dd><p>Validates certificate binding only when the token's <code>cnf</code> (confirmation) claim carries
+an <code>x5t#S256</code> thumbprint member.</p>
 </dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="MonoCloud.Authentication.Api.MonoCloudAuthenticationHandler.html">MonoCloudAuthenticationHandler</a></dt>
-      <dd><p>Handles authentication for MonoCloud by providing authentication logic specific to the MonoCloud platform.</p>
-</dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.html">MonoCloudAuthenticationOptions</a></dt>
-      <dd><p>Provides options to configure the MonoCloud authentication scheme for an ASP.NET Core application.</p>
-</dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="MonoCloud.Authentication.Api.PostConfigureMonoCloudAuthenticationOptions.html">PostConfigureMonoCloudAuthenticationOptions</a></dt>
-      <dd><p>Supports all classes in the .NET class hierarchy and provides low-level services to derived classes. This is the ultimate base class of all .NET classes; it is the root of the type hierarchy.</p>
-</dd>
-    </dl>
-    <h3 id="enums">
-Enums
-</h3>
-    <dl class="jumplist">
-      <dt><a class="xref" href="MonoCloud.Authentication.Api.CertificateBindingValidation.html">CertificateBindingValidation</a></dt>
-      <dd><p>Controls how certificate binding is validated for certificate-bound access tokens.</p>
-</dd>
-    </dl>
+  </dl>
+
 
 
 </article>

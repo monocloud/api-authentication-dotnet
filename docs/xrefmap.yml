@@ -7,6 +7,30 @@ references:
   commentId: N:MonoCloud.Authentication.Api
   fullName: MonoCloud.Authentication.Api
   nameWithType: MonoCloud.Authentication.Api
+- uid: MonoCloud.Authentication.Api.CertificateBindingValidation
+  name: CertificateBindingValidation
+  href: api/MonoCloud.Authentication.Api.CertificateBindingValidation.html
+  commentId: T:MonoCloud.Authentication.Api.CertificateBindingValidation
+  fullName: MonoCloud.Authentication.Api.CertificateBindingValidation
+  nameWithType: CertificateBindingValidation
+- uid: MonoCloud.Authentication.Api.CertificateBindingValidation.DangerouslyIgnore
+  name: DangerouslyIgnore
+  href: api/MonoCloud.Authentication.Api.CertificateBindingValidation.html#MonoCloud_Authentication_Api_CertificateBindingValidation_DangerouslyIgnore
+  commentId: F:MonoCloud.Authentication.Api.CertificateBindingValidation.DangerouslyIgnore
+  fullName: MonoCloud.Authentication.Api.CertificateBindingValidation.DangerouslyIgnore
+  nameWithType: CertificateBindingValidation.DangerouslyIgnore
+- uid: MonoCloud.Authentication.Api.CertificateBindingValidation.Required
+  name: Required
+  href: api/MonoCloud.Authentication.Api.CertificateBindingValidation.html#MonoCloud_Authentication_Api_CertificateBindingValidation_Required
+  commentId: F:MonoCloud.Authentication.Api.CertificateBindingValidation.Required
+  fullName: MonoCloud.Authentication.Api.CertificateBindingValidation.Required
+  nameWithType: CertificateBindingValidation.Required
+- uid: MonoCloud.Authentication.Api.CertificateBindingValidation.WhenPresent
+  name: WhenPresent
+  href: api/MonoCloud.Authentication.Api.CertificateBindingValidation.html#MonoCloud_Authentication_Api_CertificateBindingValidation_WhenPresent
+  commentId: F:MonoCloud.Authentication.Api.CertificateBindingValidation.WhenPresent
+  fullName: MonoCloud.Authentication.Api.CertificateBindingValidation.WhenPresent
+  nameWithType: CertificateBindingValidation.WhenPresent
 - uid: MonoCloud.Authentication.Api.MonoCloudAuthenticationDefaults
   name: MonoCloudAuthenticationDefaults
   href: api/MonoCloud.Authentication.Api.MonoCloudAuthenticationDefaults.html

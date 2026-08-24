@@ -42,4 +42,12 @@ public class MonoCloudAuthenticationOptionsTests
     options.IncludeErrorDetails.ShouldBeTrue();
     options.RequireHttpsMetadata.ShouldBeTrue();
   }
+
+  [Test]
+  public void ValidateCertificateBinding_DefaultsToWhenPresent()
+  {
+    var options = new MonoCloudAuthenticationOptions();
+
+    options.ValidateCertificateBinding.ShouldBe(CertificateBindingValidation.WhenPresent);
+  }
 }

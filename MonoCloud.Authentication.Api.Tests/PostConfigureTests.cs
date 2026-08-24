@@ -23,6 +23,19 @@ public class PostConfigureTests
   }
 
   [Test]
+  public void Should_ThrowArgumentException_When_CertificateBindingValidationIsOutOfRange()
+  {
+    var options = new MonoCloudAuthenticationOptions
+    {
+      ValidateCertificateBinding = (CertificateBindingValidation)3
+    };
+
+    var postConfigureOptions = new PostConfigureMonoCloudAuthenticationOptions(new HttpClientFactoryMock());
+
+    Should.Throw<ArgumentException>(() => postConfigureOptions.PostConfigure(null, options)).Message.ShouldBe("ValidateCertificateBinding must be a defined CertificateBindingValidation value (Parameter 'options')");
+  }
+
+  [Test]
   public void Should_PrependHttps_When_AuthorityHasNoScheme()
   {
     var options = new MonoCloudAuthenticationOptions

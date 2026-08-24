@@ -27,6 +27,11 @@ public class PostConfigureMonoCloudAuthenticationOptions : IPostConfigureOptions
       throw new ArgumentException("IIntrospectionCache not found in the services collection", nameof(_cache));
     }
 
+    if (!Enum.IsDefined(options.ValidateCertificateBinding))
+    {
+      throw new ArgumentException("ValidateCertificateBinding must be a defined CertificateBindingValidation value", nameof(options));
+    }
+
     if (options.Authority is not null && !options.Authority.Contains("://"))
     {
       options.Authority = $"https://{options.Authority}";

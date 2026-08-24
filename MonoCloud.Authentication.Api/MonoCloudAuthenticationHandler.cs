@@ -44,7 +44,7 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
   /// </summary>
   protected new MonoCloudAuthenticationEvents Events
   {
-    get => (MonoCloudAuthenticationEvents)base.Events!;
+    get => (MonoCloudAuthenticationEvents)base.Events;
     set => base.Events = value;
   }
 
@@ -92,7 +92,7 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
     }
 
     Logger.LogDebug("Handling with introspection");
-    return await HandleOpaqueTokenAuthenticationAsync(token!);
+    return await HandleOpaqueTokenAuthenticationAsync(token);
   }
 
   private async Task<AuthenticateResult> HandleJwtBearerAuthenticationAsync(string token)
@@ -160,13 +160,10 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
             return await AuthenticationFailed("Token inactive", Context, Scheme, Events, Options);
           }
 
-          if (Options.ValidateCertificateBinding(Context))
+          var certificateBindingResult = await ValidateCertificateBinding(claims);
+          if (certificateBindingResult is not null)
           {
-            var certificateBindingResult = await ValidateCertificateBinding(claims);
-            if (certificateBindingResult is not null)
-            {
-              return certificateBindingResult;
-            }
+            return certificateBindingResult;
           }
 
           return await CreateOpaqueTokenTicket(claims, token, Context, Scheme, Events, Options, Logger);
@@ -192,13 +189,10 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
           await TrySetClaimsCacheAsync(token, introspectionClaims);
         }
 
-        if (Options.ValidateCertificateBinding(Context))
+        var certificateBindingResult = await ValidateCertificateBinding(introspectionClaims);
+        if (certificateBindingResult is not null)
         {
-          var certificateBindingResult = await ValidateCertificateBinding(introspectionClaims);
-          if (certificateBindingResult is not null)
-          {
-            return certificateBindingResult;
-          }
+          return certificateBindingResult;
         }
 
         return await CreateOpaqueTokenTicket(introspectionClaims, token, Context, Scheme, Events, Options, Logger);
@@ -335,17 +329,18 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
       HttpContext httpContext,
       AuthenticationScheme scheme,
       MonoCloudAuthenticationEvents events,
-      MonoCloudAuthenticationOptions options)
+      MonoCloudAuthenticationOptions options,
+      Exception? innerException = null)
   {
     var authenticationFailedContext = new AuthenticationFailedContext(httpContext, scheme, options)
     {
-      Exception = new Exception(error)
+      Exception = new Exception(error, innerException)
     };
 
     await events.AuthenticationFailed(authenticationFailedContext);
 
     // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
-    return authenticationFailedContext.Result ?? AuthenticateResult.Fail(error);
+    return authenticationFailedContext.Result ?? AuthenticateResult.Fail(authenticationFailedContext.Exception);
   }
 
   private static async Task<AuthenticateResult> CreateOpaqueTokenTicket(IList<Claim> claims, string token, HttpContext httpContext, AuthenticationScheme scheme, MonoCloudAuthenticationEvents events, MonoCloudAuthenticationOptions options, ILogger logger)
@@ -386,9 +381,48 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
 
   private async Task<AuthenticateResult?> ValidateCertificateBinding(IEnumerable<Claim> claims)
   {
+    var cnfClaim = claims.FirstOrDefault(x => x.Type == "cnf");
+
+    Dictionary<string, JsonElement>? cnfClaimValue = null;
+    var cnfIsMalformed = false;
+
+    if (cnfClaim is not null)
+    {
+      try
+      {
+        cnfClaimValue = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(cnfClaim.Value);
+      }
+      catch (Exception)
+      {
+        cnfIsMalformed = true;
+      }
+    }
+
+    var shouldValidate = Options.ValidateCertificateBinding switch
+    {
+      CertificateBindingValidation.Required => true,
+      CertificateBindingValidation.WhenPresent => cnfClaim is not null && (cnfClaimValue is null || cnfClaimValue.ContainsKey("x5t#S256")),
+      _ => false,
+    };
+
+    if (!shouldValidate)
+    {
+      return null;
+    }
+
     Logger.LogDebug("Starting certificate binding validation");
 
-    var clientCertificate = await Options.CertificateRetriever(Context);
+    X509Certificate2? clientCertificate;
+
+    try
+    {
+      clientCertificate = await Options.CertificateRetriever(Context);
+    }
+    catch (Exception ex)
+    {
+      Logger.LogInformation(ex, "The certificate retriever threw while retrieving the client certificate");
+      return await AuthenticationFailed("Client certificate is malformed", Context, Scheme, Events, Options, ex);
+    }
 
     if (clientCertificate is null)
     {
@@ -399,18 +433,12 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
     var clientCertHash = Convert.ToBase64String(SHA256.HashData(clientCertificate.RawData))
         .TrimEnd('=').Replace('+', '-').Replace('/', '_');
 
-    var cnfClaim = claims.FirstOrDefault(x => x.Type == "cnf");
     if (cnfClaim is null)
     {
       return await AuthenticationFailed("Access token does not contain a 'cnf' (confirmation) claim for certificate binding", Context, Scheme, Events, Options);
     }
 
-    Dictionary<string, JsonElement>? cnfClaimValue;
-    try
-    {
-      cnfClaimValue = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(cnfClaim.Value);
-    }
-    catch (Exception)
+    if (cnfIsMalformed)
     {
       return await AuthenticationFailed("Malformed 'cnf' claim for certificate binding", Context, Scheme, Events, Options);
     }
@@ -523,15 +551,12 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
 
       NormalizeScopes(context);
 
-      if (handler.Options.ValidateCertificateBinding(context.HttpContext))
-      {
-        var result = await handler.ValidateCertificateBinding(context.Principal!.Claims);
+      var result = await handler.ValidateCertificateBinding(context.Principal!.Claims);
 
-        if (result is not null)
-        {
-          Apply(result, context);
-          return;
-        }
+      if (result is not null)
+      {
+        Apply(result, context);
+        return;
       }
 
       await inner.TokenValidated(context);
