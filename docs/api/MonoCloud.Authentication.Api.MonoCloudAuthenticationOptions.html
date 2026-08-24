@@ -292,7 +292,7 @@ additions.</p>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_AuthenticationType" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.AuthenticationType">
   AuthenticationType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L116"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Specifies the authentication type associated with the identity,
@@ -360,7 +360,7 @@ before they are revalidated or refreshed.</p>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_CacheKeyGenerator" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.CacheKeyGenerator">
   CacheKeyGenerator
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L134"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A delegate used to generate a unique cache key based on the provided
@@ -426,13 +426,15 @@ with distributed caching of token-related data.</p>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_CertificateRetriever" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.CertificateRetriever">
   CertificateRetriever
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L100"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L102"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A delegate function used to retrieve an X.509 certificate from the current HTTP context.
 This property allows customization of how the client certificate is accessed, providing
 the ability to handle scenarios where the certificate is needed for additional processing
-or authentication validation.</p>
+or authentication validation. Return <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> when no client certificate is
+present; an exception thrown here is treated as a malformed client certificate and fails
+authentication with a 401.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -629,7 +631,7 @@ such as token validation, assertion creation, or introspection.</p>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_HttpClient" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.HttpClient">
   HttpClient
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L145"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L147"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Provides an instance of <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.net.http.httpclient">HttpClient</a> used to send HTTP requests
@@ -669,7 +671,7 @@ so discovery document retrieval shares it (and therefore any configured client c
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_IntrospectJwtTokens" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.IntrospectJwtTokens">
   IntrospectJwtTokens
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L107"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L109"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Indicates whether JWT tokens must be introspected during authentication.
@@ -770,7 +772,7 @@ When not explicitly set, a default algorithm is typically applied.</p>
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_NameClaimType" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.NameClaimType">
   NameClaimType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L120"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L122"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Specifies the claim type to be used as the username in the identity.
@@ -803,7 +805,7 @@ This value determines which claim in the token will be mapped to the user's iden
 
   <h3 id="MonoCloud_Authentication_Api_MonoCloudAuthenticationOptions_RoleClaimType" data-uid="MonoCloud.Authentication.Api.MonoCloudAuthenticationOptions.RoleClaimType">
   RoleClaimType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/monocloud/api-authentication-dotnet/blob/main/MonoCloud.Authentication.Api/MonoCloudAuthenticationOptions.cs/#L127"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Specifies the claim type used to determine the roles of a user during token validation.</p>

@@ -168,7 +168,9 @@ pnpm changeset     # record a version bump (Changesets; .changeset/, baseBranch 
    SHA-256 is compared against the token's `cnf.x5t#S256` claim — enforced on the JWT path, the live
    opaque path, and the cached opaque path, all through the single `ValidateCertificateBinding(claims)`
    method, which evaluates the mode gate up front and only invokes `CertificateRetriever` (and only
-   raises `CertificateBindingValidated`) when validation actually runs.
+   raises `CertificateBindingValidated`) when validation actually runs. A `CertificateRetriever` that
+   throws is treated as a certificate-binding verdict (`Fail` → 401, `Client certificate is
+   malformed`), not an infrastructure error — unlike consumer event hooks, it never rethrows to a 500.
 6. Opaque-path error semantics mirror the base `JwtBearerHandler`: genuine token verdicts
    (introspection `active:false`, live or cached, and certificate-binding failures) return
    `AuthenticateResult.Fail` → 401 `invalid_token` challenge, while infrastructure and consumer-event

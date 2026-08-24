@@ -329,17 +329,18 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
       HttpContext httpContext,
       AuthenticationScheme scheme,
       MonoCloudAuthenticationEvents events,
-      MonoCloudAuthenticationOptions options)
+      MonoCloudAuthenticationOptions options,
+      Exception? innerException = null)
   {
     var authenticationFailedContext = new AuthenticationFailedContext(httpContext, scheme, options)
     {
-      Exception = new Exception(error)
+      Exception = new Exception(error, innerException)
     };
 
     await events.AuthenticationFailed(authenticationFailedContext);
 
     // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
-    return authenticationFailedContext.Result ?? AuthenticateResult.Fail(error);
+    return authenticationFailedContext.Result ?? AuthenticateResult.Fail(authenticationFailedContext.Exception);
   }
 
   private static async Task<AuthenticateResult> CreateOpaqueTokenTicket(IList<Claim> claims, string token, HttpContext httpContext, AuthenticationScheme scheme, MonoCloudAuthenticationEvents events, MonoCloudAuthenticationOptions options, ILogger logger)
@@ -411,7 +412,17 @@ public class MonoCloudAuthenticationHandler : JwtBearerHandler
 
     Logger.LogDebug("Starting certificate binding validation");
 
-    var clientCertificate = await Options.CertificateRetriever(Context);
+    X509Certificate2? clientCertificate;
+
+    try
+    {
+      clientCertificate = await Options.CertificateRetriever(Context);
+    }
+    catch (Exception ex)
+    {
+      Logger.LogInformation(ex, "The certificate retriever threw while retrieving the client certificate");
+      return await AuthenticationFailed("Client certificate is malformed", Context, Scheme, Events, Options, ex);
+    }
 
     if (clientCertificate is null)
     {

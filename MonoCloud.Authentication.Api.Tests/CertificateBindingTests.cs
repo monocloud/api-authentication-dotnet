@@ -75,6 +75,22 @@ public class CertificateBindingTests
   }
 
   [Test]
+  public async Task Should_Fail_When_CertificateRetrieverThrows()
+  {
+    var options = BindingOptions(new OpenIdServerMock(),
+      o => o.CertificateRetriever = _ => throw new CryptographicException("bad pem"));
+
+    var token = OpenIdServerMock.CreateAccessToken(includeCnf: true);
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, token);
+    var result = await handler.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeFalse();
+    result.Failure!.Message.ShouldBe("Client certificate is malformed");
+    result.Failure.InnerException.ShouldBeOfType<CryptographicException>();
+  }
+
+  [Test]
   public async Task Should_Fail_When_RequiredAndTokenHasNoCnfClaim()
   {
     var options = BindingOptions(new OpenIdServerMock(), o => o.ValidateCertificateBinding = CertificateBindingValidation.Required);
@@ -400,6 +416,25 @@ public class CertificateBindingTests
     result.Succeeded.ShouldBeFalse();
 
     result.Failure!.Message.ShouldBe("The certificate hash in the access token does not match the presented client certificate (certificate binding validation failed)");
+  }
+
+  [Test]
+  public async Task Should_Fail_When_RequiredAndRetrieverThrowsOnUnboundIntrospectedToken()
+  {
+    var server = new OpenIdServerMock();
+    server.SetupIntrospection(authType: "client_secret_post");
+
+    var options = OpaqueBindingOptions(server, o =>
+    {
+      o.ValidateCertificateBinding = CertificateBindingValidation.Required;
+      o.CertificateRetriever = _ => throw new CryptographicException("The certificate contents do not contain a PEM with a CERTIFICATE label, or the content is malformed.");
+    });
+
+    var (handler, _) = await HandlerTestHarness.CreateAsync(options, "opaque-unbound-retriever-throws");
+    var result = await handler.AuthenticateAsync();
+
+    result.Succeeded.ShouldBeFalse();
+    result.Failure!.Message.ShouldBe("Client certificate is malformed");
   }
 
   [Test]

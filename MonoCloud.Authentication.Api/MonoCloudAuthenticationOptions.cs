@@ -95,7 +95,9 @@ public class MonoCloudAuthenticationOptions : JwtBearerOptions
   /// A delegate function used to retrieve an X.509 certificate from the current HTTP context.
   /// This property allows customization of how the client certificate is accessed, providing
   /// the ability to handle scenarios where the certificate is needed for additional processing
-  /// or authentication validation.
+  /// or authentication validation. Return <see langword="null"/> when no client certificate is
+  /// present; an exception thrown here is treated as a malformed client certificate and fails
+  /// authentication with a 401.
   /// </summary>
   public Func<HttpContext, Task<X509Certificate2?>> CertificateRetriever { get; set; } = async context => await context.Connection.GetClientCertificateAsync();
 
